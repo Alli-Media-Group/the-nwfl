@@ -1,0 +1,149 @@
+@use "../../styles/mixins" as m;
+
+.match-carousel {
+  width: 100%;
+  overflow: hidden;
+
+  &__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  &__container {
+    display: flex;
+    gap: var(--sp-md);
+    align-items: stretch;
+  }
+
+  // ── Individual match card — matches design: dark grey card ─────────────
+  &__slide {
+    flex: 0 0 auto;
+    width: clamp(240px, 28vw, 300px);
+  }
+
+  &__card {
+    background: #565656;
+    border-radius: var(--radius-sm);
+    padding: var(--sp-md) var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  // ── Teams + score row ──────────────────────────────────────────────────
+  &__matchup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xs);
+    flex: 1;
+    min-width: 0;
+
+    &-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #d5d5d5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: var(--fs-sm);
+      font-weight: 700;
+      color: var(--color-white);
+      overflow: hidden;
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &-name {
+      font-family: var(--font-body);
+      font-size: var(--fs-xs);
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+  }
+
+  // ── Score center ───────────────────────────────────────────────────────
+  &__score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+
+    &-line {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+    }
+
+    &-num {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: var(--fs-2xl);
+      color: var(--color-white);
+      line-height: 1;
+      min-width: 1.4ch;
+      text-align: center;
+    }
+
+    &-sep {
+      font-family: var(--font-body);
+      font-size: var(--fs-md);
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1;
+    }
+
+    &-status {
+      font-family: var(--font-body);
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+  }
+
+  // ── CTA button below matchup — purple gradient replaces red ───────────
+  &__cta {
+    width: 100%;
+    padding: 0.4rem 0;
+    background: var(--gradient-glow);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    transition: filter var(--transition-fast);
+
+    &:hover {
+      filter: brightness(1.15);
+    }
+  }
+}

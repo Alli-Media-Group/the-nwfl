@@ -29,8 +29,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--sp-sm);
-  padding: 0.65rem 1.5rem;
-  border-radius: var(--radius-pill);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-sm); // 6px — rectangular, matches design CTA shape
   font-family: var(--font-body);
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -38,19 +38,20 @@
   text-transform: uppercase;
   transition: all var(--transition-base);
   cursor: pointer;
+  border: none;
 
   &--primary {
-    background: var(--gradient-glow);
+    background: var(--gradient-glow); // purple gradient replaces the original red/orange
     color: var(--color-white);
-    box-shadow: 0 4px 20px rgba(138, 61, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(138, 61, 255, 0.35);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(138, 61, 255, 0.55);
+      filter: brightness(1.15);
+      box-shadow: 0 6px 24px rgba(138, 61, 255, 0.5);
     }
 
     &:active {
-      transform: translateY(0);
+      filter: brightness(0.95);
     }
   }
 

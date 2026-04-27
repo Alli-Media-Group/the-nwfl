@@ -1,0 +1,122 @@
+@use "../../styles/mixins" as m;
+
+.rising-stars {
+  position: relative;
+  isolation: isolate;
+  background: #000000;
+  @include m.section-padding;
+  overflow: hidden;
+
+  // ── Dashed tick pattern overlay — matches design background texture ──────
+  &__pattern {
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-base);
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.03) 0px,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 12px
+      );
+  }
+
+  &__inner {
+    position: relative;
+    z-index: var(--z-raised);
+    @include m.container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2xl);
+  }
+
+  // ── Section heading ────────────────────────────────────────────────────────
+  &__heading {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--fs-2xl);
+    color: var(--color-white);
+    text-align: center;
+    letter-spacing: 0.01em;
+
+    @include m.md {
+      font-size: var(--fs-3xl);
+    }
+  }
+
+  // ── Embla carousel ────────────────────────────────────────────────────────
+  &__carousel {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__track {
+    display: flex;
+    gap: var(--sp-xl);
+    align-items: flex-start;
+  }
+
+  // ── Player card — no card bg, just image + name below ─────────────────────
+  &__card {
+    flex: 0 0 auto;
+    width: clamp(260px, 28vw, 380px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+    cursor: pointer;
+  }
+
+  &__card-img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+
+    // shimmer while loading
+    &.is-loading {
+      @include m.img-shimmer;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform var(--transition-slow);
+
+      // hide the img element itself while loading — shimmer bg shows instead
+      &.is-loading { opacity: 0; }
+    }
+  }
+
+  &__card:hover &__card-img img {
+    transform: scale(1.04);
+  }
+
+  &__card-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    color: var(--color-white);
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  &__card-meta {
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--color-muted);
+    text-align: center;
+  }
+
+  // ── CTA button row ─────────────────────────────────────────────────────────
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -5,30 +5,41 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--z-navbar);
   height: var(--navbar-height);
-  @include m.glass;
-  box-shadow: var(--shadow-nav);
-  transition: background var(--transition-base);
+  background: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background var(--transition-base), border-color var(--transition-base);
+
+  // ── Transparent mode (floats over hero) ───────────────────────────────
+  &--transparent {
+    background: transparent;
+    border-bottom-color: transparent;
+  }
 
   &__inner {
     @include m.container;
-    @include m.flex-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
     height: 100%;
+    gap: var(--sp-xl);
   }
 
   // ── Logo ───────────────────────────────────────────────────────────────
   &__logo {
     display: flex;
     align-items: center;
-    gap: var(--sp-sm);
     text-decoration: none;
+    flex-shrink: 0;
 
     &-wordmark {
       font-family: var(--font-heading);
+      font-weight: 700;
       font-size: var(--fs-xl);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--color-white);
       line-height: 1;
 
       span {
@@ -40,11 +51,13 @@
     }
   }
 
-  // ── Desktop Nav Links ──────────────────────────────────────────────────
+  // ── Desktop Nav Links — centered in the grid middle column ────────────
   &__links {
     display: none;
     align-items: center;
-    gap: var(--sp-xl);
+    justify-content: center;
+    gap: var(--sp-2xl);
+    list-style: none;
 
     @include m.md {
       display: flex;
@@ -52,48 +65,63 @@
   }
 
   &__link {
+    font-family: var(--font-body);
     font-size: var(--fs-sm);
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--color-white);
     transition: color var(--transition-fast);
     position: relative;
+    padding-block: var(--sp-xs);
 
     &::after {
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: -2px;
       left: 0;
       right: 0;
       height: 2px;
       background: var(--gradient-glow);
-      border-radius: var(--radius-pill);
       transform: scaleX(0);
+      transform-origin: left;
       transition: transform var(--transition-base);
     }
 
-    &:hover,
+    &:hover {
+      color: var(--color-off-white);
+
+      &::after { transform: scaleX(1); }
+    }
+
     &.active {
       color: var(--color-white);
 
-      &::after {
-        transform: scaleX(1);
-      }
-    }
-
-    &.active {
-      color: var(--color-highlight);
+      &::after { transform: scaleX(1); }
     }
   }
 
-  // ── CTA ────────────────────────────────────────────────────────────────
-  &__cta {
-    display: none;
+  // ── Right side (search + hamburger) ───────────────────────────────────
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--sp-md);
+    flex-shrink: 0;
+  }
 
-    @include m.md {
-      display: block;
-    }
+  &__search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--sp-xs);
+    transition: color var(--transition-fast);
+
+    &:hover { color: var(--color-highlight); }
   }
 
   // ── Mobile Hamburger ───────────────────────────────────────────────────
@@ -102,21 +130,19 @@
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     background: none;
     border: none;
     padding: 4px;
 
-    @include m.md {
-      display: none;
-    }
+    @include m.md { display: none; }
 
     span {
       display: block;
       height: 2px;
-      border-radius: var(--radius-pill);
+      border-radius: 2px;
       background: var(--color-white);
       transition: transform var(--transition-base), opacity var(--transition-base);
     }
@@ -132,8 +158,8 @@
     top: var(--navbar-height);
     left: 0;
     right: 0;
-    @include m.glass;
-    border-top: 1px solid var(--color-border);
+    background: #000000;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: var(--sp-lg) var(--sp-xl);
     display: flex;
     flex-direction: column;
@@ -143,9 +169,7 @@
     transition: transform var(--transition-base), opacity var(--transition-base);
     pointer-events: none;
 
-    @include m.md {
-      display: none;
-    }
+    @include m.md { display: none; }
 
     &.open {
       transform: translateY(0);
@@ -153,12 +177,11 @@
       pointer-events: all;
     }
 
+    li { list-style: none; }
+
     .navbar__link {
       font-size: var(--fs-md);
-
-      &::after {
-        display: none;
-      }
+      &::after { display: none; }
     }
   }
 }

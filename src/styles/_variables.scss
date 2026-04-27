@@ -1,7 +1,7 @@
 // ─── Color Palette ───────────────────────────────────────────────────────────
 :root {
   // Purples
-  --color-bg:           #1A0033;
+  --color-bg:           #000000;
   --color-primary:      #4B1FA3;
   --color-accent:       #6A2BD9;
   --color-highlight:    #8A3DFF;
@@ -26,8 +26,8 @@
   --color-warning:      #f59e0b;
 
   // ─── Typography ──────────────────────────────────────────────────────────
-  --font-heading:       'Bebas Neue', 'Impact', sans-serif;
-  --font-body:          'Inter', 'Segoe UI', sans-serif;
+  --font-heading:       'Montserrat', sans-serif;   /* Bold (700) for all headings */
+  --font-body:          'Poppins', sans-serif;       /* Regular–SemiBold for body copy */
 
   --fs-xs:    0.75rem;
   --fs-sm:    0.875rem;
@@ -67,4 +67,14 @@
   --transition-fast:  0.15s ease;
   --transition-base:  0.25s ease;
   --transition-slow:  0.4s ease;
+
+  // ─── Z-index hierarchy (single source of truth) ──────────────────────────
+  // Nothing should use a raw z-index number — always use these tokens.
+  --z-base:       0;    // normal document flow
+  --z-raised:     10;   // cards, overlays within a section
+  --z-sticky:     20;   // section-level sticky elements
+  --z-dropdown:   50;   // dropdowns, tooltips
+  --z-modal:      80;   // modals, drawers
+  --z-navbar:     100;  // navbar — always on top of everything except modals
+  --z-toast:      200;  // notifications
 }

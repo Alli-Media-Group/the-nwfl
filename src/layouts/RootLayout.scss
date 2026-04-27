@@ -5,8 +5,14 @@
   display: flex;
   flex-direction: column;
 
+  // Pages that don't have a hero get top padding so content clears the navbar.
+  // Pages with a hero (like Home) handle their own spacing — navbar floats over them.
   &__main {
     flex: 1;
+  }
+
+  // Non-hero pages: add top padding
+  &__main--padded {
     padding-top: var(--navbar-height);
   }
 }

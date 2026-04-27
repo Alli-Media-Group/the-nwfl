@@ -1,0 +1,155 @@
+@use "../../styles/mixins" as m;
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  // Isolate this section's stacking context — nothing inside can escape above --z-navbar
+  isolation: isolate;
+  overflow: hidden;
+
+  // ── Background image ────────────────────────────────────────────────────
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-base);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+  }
+
+  // ── Dark overlay ─────────────────────────────────────────────────────────
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-raised);
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.55) 50%,
+      rgba(0, 0, 0, 0.80) 100%
+    );
+  }
+
+  // ── Content — vertically centered ────────────────────────────────────────
+  &__content {
+    position: relative;
+    z-index: var(--z-sticky);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-inline: var(--sp-lg);
+    padding-top: var(--navbar-height);
+
+    @include m.md {
+      padding-inline: var(--sp-2xl);
+    }
+  }
+
+  &__title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    text-transform: uppercase;
+    color: var(--color-white);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    max-width: 860px;
+    margin-bottom: var(--sp-md);
+
+    span {
+      background: var(--gradient-glow);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(var(--fs-base), 2.2vw, var(--fs-lg));
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: var(--sp-2xl);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  // ── Score bar wrapper — sits at the very bottom of the hero ──────────────
+  &__scores-wrapper {
+    position: relative;
+    z-index: var(--z-sticky);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: var(--sp-xl);
+  }
+
+  // ── Score carousel container ──────────────────────────────────────────────
+  &__scores {
+    width: 80%;
+    padding-block: var(--sp-lg);
+    padding-inline: var(--sp-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    background: #2c2c2c;
+    border-radius: var(--radius-sm);
+
+    @include m.md {
+      padding-inline: var(--sp-2xl);
+    }
+  }
+
+  // ── Prev / Next arrows ────────────────────────────────────────────────────
+  &__arrow {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+
+    &:hover {
+      border-color: var(--color-highlight);
+      background: rgba(138, 61, 255, 0.2);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__carousel-wrapper {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+}

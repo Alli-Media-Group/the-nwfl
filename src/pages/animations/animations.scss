@@ -1,0 +1,66 @@
+@use "../../styles/mixins" as m;
+
+// ── Logo pulse ─────────────────────────────────────────────────────────────
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1);    opacity: 1;    }
+  50%       { transform: scale(1.05); opacity: 0.75; }
+}
+
+// ── Shimmer sweep across the card ──────────────────────────────────────────
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
+}
+
+// ── Background hue shift — purple cycling through the gradient stops ────────
+@keyframes hue-shift {
+  0%   { filter: hue-rotate(0deg);   }
+  50%  { filter: hue-rotate(30deg);  }
+  100% { filter: hue-rotate(0deg);   }
+}
+
+.card {
+  position: relative;
+  width: 300px;
+  height: 380px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--gradient-glow);
+  animation: hue-shift 4s ease-in-out infinite;
+  @include m.flex-center;
+  margin: var(--sp-2xl) auto;
+
+  // ── Shimmer layer — sweeps left to right over the card ─────────────────
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.12) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  .logo {
+    position: relative;
+    z-index: 1; // sits above the shimmer layer
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    animation: pulse-scale 1.8s ease-in-out infinite;
+
+    img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      // slight glow on the logo so it reads well on the purple bg
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+    }
+  }
+}

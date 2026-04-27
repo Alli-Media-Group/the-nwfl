@@ -60,3 +60,51 @@ $bp-xl:  1280px;
 @mixin section-padding {
   padding-block: var(--sp-section);
 }
+
+// ─── Image loading shimmer ────────────────────────────────────────────────────
+// Apply to the image *container* element.
+// Add class `is-loading` while image is loading, remove it on load.
+@mixin img-shimmer {
+  position: relative;
+  background: var(--gradient-glow);
+  animation: hue-shift 4s ease-in-out infinite;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.12) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  // Logo/icon pulse lives inside the container
+  .shimmer-icon {
+    position: relative;
+    z-index: 1;
+    animation: pulse-scale 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+  }
+}
+
+// Keyframes — declared once globally so both components share them
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
+}
+
+@keyframes hue-shift {
+  0%, 100% { filter: hue-rotate(0deg);  }
+  50%       { filter: hue-rotate(30deg); }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1);    opacity: 1;    }
+  50%       { transform: scale(1.05); opacity: 0.75; }
+}
