@@ -1,0 +1,164 @@
+@use '../../styles/mixins' as m;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  @include m.glass;
+  box-shadow: var(--shadow-nav);
+  transition: background var(--transition-base);
+
+  &__inner {
+    @include m.container;
+    @include m.flex-between;
+    height: 100%;
+  }
+
+  // ── Logo ───────────────────────────────────────────────────────────────
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    text-decoration: none;
+
+    &-wordmark {
+      font-family: var(--font-heading);
+      font-size: var(--fs-xl);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+
+      span {
+        background: var(--gradient-glow);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+  }
+
+  // ── Desktop Nav Links ──────────────────────────────────────────────────
+  &__links {
+    display: none;
+    align-items: center;
+    gap: var(--sp-xl);
+
+    @include m.md {
+      display: flex;
+    }
+  }
+
+  &__link {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    transition: color var(--transition-fast);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient-glow);
+      border-radius: var(--radius-pill);
+      transform: scaleX(0);
+      transition: transform var(--transition-base);
+    }
+
+    &:hover,
+    &.active {
+      color: var(--color-white);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &.active {
+      color: var(--color-highlight);
+    }
+  }
+
+  // ── CTA ────────────────────────────────────────────────────────────────
+  &__cta {
+    display: none;
+
+    @include m.md {
+      display: block;
+    }
+  }
+
+  // ── Mobile Hamburger ───────────────────────────────────────────────────
+  &__hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+
+    @include m.md {
+      display: none;
+    }
+
+    span {
+      display: block;
+      height: 2px;
+      border-radius: var(--radius-pill);
+      background: var(--color-white);
+      transition: transform var(--transition-base), opacity var(--transition-base);
+    }
+
+    &.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    &.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    &.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+
+  // ── Mobile Menu ────────────────────────────────────────────────────────
+  &__mobile {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    @include m.glass;
+    border-top: 1px solid var(--color-border);
+    padding: var(--sp-lg) var(--sp-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+    transform: translateY(-110%);
+    opacity: 0;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+    pointer-events: none;
+
+    @include m.md {
+      display: none;
+    }
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .navbar__link {
+      font-size: var(--fs-md);
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

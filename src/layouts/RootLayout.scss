@@ -1,0 +1,12 @@
+@use '../styles/mixins' as m;
+
+.root-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    flex: 1;
+    padding-top: var(--navbar-height);
+  }
+}
