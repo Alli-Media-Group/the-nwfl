@@ -3,8 +3,8 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home/Home";
 import Stats from "./pages/Stats/Stats";
 import Analytics from "./pages/Analytics/Analytics";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
 import "./styles/main.scss";
-import Animation from "./pages/animations/animations";
 
 export default function App() {
   return (
@@ -12,9 +12,14 @@ export default function App() {
       <Routes>
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="stats" element={<Stats />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="animation" element={<Animation />} />
+          <Route path="stats"        element={<Stats />} />
+          <Route path="analytics"    element={<Analytics />} />
+          <Route path="about"        element={<ComingSoon title="About" />} />
+          <Route path="news"         element={<ComingSoon title="News" />} />
+          <Route path="match-center" element={<ComingSoon title="Match Center" />} />
+          <Route path="teams"        element={<ComingSoon title="Teams" />} />
+          <Route path="players"      element={<ComingSoon title="Players" />} />
+          <Route path="media"        element={<ComingSoon title="Media Channel" />} />
         </Route>
       </Routes>
     </BrowserRouter>

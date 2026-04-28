@@ -11,37 +11,81 @@
 
   &__container {
     display: flex;
-    gap: var(--sp-md);
     align-items: stretch;
+    margin-left: calc(var(--sp-md) * -1);
   }
 
-  // ── Individual match card ─────────────────────────────────────────────
+  // ── Slide ─────────────────────────────────────────────────────────────────
   &__slide {
     flex: 0 0 auto;
-    // mobile: one card fills ~85% of the container so it's fully readable
-    // desktop: fixed comfortable width
-    width: clamp(200px, 80vw, 260px);
+    // padding-left creates the gap — Embla loop clones carry it correctly
+    padding-left: var(--sp-md);
+    width: clamp(200px, 75vw, 240px);
 
     @include m.md {
-      width: clamp(240px, 28vw, 300px);
+      width: clamp(240px, 24vw, 280px);
     }
   }
 
+  // ── Card ──────────────────────────────────────────────────────────────────
   &__card {
-    background: #565656;
-    border-radius: var(--radius-sm);
-    padding: var(--sp-sm) var(--sp-md);
+    background: rgba(15, 8, 30, 0.85);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-md) var(--sp-lg);
     display: flex;
     flex-direction: column;
-    gap: var(--sp-sm);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    gap: var(--sp-md);
+    border: 1px solid rgba(138, 61, 255, 0.2);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 
-    @include m.md {
-      padding: var(--sp-md) var(--sp-lg);
+    &:hover {
+      border-color: rgba(138, 61, 255, 0.5);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(138, 61, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
   }
 
-  // ── Teams + score row ──────────────────────────────────────────────────
+  // ── Header row ────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+  }
+
+  &__matchday {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__status {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    &--ft {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    &--upcoming {
+      color: var(--color-highlight);
+    }
+  }
+
+  // ── Matchup row ───────────────────────────────────────────────────────────
   &__matchup {
     display: flex;
     align-items: center;
@@ -50,118 +94,122 @@
   }
 
   &__team {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--sp-xs);
     flex: 1;
-    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
 
-    &-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #d5d5d5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-heading);
-      font-size: var(--fs-xs);
-      font-weight: 700;
-      color: #333;
-      overflow: hidden;
-      flex-shrink: 0;
+  // ── Logo — rounded square app-icon style ──────────────────────────────────
+  &__team-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-white);
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-      @include m.md {
-        width: 56px;
-        height: 56px;
-        font-size: var(--fs-sm);
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
+    @include m.md {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
     }
 
-    &-name {
-      font-family: var(--font-body);
-      font-size: var(--fs-xs);
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.75);
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 100%;
+    img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
     }
   }
 
-  // ── Score center ───────────────────────────────────────────────────────
+  // ── Score center ──────────────────────────────────────────────────────────
   &__score {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
     flex-shrink: 0;
+  }
 
-    &-line {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-sm);
-    }
+  &__score-line {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+  }
 
-    &-num {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: var(--fs-xl);
-      color: var(--color-white);
-      line-height: 1;
-      min-width: 1.2ch;
-      text-align: center;
+  &__score-num {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--fs-2xl);
+    color: var(--color-white);
+    line-height: 1;
+    min-width: 1.2ch;
+    text-align: center;
 
-      @include m.md {
-        font-size: var(--fs-2xl);
-      }
-    }
-
-    &-sep {
-      font-family: var(--font-body);
-      font-size: var(--fs-md);
-      color: rgba(255, 255, 255, 0.5);
-      line-height: 1;
-    }
-
-    &-status {
-      font-family: var(--font-body);
-      font-size: var(--fs-xs);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-muted);
+    @include m.md {
+      font-size: var(--fs-3xl);
     }
   }
 
-  // ── CTA button below matchup — purple gradient replaces red ───────────
+  &__score-sep {
+    font-family: var(--font-body);
+    font-size: var(--fs-lg);
+    color: rgba(255, 255, 255, 0.3);
+    line-height: 1;
+  }
+
+  &__score-vs {
+    font-family: var(--font-heading);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.1em;
+  }
+
+  // ── CTA button ────────────────────────────────────────────────────────────
   &__cta {
     width: 100%;
-    padding: 0.4rem 0;
-    background: var(--gradient-glow);
-    color: var(--color-white);
+    padding: 0.5rem 0;
     font-family: var(--font-body);
     font-size: var(--fs-xs);
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    border: none;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-pill);
     cursor: pointer;
     text-align: center;
-    transition: filter var(--transition-fast);
+    transition: all var(--transition-fast);
+
+    // default — filled gradient (Stats)
+    background: var(--gradient-glow);
+    color: var(--color-white);
+    border: none;
+    box-shadow: 0 4px 16px rgba(138, 61, 255, 0.3);
 
     &:hover {
-      filter: brightness(1.15);
+      filter: brightness(1.2);
+      box-shadow: 0 6px 20px rgba(138, 61, 255, 0.5);
+    }
+
+    // outline variant (Tickets / upcoming)
+    &--outline {
+      background: transparent;
+      color: var(--color-highlight);
+      border: 1.5px solid var(--color-highlight);
+      box-shadow: none;
+
+      &:hover {
+        background: rgba(138, 61, 255, 0.15);
+        filter: none;
+        box-shadow: 0 0 16px rgba(138, 61, 255, 0.2);
+      }
     }
   }
 }

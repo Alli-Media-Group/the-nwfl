@@ -1,0 +1,155 @@
+@use '../../styles/mixins' as m;
+
+// ── Backdrop ───────────────────────────────────────────────────────────────────
+.sidebar__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: calc(var(--z-navbar) + 1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+// ── Sidebar panel ──────────────────────────────────────────────────────────────
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(360px, 85vw);
+  height: 100dvh;
+  z-index: calc(var(--z-navbar) + 2);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--transition-slow);
+  overflow: hidden;
+  border-left: 1px solid rgba(138, 61, 255, 0.3);
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  // ── Background image ────────────────────────────────────────────────────────
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: blur(2px) brightness(0.55);
+      transform: scale(1.04);
+    }
+
+    &-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(26, 0, 51, 0.82) 0%,
+        rgba(75, 31, 163, 0.75) 50%,
+        rgba(26, 0, 51, 0.9) 100%
+      );
+    }
+  }
+
+  // ── Close button ────────────────────────────────────────────────────────────
+  &__close {
+    position: relative;
+    z-index: 1;
+    align-self: flex-end;
+    margin: var(--sp-lg) var(--sp-lg) 0;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+
+    &:hover {
+      color: var(--color-white);
+      transform: rotate(90deg);
+    }
+  }
+
+  // ── Nav links ───────────────────────────────────────────────────────────────
+  &__nav {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: var(--sp-xl) var(--sp-2xl);
+
+    ul {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-xs);
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    padding: var(--sp-md) var(--sp-lg);
+    border-radius: var(--radius-md);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+
+    &:hover {
+      color: var(--color-white);
+      background: rgba(138, 61, 255, 0.15);
+      border-color: rgba(138, 61, 255, 0.3);
+    }
+
+    &.active {
+      color: var(--color-white);
+      background: rgba(138, 61, 255, 0.2);
+      border-color: var(--color-highlight);
+
+      .sidebar__link-icon {
+        color: var(--color-highlight);
+      }
+    }
+  }
+
+  &__link-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color var(--transition-fast);
+  }
+
+  &__link-label {
+    line-height: 1;
+  }
+
+  // ── Footer ──────────────────────────────────────────────────────────────────
+  &__footer {
+    position: relative;
+    z-index: 1;
+    padding: var(--sp-lg) var(--sp-2xl);
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}

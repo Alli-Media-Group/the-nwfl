@@ -168,9 +168,10 @@ Sections NOT in Figma must be built using this design language, not invented fro
 
 - Do not use raw hex values in component SCSS files
 - Do not use `px` for spacing — use `--sp-*` tokens
-- Do not use any font family other than Montserrat (headings) or Poppins (body)
+- Do not use any font family other than Placard Next Condensed / Montserrat (headings) or Poppins (body)
 - Do not set heading weight below 700
 - Do not invent new color tokens — extend `_variables.scss` if genuinely needed and document here
 - Do not build outside the defined page scope (Home, Stats, Analytics)
+- This platform is **exclusively for the Nigeria Women Football League (NWFL)**. Do not reference, design for, or accommodate any other sport or league.
 - Do not add inline styles to JSX
 - Do not use CSS-in-JS

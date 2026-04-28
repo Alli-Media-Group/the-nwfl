@@ -1,16 +1,16 @@
-import useEmblaCarousel from 'embla-carousel-react';
-import { useCallback } from 'react';
 import './MatchCarousel.scss';
 
-/**
- * MatchCarousel — card-style score ticker
- *
- * @param {Array}  matches  - [{ id, homeTeam, homeScore, awayTeam, awayScore,
- *                              status, matchday, homeLogoUrl?, awayLogoUrl? }]
- * @param {React.Ref} emblaRef      - forwarded from parent for prev/next control
- * @param {Function}  scrollPrev    - called by parent arrow button
- * @param {Function}  scrollNext    - called by parent arrow button
- */
+function TeamLogo({ logoUrl, name }) {
+  return (
+    <div className="match-carousel__team-logo">
+      {logoUrl
+        ? <img src={logoUrl} alt={name} />
+        : <span>{name.charAt(0)}</span>
+      }
+    </div>
+  );
+}
+
 export default function MatchCarousel({ matches = [], emblaRef }) {
   if (!matches.length) return null;
 
@@ -18,55 +18,53 @@ export default function MatchCarousel({ matches = [], emblaRef }) {
     <div className="match-carousel">
       <div className="match-carousel__viewport" ref={emblaRef}>
         <div className="match-carousel__container">
-          {matches.map((match) => (
-            <div className="match-carousel__slide" key={match.id}>
-              <div className="match-carousel__card">
+          {matches.map((match) => {
+            const isUpcoming = match.status === 'UPCOMING';
+            return (
+              <div className="match-carousel__slide" key={match.id}>
+                <div className="match-carousel__card">
 
-                {/* Teams + Score */}
-                <div className="match-carousel__matchup">
+                  {/* Status top-right */}
+                  <div className="match-carousel__header">
+                    <span className="match-carousel__matchday">{match.matchday}</span>
+                    <span className={`match-carousel__status match-carousel__status--${isUpcoming ? 'upcoming' : 'ft'}`}>
+                      {isUpcoming ? `${match.date} · ${match.time}` : 'Full Time'}
+                    </span>
+                  </div>
 
-                  {/* Home */}
-                  <div className="match-carousel__team">
-                    <div className="match-carousel__team-logo">
-                      {match.homeLogoUrl
-                        ? <img src={match.homeLogoUrl} alt={match.homeTeam} />
-                        : match.homeTeam.charAt(0)
+                  {/* Teams + Score */}
+                  <div className="match-carousel__matchup">
+                    <div className="match-carousel__team">
+                      <TeamLogo logoUrl={match.homeLogoUrl} name={match.homeTeam} />
+                    </div>
+
+                    <div className="match-carousel__score">
+                      {isUpcoming
+                        ? <span className="match-carousel__score-vs">VS</span>
+                        : (
+                          <div className="match-carousel__score-line">
+                            <span className="match-carousel__score-num">{match.homeScore}</span>
+                            <span className="match-carousel__score-sep">—</span>
+                            <span className="match-carousel__score-num">{match.awayScore}</span>
+                          </div>
+                        )
                       }
                     </div>
-                    <span className="match-carousel__team-name">{match.homeTeam}</span>
+
+                    <div className="match-carousel__team">
+                      <TeamLogo logoUrl={match.awayLogoUrl} name={match.awayTeam} />
+                    </div>
                   </div>
 
-                  {/* Score */}
-                  <div className="match-carousel__score">
-                    <div className="match-carousel__score-line">
-                      <span className="match-carousel__score-num">{match.homeScore}</span>
-                      <span className="match-carousel__score-sep">-</span>
-                      <span className="match-carousel__score-num">{match.awayScore}</span>
-                    </div>
-                    <span className="match-carousel__score-status">{match.status}</span>
-                  </div>
-
-                  {/* Away */}
-                  <div className="match-carousel__team">
-                    <div className="match-carousel__team-logo">
-                      {match.awayLogoUrl
-                        ? <img src={match.awayLogoUrl} alt={match.awayTeam} />
-                        : match.awayTeam.charAt(0)
-                      }
-                    </div>
-                    <span className="match-carousel__team-name">{match.awayTeam}</span>
-                  </div>
+                  {/* CTA */}
+                  <button className={`match-carousel__cta${isUpcoming ? ' match-carousel__cta--outline' : ''}`}>
+                    {isUpcoming ? 'Tickets' : 'Stats'}
+                  </button>
 
                 </div>
-
-                {/* CTA — "Match Centre" or "Match Preview" */}
-                <button className="match-carousel__cta">
-                  {match.status === 'FT' ? 'Match Centre' : 'Match Preview'}
-                </button>
-
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

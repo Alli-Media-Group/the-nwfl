@@ -19,11 +19,16 @@
 
   &__inner {
     @include m.container;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 100%;
-    gap: var(--sp-xl);
+
+    @include m.md {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--sp-xl);
+    }
   }
 
   // ── Logo ───────────────────────────────────────────────────────────────
@@ -33,21 +38,10 @@
     text-decoration: none;
     flex-shrink: 0;
 
-    &-wordmark {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: var(--fs-xl);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-white);
-      line-height: 1;
-
-      span {
-        background: var(--gradient-glow);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
+    &-img {
+      height: 40px;
+      width: auto;
+      display: block;
     }
   }
 
@@ -65,7 +59,7 @@
   }
 
   &__link {
-    font-family: var(--font-body);
+    font-family: var(--font-heading);
     font-size: var(--fs-sm);
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -124,64 +118,27 @@
     &:hover { color: var(--color-highlight); }
   }
 
-  // ── Mobile Hamburger ───────────────────────────────────────────────────
-  &__hamburger {
+  // ── Menu button (opens sidebar) — visible on all breakpoints ─────────
+  &__menu-btn {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 5px;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    color: var(--color-white);
     background: none;
     border: none;
-    padding: 4px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background var(--transition-fast);
 
-    @include m.md { display: none; }
-
-    span {
-      display: block;
-      height: 2px;
-      border-radius: 2px;
-      background: var(--color-white);
-      transition: transform var(--transition-base), opacity var(--transition-base);
+    &:hover {
+      color: var(--color-highlight);
+      background: rgba(138, 61, 255, 0.1);
     }
-
-    &.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    &.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    &.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  }
-
-  // ── Mobile Menu ────────────────────────────────────────────────────────
-  &__mobile {
-    position: fixed;
-    top: var(--navbar-height);
-    left: 0;
-    right: 0;
-    background: #000000;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: var(--sp-lg) var(--sp-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-lg);
-    transform: translateY(-110%);
-    opacity: 0;
-    transition: transform var(--transition-base), opacity var(--transition-base);
-    pointer-events: none;
-
-    @include m.md { display: none; }
 
     &.open {
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    li { list-style: none; }
-
-    .navbar__link {
-      font-size: var(--fs-md);
-      &::after { display: none; }
+      color: var(--color-highlight);
     }
   }
 }

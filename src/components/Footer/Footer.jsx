@@ -1,6 +1,6 @@
 import { FaFacebookF, FaXTwitter, FaInstagram, FaYoutube } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-import logo from '/logo.svg';
+import logo from '/logo.webp';
 import './Footer.scss';
 
 const NAV_LINKS = [

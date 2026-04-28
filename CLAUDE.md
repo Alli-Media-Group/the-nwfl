@@ -2,9 +2,11 @@
 
 ## Project Overview
 
-Frontend-only sports league platform (Nigeria Women Football League).
+Frontend-only sports league platform exclusively for the **Nigeria Women Football League (NWFL)**.
 Three pages: Landing (`/`), Stats (`/stats`), Analytics (`/analytics`).
 Stack: React 19, Vite 8, SCSS (sass), React Router v6.
+
+**Scope lock:** This is NWFL only. Do not design, reference, or accommodate any other sport, league, or competition.
 
 ## Must-Read Before Any Design Work
 

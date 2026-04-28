@@ -1,15 +1,12 @@
 import Hero from "../../components/Hero/Hero";
 import NewsSection from "../../components/NewsSection/NewsSection";
 import RisingStars from "../../components/RisingStars/RisingStars";
-import GrowingNetwork from "../../components/GrowingNetwork/GrowingNetwork";
+import LeagueSection from "../../components/LeagueSection/LeagueSection";
 import { mockMatches } from "../../data/mockMatches";
 import { mockFeaturedArticle, mockArticles } from "../../data/mockNews";
 import { mockPlayers } from "../../data/mockPlayers";
-import { networkCards } from "../../data/mockNetwork";
 import heroBg from "../../data/images/hero.webp";
 import stadiumBg from "../../data/images/stadium.webp";
-import peopleBg from "../../data/images/people.webp";
-import Newsletter from "../../components/NewsLetter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 
 export default function Home() {
@@ -30,9 +27,7 @@ export default function Home() {
 
       <RisingStars players={mockPlayers} />
 
-      <GrowingNetwork bgImage={peopleBg} cards={networkCards} />
-
-      <Newsletter />
+      <LeagueSection matches={mockMatches} />
 
       <Footer />
     </>

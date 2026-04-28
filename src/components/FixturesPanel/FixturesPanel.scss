@@ -1,0 +1,198 @@
+@use '../../styles/mixins' as m;
+
+.fixtures-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-lg);
+  height: 100%;
+
+  &__title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-white);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    padding-right: var(--sp-xs);
+
+    // subtle scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+  }
+
+  // ── Match card ────────────────────────────────────────────────────────────
+  &__card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--sp-md) var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+    transition: border-color var(--transition-fast);
+
+    &:hover {
+      border-color: var(--color-highlight);
+    }
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__matchday {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__badge {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+
+    &--final {
+      color: var(--color-muted);
+    }
+
+    &--upcoming {
+      color: var(--color-highlight);
+      background: rgba(138, 61, 255, 0.15);
+    }
+  }
+
+  // ── Teams row ─────────────────────────────────────────────────────────────
+  &__matchup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xs);
+    flex: 1;
+    min-width: 0;
+
+    &--away {
+      align-items: center;
+    }
+  }
+
+  &__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--color-white);
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__team-name {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    color: var(--color-white);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+
+  // ── Score / time center ───────────────────────────────────────────────────
+  &__score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  &__scoreline {
+    font-family: var(--font-heading);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  &__time {
+    font-family: var(--font-heading);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  &__status {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  // ── CTA button ────────────────────────────────────────────────────────────
+  &__cta {
+    display: block;
+    width: 100%;
+    padding: var(--sp-md);
+    background: var(--gradient-glow);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    transition: filter var(--transition-fast);
+    margin-top: var(--sp-xs);
+
+    &:hover {
+      filter: brightness(1.15);
+    }
+  }
+}

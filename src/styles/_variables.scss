@@ -1,3 +1,12 @@
+// ─── Custom Fonts ─────────────────────────────────────────────────────────────
+@font-face {
+  font-family: 'Placard Next Condensed';
+  src: url('/fonts/PlacCond_0.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 // ─── Color Palette ───────────────────────────────────────────────────────────
 :root {
   // Purples
@@ -26,8 +35,8 @@
   --color-warning:      #f59e0b;
 
   // ─── Typography ──────────────────────────────────────────────────────────
-  --font-heading:       'Montserrat', sans-serif;   /* Bold (700) for all headings */
-  --font-body:          'Poppins', sans-serif;       /* Regular–SemiBold for body copy */
+  --font-heading:       'Placard Next Condensed', 'Montserrat', sans-serif;
+  --font-body:          'Poppins', sans-serif;
 
   --fs-xs:    0.75rem;
   --fs-sm:    0.875rem;

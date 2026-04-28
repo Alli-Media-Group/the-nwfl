@@ -55,13 +55,14 @@
 
   &__track {
     display: flex;
-    gap: var(--sp-xl);
     align-items: flex-start;
+    margin-left: calc(var(--sp-xl) * -1);
   }
 
   // ── Player card — no card bg, just image + name below ─────────────────────
   &__card {
     flex: 0 0 auto;
+    padding-left: var(--sp-xl);
     width: clamp(260px, 28vw, 380px);
     display: flex;
     flex-direction: column;
