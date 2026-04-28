@@ -94,7 +94,7 @@
     justify-content: center;
   }
 
-  // ── Score bar wrapper — sits at the very bottom of the hero ──────────────
+  // ── Score bar wrapper ─────────────────────────────────────────────────────
   &__scores-wrapper {
     position: relative;
     z-index: var(--z-sticky);
@@ -102,32 +102,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: var(--sp-xl);
+    padding-bottom: var(--sp-lg);
+    padding-inline: var(--sp-md);
+
+    @include m.md {
+      padding-bottom: var(--sp-xl);
+      padding-inline: var(--sp-xl);
+    }
   }
 
   // ── Score carousel container ──────────────────────────────────────────────
   &__scores {
-    width: 80%;
-    padding-block: var(--sp-lg);
-    padding-inline: var(--sp-xl);
+    width: 100%;                  // full width on mobile
+    padding-block: var(--sp-md);
+    padding-inline: var(--sp-sm);
     display: flex;
     align-items: center;
-    gap: var(--sp-md);
+    gap: var(--sp-sm);
     background: #2c2c2c;
     border-radius: var(--radius-sm);
 
     @include m.md {
-      padding-inline: var(--sp-2xl);
+      width: 90%;
+      padding-block: var(--sp-lg);
+      padding-inline: var(--sp-lg);
+      gap: var(--sp-md);
     }
   }
 
   // ── Prev / Next arrows ────────────────────────────────────────────────────
   &__arrow {
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
     background: rgba(0, 0, 0, 0.4);
     color: var(--color-white);
     display: flex;
@@ -136,14 +145,25 @@
     cursor: pointer;
     transition: border-color var(--transition-fast), background var(--transition-fast);
 
+    @include m.md {
+      width: 40px;
+      height: 40px;
+      border-width: 2px;
+    }
+
     &:hover {
       border-color: var(--color-highlight);
       background: rgba(138, 61, 255, 0.2);
     }
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 12px;
+      height: 12px;
+
+      @include m.md {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 

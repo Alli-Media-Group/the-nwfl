@@ -1,13 +1,16 @@
-import "./NewsLetter.scss";
+import './NewsLetter.scss';
 
 const Newsletter = () => {
   return (
-    <div className="news__letter">
-      <h1>Sporty Stuff Only</h1>
-      <p>
-        Subscribe to our newsletter: <span>yourname@gmail.com</span>
+    <section className="newsletter" aria-label="Newsletter">
+      <h2 className="newsletter__heading">Sporty stuff only</h2>
+      <p className="newsletter__sub">
+        Subscribe to our newsletter:&nbsp;
+        <a href="mailto:yourname@email.com" className="newsletter__email">
+          yourname@email.com
+        </a>
       </p>
-    </div>
+    </section>
   );
 };
 

@@ -1,24 +1,58 @@
 @use "../../styles/mixins" as m;
 
-.news__letter {
-  background: var(--gradient-primary);
+.newsletter {
+  background: var(--gradient-glow);
   isolation: isolate;
+  padding: var(--sp-2xl) var(--sp-lg);
   @include m.flex-center;
   flex-direction: column;
-  gap: var(--sp-md);
-  padding: var(--sp-md) var(--sp-sm);
+  gap: var(--sp-sm);
+  text-align: center;
 
-  h1 {
-    font-family: var(--font-heading);
-    font-size: var(--fs-xl);
+  @include m.md {
+    padding: var(--sp-2xl) var(--sp-3xl);
   }
 
-  p {
-    font-family: var(--font-body);
-    font-size: var(--fs-base);
+  &__heading {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--fs-2xl);
+    color: var(--color-white);
+    letter-spacing: 0.02em;
 
-    span {
-      font-weight: 200 !important;
+    @include m.md {
+      font-size: var(--fs-3xl);
+    }
+  }
+
+  &__sub {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--fs-base);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+
+    @include m.md {
+      font-size: var(--fs-md);
+    }
+  }
+
+  &__email {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--fs-base);
+    color: var(--color-white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.9;
+    transition: opacity var(--transition-fast);
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

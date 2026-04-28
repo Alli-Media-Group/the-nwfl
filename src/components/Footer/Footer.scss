@@ -1,34 +1,103 @@
 @use "../../styles/mixins" as m;
 
 .footer {
+  background: #000000;
+  isolation: isolate;
   width: 100%;
-  @include m.flex-center;
-  flex-direction: column;
-  padding: var(--sp-md);
   font-family: var(--font-body);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 
-  &__nav {
-    width: 100%;
-    @include m.flex-between;
-    padding: var(--sp-md) var(--sp-3xl);
+  // ── Top row: logo + nav links ────────────────────────────────────────────
+  &__top {
+    @include m.container;
+    padding-block: var(--sp-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
 
-    .logo {
-      height: 64px;
-      width: 64px;
+    @include m.md {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: var(--sp-xl);
+    }
+  }
 
-      img {
-        height: 100%;
-        width: 100%;
-        transition: var(--transition-base);
+  &__logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
 
-        &:hover {
-          transform: scale(1.2);
-        }
+    img {
+      height: 52px;
+      width: auto;
+      display: block;
+      transition: transform var(--transition-base);
+
+      &:hover {
+        transform: scale(1.08);
       }
     }
   }
 
-  &__text {
+  &__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-lg) var(--sp-xl);
+    list-style: none;
+  }
+
+  &__nav-link {
+    font-family: var(--font-body);
     font-size: var(--fs-sm);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-white);
+    }
+  }
+
+  // ── Social icons row ─────────────────────────────────────────────────────
+  &__social {
+    @include m.container;
+    padding-bottom: var(--sp-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-xl);
+  }
+
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+
+    &:hover {
+      color: var(--color-white);
+      transform: translateY(-2px);
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  // ── Copyright bar ────────────────────────────────────────────────────────
+  &__copy {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-block: var(--sp-md);
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: rgba(255, 255, 255, 0.35);
+    font-family: var(--font-body);
+    font-weight: 400;
   }
 }

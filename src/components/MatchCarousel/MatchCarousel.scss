@@ -15,20 +15,30 @@
     align-items: stretch;
   }
 
-  // ── Individual match card — matches design: dark grey card ─────────────
+  // ── Individual match card ─────────────────────────────────────────────
   &__slide {
     flex: 0 0 auto;
-    width: clamp(240px, 28vw, 300px);
+    // mobile: one card fills ~85% of the container so it's fully readable
+    // desktop: fixed comfortable width
+    width: clamp(200px, 80vw, 260px);
+
+    @include m.md {
+      width: clamp(240px, 28vw, 300px);
+    }
   }
 
   &__card {
     background: #565656;
     border-radius: var(--radius-sm);
-    padding: var(--sp-md) var(--sp-lg);
+    padding: var(--sp-sm) var(--sp-md);
     display: flex;
     flex-direction: column;
     gap: var(--sp-sm);
     border: 1px solid rgba(255, 255, 255, 0.06);
+
+    @include m.md {
+      padding: var(--sp-md) var(--sp-lg);
+    }
   }
 
   // ── Teams + score row ──────────────────────────────────────────────────
@@ -48,21 +58,25 @@
     min-width: 0;
 
     &-logo {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: #d5d5d5;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-heading);
-      font-size: var(--fs-sm);
+      font-size: var(--fs-xs);
       font-weight: 700;
-      color: var(--color-white);
+      color: #333;
       overflow: hidden;
       flex-shrink: 0;
-      width: 64px;
-      height: 64px;
+
+      @include m.md {
+        width: 56px;
+        height: 56px;
+        font-size: var(--fs-sm);
+      }
 
       img {
         width: 100%;
@@ -101,11 +115,15 @@
     &-num {
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: var(--fs-2xl);
+      font-size: var(--fs-xl);
       color: var(--color-white);
       line-height: 1;
-      min-width: 1.4ch;
+      min-width: 1.2ch;
       text-align: center;
+
+      @include m.md {
+        font-size: var(--fs-2xl);
+      }
     }
 
     &-sep {
