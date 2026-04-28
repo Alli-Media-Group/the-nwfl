@@ -1,7 +1,7 @@
-import featured from './images/news/_Z623987.jpg';
-import article1 from './images/news/_Z623834.jpg';
-import article2 from './images/news/_Z624022.jpg';
-import article3 from './images/news/_Z624064.jpg';
+import featured from './images/news/_Z623987.webp';
+import article1 from './images/news/_Z623834.webp';
+import article2 from './images/news/_Z624022.webp';
+import article3 from './images/news/_Z624064.webp';
 
 export const mockFeaturedArticle = {
   id: 1,

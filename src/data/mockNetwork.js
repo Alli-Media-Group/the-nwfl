@@ -1,6 +1,6 @@
-import startSelling from './images/network/start-selling.png';
-import createMagic from './images/network/create-magic.png';
-import behindTheScenes from './images/network/behind-the-screens.png';
+import startSelling from './images/network/start-selling.webp';
+import createMagic from './images/network/create-magic.webp';
+import behindTheScenes from './images/network/behind-the-screens.webp';
 
 export const networkCards = [
   {

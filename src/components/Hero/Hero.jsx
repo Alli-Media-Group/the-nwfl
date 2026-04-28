@@ -65,7 +65,12 @@ export default function Hero({
     <section className="hero" aria-label="Hero">
       {/* Background */}
       <div className="hero__bg">
-        <img src={bgImage} alt="NWFL match action" />
+        <img
+          src={bgImage}
+          alt="NWFL match action"
+          fetchpriority="high"
+          decoding="async"
+        />
       </div>
       <div className="hero__overlay" aria-hidden="true" />
 

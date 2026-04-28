@@ -6,9 +6,9 @@ import { mockMatches } from "../../data/mockMatches";
 import { mockFeaturedArticle, mockArticles } from "../../data/mockNews";
 import { mockPlayers } from "../../data/mockPlayers";
 import { networkCards } from "../../data/mockNetwork";
-import heroBg from "../../data/images/hero.png";
-import stadiumBg from "../../data/images/stadium.png";
-import peopleBg from "../../data/images/people.jpg";
+import heroBg from "../../data/images/hero.webp";
+import stadiumBg from "../../data/images/stadium.webp";
+import peopleBg from "../../data/images/people.webp";
 import Newsletter from "../../components/NewsLetter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 
