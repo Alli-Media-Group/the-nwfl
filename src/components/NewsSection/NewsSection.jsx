@@ -99,7 +99,7 @@ export default function NewsSection({
                 <span>{brandName}</span>
               </h3>
 
-              <Link to={`/news/${featured.slug}`} className="news-section__featured-cta">
+              <Link to="/news-log" className="news-section__featured-cta">
                 See News Log <ArrowRightCircle />
               </Link>
 

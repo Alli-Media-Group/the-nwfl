@@ -1,17 +1,18 @@
-// Logo paths — placeholder European club logos until real NWFL logos are available
+const BASE = '/team-logos/thenwfl_2425_teams';
+
 const L = {
-  rivers:      '/team-logos/128x128/roma.football-logos.cc.png',
-  edo:         '/team-logos/128x128/lyon.football-logos.cc.png',
-  bayelsa:     '/team-logos/128x128/rangers.football-logos.cc.png',
-  delta:       '/team-logos/128x128/feyenoord.football-logos.cc.png',
-  nasarawa:    '/team-logos/128x128/celtic.football-logos.cc.png',
-  confluence:  '/team-logos/128x128/fc-porto.football-logos.cc.png',
-  naija:       '/team-logos/128x128/brann.football-logos.cc.png',
-  royal:       '/team-logos/128x128/salzburg.football-logos.cc.png',
-  osun:        '/team-logos/128x128/genk.football-logos.cc.png',
-  fcrobo:      '/team-logos/128x128/lille.football-logos.cc.png',
-  adamawa:     '/team-logos/128x128/freiburg.football-logos.cc.png',
-  abia:        '/team-logos/128x128/paok.football-logos.cc.png',
+  rivers:     `${BASE}/rivers-angels.png`,
+  edo:        `${BASE}/edo-queens.png`,
+  bayelsa:    `${BASE}/bayelsa-queens.png`,
+  delta:      `${BASE}/delta-queens.png`,
+  nasarawa:   `${BASE}/nasarawa-amazons.png`,
+  confluence: `${BASE}/confluence-queens.png`,
+  naija:      `${BASE}/naija-ratels.png`,
+  fcrobo:     `${BASE}/fc-robo-queens.png`,
+  osun:       `${BASE}/osun-babes.png`,
+  adamawa:    `${BASE}/adamawa-queens.png`,
+  abia:       `${BASE}/abia-angels.png`,
+  sunshine:   `${BASE}/sunshine-queens.png`,
 };
 
 export const mockMatches = [
@@ -42,13 +43,13 @@ export const mockMatches = [
   {
     id: 5,
     homeTeam: 'Osun Babes FC',        homeScore: null, homeLogoUrl: L.osun,
-    awayTeam: 'Royal Queens FC',      awayScore: null, awayLogoUrl: L.royal,
+    awayTeam: 'Adamawa Queens FC',    awayScore: null, awayLogoUrl: L.adamawa,
     status: 'UPCOMING', matchday: 'MD 15', date: 'SAT 24 JUNE', time: '14:00',
   },
   {
     id: 6,
-    homeTeam: 'Adamawa Queens FC',    homeScore: 0, homeLogoUrl: L.adamawa,
-    awayTeam: 'Abia Angels FC',       awayScore: 3, awayLogoUrl: L.abia,
+    homeTeam: 'Abia Angels FC',       homeScore: 0, homeLogoUrl: L.abia,
+    awayTeam: 'Sunshine Queens FC',   awayScore: 1, awayLogoUrl: L.sunshine,
     status: 'FT', matchday: 'MD 14',  date: '2023-05-10',
   },
 ];
