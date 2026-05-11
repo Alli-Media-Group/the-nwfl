@@ -21,7 +21,6 @@ export default function App() {
           <Route path="teams/:slug"  element={<TeamDetail />} />
           <Route path="about"        element={<ComingSoon title="About" />} />
           <Route path="news"         element={<ComingSoon title="News" />} />
-          <Route path="news-log"     element={<NotFound />} />
           <Route path="match-center" element={<ComingSoon title="Match Center" />} />
           <Route path="players"      element={<ComingSoon title="Players" />} />
           <Route path="media"        element={<ComingSoon title="Media Channel" />} />

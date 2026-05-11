@@ -89,20 +89,24 @@
   &__matchup {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: var(--sp-sm);
   }
 
   &__team {
-    flex: 1;
     display: flex;
     justify-content: center;
+    flex-shrink: 0;
   }
 
   // ── Logo — rounded square app-icon style ──────────────────────────────────
   &__team-logo {
     width: 56px;
     height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    max-width: 56px;
+    max-height: 56px;
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -116,16 +120,23 @@
     overflow: hidden;
     flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
 
     @include m.md {
       width: 64px;
       height: 64px;
+      min-width: 64px;
+      min-height: 64px;
+      max-width: 64px;
+      max-height: 64px;
       border-radius: 16px;
     }
 
     img {
-      width: 80%;
-      height: 80%;
+      position: absolute;
+      inset: 6px;
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
       object-fit: contain;
     }
   }

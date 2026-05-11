@@ -1,24 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { mockTeams } from '../../data/mockTeams';
-import { groupA, groupB } from '../../data/mockStandings';
+import { fetchTeams, fetchStandings } from '../../lib/api';
 import Footer from '../../components/Footer/Footer';
 import './Teams.scss';
 
 const FILTERS = ['All', 'Group A', 'Group B'];
 
-// rows to highlight for qualification / relegation
 const QUALIFY_COUNT  = { A: 3, B: 3 };
 const RELEGATE_COUNT = { A: 3, B: 4 };
 
 function rowStatus(index, total, group) {
-  if (index < QUALIFY_COUNT[group])                    return 'qualify';
-  if (index >= total - RELEGATE_COUNT[group])          return 'relegate';
+  if (index < QUALIFY_COUNT[group])           return 'qualify';
+  if (index >= total - RELEGATE_COUNT[group]) return 'relegate';
   return 'safe';
 }
 
-function MiniStandings({ group, highlightId }) {
-  const rows = group === 'A' ? groupA : groupB;
+function MiniStandings({ group, highlightId, groupA, groupB }) {
+  const rows  = group === 'A' ? groupA : groupB;
   const total = rows.length;
 
   return (
@@ -75,7 +73,7 @@ function MiniStandings({ group, highlightId }) {
   );
 }
 
-function TeamPanel({ team, onClose }) {
+function TeamPanel({ team, onClose, groupA, groupB }) {
   if (!team) return null;
   return (
     <>
@@ -87,7 +85,6 @@ function TeamPanel({ team, onClose }) {
           </svg>
         </button>
 
-        {/* Header */}
         <div className="team-panel__header">
           <div className="team-panel__logo">
             <img src={team.logoUrl} alt={team.name} />
@@ -99,10 +96,8 @@ function TeamPanel({ team, onClose }) {
           </div>
         </div>
 
-        {/* Mini standings table */}
-        <MiniStandings group={team.group} highlightId={team.id} />
+        <MiniStandings group={team.group} highlightId={team.id} groupA={groupA} groupB={groupB} />
 
-        {/* Details */}
         <div className="team-panel__details">
           {team.manager && team.manager !== 'TBA' && (
             <div className="team-panel__detail-row">
@@ -124,7 +119,6 @@ function TeamPanel({ team, onClose }) {
           )}
         </div>
 
-        {/* Honours */}
         {team.honours.length > 0 && (
           <div className="team-panel__honours">
             {team.honours.map((h, i) => (
@@ -133,10 +127,8 @@ function TeamPanel({ team, onClose }) {
           </div>
         )}
 
-        {/* Bio */}
         {team.bio && <p className="team-panel__bio">{team.bio}</p>}
 
-        {/* CTA */}
         <Link to="/analytics" className="btn btn--primary team-panel__cta">
           View Analytics
         </Link>
@@ -163,10 +155,20 @@ function TeamCard({ team, isSelected, onClick }) {
 }
 
 export default function Teams() {
+  const [teams, setTeams]         = useState([]);
+  const [groupA, setGroupA]       = useState([]);
+  const [groupB, setGroupB]       = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedTeam, setSelectedTeam] = useState(null);
 
-  const filtered = mockTeams.filter(t => {
+  useEffect(() => {
+    fetchTeams().then(setTeams).catch(() => {});
+    fetchStandings()
+      .then(({ groupA, groupB }) => { setGroupA(groupA); setGroupB(groupB); })
+      .catch(() => {});
+  }, []);
+
+  const filtered = teams.filter(t => {
     if (activeFilter === 'All') return true;
     return `Group ${t.group}` === activeFilter;
   });
@@ -178,13 +180,11 @@ export default function Teams() {
   return (
     <>
       <div className="teams-page">
-        {/* Hero strip */}
         <div className="teams-page__hero">
           <p className="teams-page__season">NWFL Premiership · 2024/25 Season</p>
           <h1 className="teams-page__title">The Teams</h1>
         </div>
 
-        {/* Filter tabs */}
         <div className="teams-page__filters">
           {FILTERS.map(f => (
             <button
@@ -197,7 +197,6 @@ export default function Teams() {
           ))}
         </div>
 
-        {/* Grid */}
         <div className="teams-page__grid">
           {filtered.map(team => (
             <TeamCard
@@ -210,7 +209,12 @@ export default function Teams() {
         </div>
       </div>
 
-      <TeamPanel team={selectedTeam} onClose={() => setSelectedTeam(null)} />
+      <TeamPanel
+        team={selectedTeam}
+        onClose={() => setSelectedTeam(null)}
+        groupA={groupA}
+        groupB={groupB}
+      />
 
       <Footer />
     </>

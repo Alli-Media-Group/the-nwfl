@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { groupA, groupB } from '../../data/mockStandings';
+import { useState, useEffect } from 'react';
+import { fetchStandings } from '../../lib/api';
 import './StandingsTable.scss';
 
 const QUALIFY_COUNT = 3;
@@ -74,6 +74,14 @@ function Table({ data, relegateCount }) {
 
 export default function StandingsTable() {
   const [activeGroup, setActiveGroup] = useState('A');
+  const [groupA, setGroupA] = useState([]);
+  const [groupB, setGroupB] = useState([]);
+
+  useEffect(() => {
+    fetchStandings()
+      .then(({ groupA, groupB }) => { setGroupA(groupA); setGroupB(groupB); })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="standings-table">

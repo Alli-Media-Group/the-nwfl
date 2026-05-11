@@ -151,7 +151,23 @@ Use `.badge` + modifier:
 
 ---
 
-## 7. Figma Reference Notes
+## 7. Charts (Recharts)
+
+Analytics page uses **Recharts** for all data visualisations. Established patterns:
+
+- All charts use `<ResponsiveContainer width="100%" height={...}>` — no fixed pixel widths
+- Layout: `"vertical"` bar charts with team names on the Y-axis (`dataKey="team_name"` or `"name"`)
+- Y-axis width: `135` to accommodate full team names; font `Poppins 12px`, color `#f0e6ff`
+- X-axis: tick color `#a78fbf`, no tick lines, stroke `rgba(138,61,255,0.2)`
+- Grid: `strokeDasharray="3 3"`, stroke `rgba(138,61,255,0.12)`, `horizontal={false}`
+- Tooltip: custom `<ChartTooltip>` component — dark glass card, `--color-off-white` label, colored values
+- Zero-value bars: use a custom `shape` prop that renders a muted 16×3px dash instead of an empty outlined rect (Recharts default looks broken for zero)
+- Group colouring: Group A → `#8A3DFF`, Group B → `#6A2BD9`
+- Positive/negative bars (e.g. GD): positive → `#8A3DFF`, negative → `#ef4444`
+- Scored vs conceded: scored → `#22c55e`, conceded → `#ef4444`
+- Chart wrap card: `background: var(--gradient-card)`, `border: 1px solid var(--color-border)`, `border-radius: var(--radius-md)`, padding `var(--sp-xl)`
+
+## 8. Figma Reference Notes
 
 The Figma design covers the landing page layout. Key sections observed:
 
@@ -164,11 +180,11 @@ Sections NOT in Figma must be built using this design language, not invented fro
 
 ---
 
-## 8. What Not To Do
+## 9. What Not To Do
 
 - Do not use raw hex values in component SCSS files
 - Do not use `px` for spacing — use `--sp-*` tokens
-- Do not use any font family other than Placard Next Condensed / Montserrat (headings) or Poppins (body)
+- Do not use any font family other than Montserrat (headings) or Poppins (body)
 - Do not set heading weight below 700
 - Do not invent new color tokens — extend `_variables.scss` if genuinely needed and document here
 - Do not build outside the defined page scope (Home, Stats, Analytics)

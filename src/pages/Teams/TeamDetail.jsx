@@ -1,11 +1,28 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { mockTeams } from '../../data/mockTeams';
+import { fetchTeams } from '../../lib/api';
 import Footer from '../../components/Footer/Footer';
 import './TeamDetail.scss';
 
 export default function TeamDetail() {
   const { slug } = useParams();
-  const team = mockTeams.find(t => t.slug === slug);
+  const [team, setTeam] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTeams()
+      .then(teams => setTeam(teams.find(t => t.slug === slug) ?? null))
+      .catch(() => setTeam(null))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="team-detail team-detail--not-found">
+        <p>Loading…</p>
+      </div>
+    );
+  }
 
   if (!team) {
     return (
