@@ -1,8 +1,9 @@
 const BASE = '/team-logos/thenwfl_2425_teams'
+const API_BASE = import.meta.env.VITE_API_URL || ''
 
 // ── Core fetch ────────────────────────────────────────────────────────────────
 async function get(path) {
-  const res = await fetch(path)
+  const res = await fetch(`${API_BASE}${path}`)
   if (!res.ok) throw new Error(`API ${path} → ${res.status}`)
   const data = await res.json()
   return Array.isArray(data) ? data : (data.results ?? data)
