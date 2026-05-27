@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchStandings } from '../../lib/api';
+import SkeletonTableRow from '../SkeletonTableRow/SkeletonTableRow';
 import './StandingsTable.scss';
 
 const QUALIFY_COUNT = 3;
@@ -16,7 +17,7 @@ function TeamLogo({ logoUrl, name }) {
   return (
     <div className="standings-table__logo">
       {logoUrl
-        ? <img src={logoUrl} alt={name} />
+        ? <img src={logoUrl} alt={name} loading="lazy" />
         : <span>{name.charAt(0)}</span>
       }
     </div>
@@ -72,15 +73,49 @@ function Table({ data, relegateCount }) {
   );
 }
 
+function SkeletonTable() {
+  return (
+    <div className="standings-table__wrapper">
+      <table className="standings-table__table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th className="standings-table__col-team">Team</th>
+            <th>MP</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>GD</th>
+            <th>PTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <SkeletonTableRow key={i} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function StandingsTable() {
   const [activeGroup, setActiveGroup] = useState('A');
   const [groupA, setGroupA] = useState([]);
   const [groupB, setGroupB] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetchStandings()
-      .then(({ groupA, groupB }) => { setGroupA(groupA); setGroupB(groupB); })
-      .catch(() => {});
+      .then(({ groupA, groupB }) => {
+        setGroupA(groupA);
+        setGroupB(groupB);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -103,10 +138,13 @@ export default function StandingsTable() {
         </div>
       </div>
 
-      {activeGroup === 'A'
-        ? <Table data={groupA} relegateCount={RELEGATE_A} />
-        : <Table data={groupB} relegateCount={RELEGATE_B} />
-      }
+      {loading ? (
+        <SkeletonTable />
+      ) : activeGroup === 'A' ? (
+        <Table data={groupA} relegateCount={RELEGATE_A} />
+      ) : (
+        <Table data={groupB} relegateCount={RELEGATE_B} />
+      )}
 
       <div className="standings-table__legend">
         <span className="standings-table__legend-item standings-table__legend-item--qualify">

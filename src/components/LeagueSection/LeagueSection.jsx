@@ -2,12 +2,12 @@ import FixturesPanel from '../FixturesPanel/FixturesPanel';
 import StandingsTable from '../StandingsTable/StandingsTable';
 import './LeagueSection.scss';
 
-export default function LeagueSection({ matches = [] }) {
+export default function LeagueSection({ matches = [], matchesLoading = false }) {
   return (
     <section className="league-section" aria-label="Fixtures and Standings">
       <div className="league-section__inner">
         <div className="league-section__fixtures">
-          <FixturesPanel matches={matches} />
+          <FixturesPanel matches={matches} loading={matchesLoading} />
         </div>
         <div className="league-section__standings">
           <StandingsTable />

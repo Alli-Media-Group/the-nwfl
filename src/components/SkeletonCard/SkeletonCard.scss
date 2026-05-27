@@ -1,0 +1,119 @@
+@use "../../styles/mixins" as m;
+
+// Replicates MatchCarousel card dimensions exactly
+.skeleton-card {
+  background: linear-gradient(180deg, rgba(20, 10, 40, 0.92) 0%, rgba(10, 5, 25, 0.95) 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  border: 1px solid rgba(138, 61, 255, 0.18);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  height: 100%;
+  min-height: 220px;
+
+  // ── Header ────────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+    padding-bottom: var(--sp-sm);
+    border-bottom: 1px solid rgba(138, 61, 255, 0.1);
+  }
+
+  &__matchday {
+    width: 48px;
+  }
+
+  &__date {
+    width: 80px;
+  }
+
+  // ── Matchup row ───────────────────────────────────────────────────────────
+  &__matchup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+    flex: 1;
+    min-height: 0;
+  }
+
+  // ── Team column ───────────────────────────────────────────────────────────
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__logo {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+
+    @include m.md {
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      min-height: 60px;
+    }
+  }
+
+  &__team-name {
+    width: 80%;
+    max-width: 120px;
+  }
+
+  &__team-role {
+    width: 36px;
+  }
+
+  // ── Center ────────────────────────────────────────────────────────────────
+  &__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 56px;
+  }
+
+  &__vs {
+    width: 28px;
+  }
+
+  &__kickoff {
+    width: 36px;
+  }
+
+  // ── Footer ────────────────────────────────────────────────────────────────
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding-top: var(--sp-sm);
+    border-top: 1px solid rgba(138, 61, 255, 0.1);
+  }
+
+  &__venue {
+    width: 70%;
+    max-width: 180px;
+  }
+
+  &__status {
+    width: 64px;
+    height: 20px;
+  }
+}

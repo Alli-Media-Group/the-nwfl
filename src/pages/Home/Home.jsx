@@ -12,9 +12,18 @@ import Footer from "../../components/Footer/Footer";
 
 export default function Home() {
   const [matches, setMatches] = useState([]);
+  const [matchesLoading, setMatchesLoading] = useState(true);
 
   useEffect(() => {
-    fetchMatches().then(setMatches).catch(() => {});
+    setMatchesLoading(true);
+    fetchMatches()
+      .then((data) => {
+        setMatches(data);
+        setMatchesLoading(false);
+      })
+      .catch(() => {
+        setMatchesLoading(false);
+      });
   }, []);
 
   return (
@@ -24,6 +33,7 @@ export default function Home() {
         titleHtml="We are recruiting"
         subtitle="Join our large network of contributors"
         matches={matches}
+        matchesLoading={matchesLoading}
       />
 
       <NewsSection
@@ -34,7 +44,7 @@ export default function Home() {
 
       <RisingStars players={mockPlayers} />
 
-      <LeagueSection matches={matches} />
+      <LeagueSection matches={matches} matchesLoading={matchesLoading} />
 
       <Footer />
     </>

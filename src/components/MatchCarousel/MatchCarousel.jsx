@@ -4,7 +4,7 @@ function TeamLogo({ logoUrl, name }) {
   return (
     <div className="match-carousel__team-logo">
       {logoUrl
-        ? <img src={logoUrl} alt={name} />
+        ? <img src={logoUrl} alt={name} loading="lazy" />
         : <span>{name.charAt(0)}</span>
       }
     </div>
@@ -24,42 +24,60 @@ export default function MatchCarousel({ matches = [], emblaRef }) {
               <div className="match-carousel__slide" key={match.id}>
                 <div className="match-carousel__card">
 
-                  {/* Status top-right */}
+                  {/* Top meta: matchday + date */}
                   <div className="match-carousel__header">
                     <span className="match-carousel__matchday">{match.matchday}</span>
-                    <span className={`match-carousel__status match-carousel__status--${isUpcoming ? 'upcoming' : 'ft'}`}>
-                      {isUpcoming ? `${match.date} · ${match.time}` : 'Full Time'}
+                    <span className="match-carousel__date">
+                      {match.date ? new Date(match.date).toLocaleDateString('en-GB', {
+                        weekday: 'short', day: 'numeric', month: 'short'
+                      }) : 'TBD'}
                     </span>
                   </div>
 
-                  {/* Teams + Score */}
+                  {/* Main matchup row */}
                   <div className="match-carousel__matchup">
-                    <div className="match-carousel__team">
+                    {/* Home team */}
+                    <div className="match-carousel__team match-carousel__team--home">
                       <TeamLogo logoUrl={match.homeLogoUrl} name={match.homeTeam} />
+                      <span className="match-carousel__team-name">{match.homeShortName}</span>
+                      <span className="match-carousel__team-role">Home</span>
                     </div>
 
-                    <div className="match-carousel__score">
-                      {isUpcoming
-                        ? <span className="match-carousel__score-vs">VS</span>
-                        : (
-                          <div className="match-carousel__score-line">
-                            <span className="match-carousel__score-num">{match.homeScore}</span>
-                            <span className="match-carousel__score-sep">—</span>
-                            <span className="match-carousel__score-num">{match.awayScore}</span>
-                          </div>
-                        )
-                      }
+                    {/* Center: VS or score */}
+                    <div className="match-carousel__center">
+                      {isUpcoming ? (
+                        <>
+                          <span className="match-carousel__vs">VS</span>
+                          {match.time && (
+                            <span className="match-carousel__kickoff">{match.time}</span>
+                          )}
+                        </>
+                      ) : (
+                        <div className="match-carousel__scoreline">
+                          <span className="match-carousel__score-num">{match.homeScore ?? 0}</span>
+                          <span className="match-carousel__score-sep">:</span>
+                          <span className="match-carousel__score-num">{match.awayScore ?? 0}</span>
+                        </div>
+                      )}
                     </div>
 
-                    <div className="match-carousel__team">
+                    {/* Away team */}
+                    <div className="match-carousel__team match-carousel__team--away">
                       <TeamLogo logoUrl={match.awayLogoUrl} name={match.awayTeam} />
+                      <span className="match-carousel__team-name">{match.awayShortName}</span>
+                      <span className="match-carousel__team-role">Away</span>
                     </div>
                   </div>
 
-                  {/* CTA */}
-                  <button className={`match-carousel__cta${isUpcoming ? ' match-carousel__cta--outline' : ''}`}>
-                    {isUpcoming ? 'Tickets' : 'Stats'}
-                  </button>
+                  {/* Bottom: venue + status */}
+                  <div className="match-carousel__footer">
+                    {match.venue && (
+                      <span className="match-carousel__venue">{match.venue}</span>
+                    )}
+                    <span className={`match-carousel__status match-carousel__status--${isUpcoming ? 'upcoming' : 'ft'}`}>
+                      {isUpcoming ? 'Upcoming' : 'Full Time'}
+                    </span>
+                  </div>
 
                 </div>
               </div>

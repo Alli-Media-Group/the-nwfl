@@ -172,4 +172,26 @@
     min-width: 0;
     overflow: hidden;
   }
+
+  // ── Skeleton carousel (matches Embla layout exactly) ──────────────────────
+  &__skeleton-carousel {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__skeleton-container {
+    display: flex;
+    align-items: stretch;
+    margin-left: calc(var(--sp-md) * -1);
+  }
+
+  &__skeleton-slide {
+    flex: 0 0 auto;
+    padding-left: var(--sp-md);
+    width: clamp(220px, 78vw, 260px);
+
+    @include m.md {
+      width: clamp(260px, 22vw, 300px);
+    }
+  }
 }

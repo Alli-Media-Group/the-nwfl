@@ -3,6 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useRef } from "react";
 import MatchCarousel from "../MatchCarousel/MatchCarousel";
+import SkeletonCard from "../SkeletonCard/SkeletonCard";
 import "./Hero.scss";
 
 function ChevronLeft() {
@@ -40,16 +41,18 @@ function ChevronRight() {
 /**
  * Hero — full-viewport section with floating navbar overlay
  *
- * @param {string} bgImage   - hero background image path
- * @param {string} titleHtml - heading HTML (use <span> for gradient word)
- * @param {string} subtitle  - subtitle paragraph
- * @param {Array}  matches   - match data for score carousel
+ * @param {string} bgImage         - hero background image path
+ * @param {string} titleHtml       - heading HTML (use <span> for gradient word)
+ * @param {string} subtitle        - subtitle paragraph
+ * @param {Array}  matches         - match data for score carousel
+ * @param {boolean} matchesLoading - whether matches are still loading
  */
 export default function Hero({
   bgImage,
   titleHtml = "We Are <span>NWFL</span>",
   subtitle = "Follow every fixture, standing, and performance from the Nigeria Women Football League Premiership.",
   matches = [],
+  matchesLoading = false,
 }) {
   const autoplay = useRef(Autoplay({ delay: 3500, stopOnInteraction: false }));
 
@@ -99,7 +102,18 @@ export default function Hero({
             <ChevronLeft />
           </button>
           <div className="hero__carousel-wrapper">
-            <MatchCarousel matches={matches} emblaRef={emblaRef} />
+            {matchesLoading ? (
+              <div className="hero__skeleton-carousel">
+                <div className="hero__skeleton-container">
+                  <div className="hero__skeleton-slide"><SkeletonCard /></div>
+                  <div className="hero__skeleton-slide"><SkeletonCard /></div>
+                  <div className="hero__skeleton-slide"><SkeletonCard /></div>
+                  <div className="hero__skeleton-slide"><SkeletonCard /></div>
+                </div>
+              </div>
+            ) : (
+              <MatchCarousel matches={matches} emblaRef={emblaRef} />
+            )}
           </div>
           <button
             className="hero__arrow"

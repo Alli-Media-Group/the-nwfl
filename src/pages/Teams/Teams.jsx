@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchTeams, fetchStandings } from '../../lib/api';
+import SkeletonTeamCard from '../../components/SkeletonTeamCard/SkeletonTeamCard';
 import Footer from '../../components/Footer/Footer';
 import './Teams.scss';
 
@@ -158,14 +159,25 @@ export default function Teams() {
   const [teams, setTeams]         = useState([]);
   const [groupA, setGroupA]       = useState([]);
   const [groupB, setGroupB]       = useState([]);
+  const [loading, setLoading]     = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   useEffect(() => {
-    fetchTeams().then(setTeams).catch(() => {});
-    fetchStandings()
-      .then(({ groupA, groupB }) => { setGroupA(groupA); setGroupB(groupB); })
-      .catch(() => {});
+    setLoading(true);
+    Promise.all([
+      fetchTeams(),
+      fetchStandings(),
+    ])
+      .then(([teamsData, standingsData]) => {
+        setTeams(teamsData);
+        setGroupA(standingsData.groupA);
+        setGroupB(standingsData.groupB);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
   const filtered = teams.filter(t => {
@@ -198,14 +210,20 @@ export default function Teams() {
         </div>
 
         <div className="teams-page__grid">
-          {filtered.map(team => (
-            <TeamCard
-              key={team.id}
-              team={team}
-              isSelected={selectedTeam?.id === team.id}
-              onClick={() => handleCardClick(team)}
-            />
-          ))}
+          {loading ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonTeamCard key={i} />
+            ))
+          ) : (
+            filtered.map(team => (
+              <TeamCard
+                key={team.id}
+                team={team}
+                isSelected={selectedTeam?.id === team.id}
+                onClick={() => handleCardClick(team)}
+              />
+            ))
+          )}
         </div>
       </div>
 

@@ -1,0 +1,50 @@
+@use 'mixins' as m;
+
+// ── Shimmer animation keyframes ─────────────────────────────────────────────
+@keyframes skeleton-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+// ── Base shimmer block ──────────────────────────────────────────────────────
+// Apply to any element that needs the shimmer loading effect
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.07) 50%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: skeleton-shimmer 1.4s linear infinite;
+  }
+
+  // Shape variants
+  &--circle {
+    border-radius: 50%;
+  }
+
+  &--pill {
+    border-radius: var(--radius-pill);
+  }
+
+  &--text {
+    height: 0.85em;
+    border-radius: 4px;
+  }
+
+  &--text-sm {
+    height: 0.7em;
+    border-radius: 3px;
+  }
+}

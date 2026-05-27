@@ -1,0 +1,58 @@
+.skeleton-table-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  td {
+    padding: var(--sp-sm) var(--sp-md);
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__pos {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+  }
+
+  &__col-team {
+    text-align: left !important;
+    padding-left: var(--sp-lg) !important;
+    min-width: 180px;
+  }
+
+  &__team {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+  }
+
+  &__logo {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    width: 100px;
+    height: 0.85em;
+  }
+
+  &__stat {
+    display: inline-block;
+    width: 20px;
+    height: 0.85em;
+
+    &--pts {
+      width: 24px;
+    }
+  }
+}
