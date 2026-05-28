@@ -1,4 +1,3 @@
-const BASE = '/team-logos/thenwfl_2425_teams'
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
 // ── Core fetch ────────────────────────────────────────────────────────────────
@@ -9,10 +8,6 @@ async function get(path) {
   return Array.isArray(data) ? data : (data.results ?? data)
 }
 
-// ── Logo helper (matches admin pattern) ──────────────────────────────────────
-export function logoUrl(slug) {
-  return `${BASE}/${slug}.png`
-}
 
 // ── Adapters — map API shape → component shape ────────────────────────────────
 
@@ -24,7 +19,7 @@ function adaptStanding(s) {
     id:      s.team.id,
     name:    s.team.name,
     slug:    s.team.slug,
-    logoUrl: logoUrl(s.team.slug),
+    logoUrl: s.team.logo_url || null,
     mp:      s.played,
     w:       s.won,
     d:       s.drawn,
@@ -49,8 +44,8 @@ function adaptMatch(m) {
     awayShortName: m.away_team.short_name || m.away_team.name,
     homeScore:    m.home_score,
     awayScore:    m.away_score,
-    homeLogoUrl:  logoUrl(m.home_team.slug),
-    awayLogoUrl:  logoUrl(m.away_team.slug),
+    homeLogoUrl:  m.home_team.logo_url || null,
+    awayLogoUrl:  m.away_team.logo_url || null,
     matchday:     m.matchday != null ? `MD ${m.matchday}` : null,
     date:         m.date ?? null,
     time:         m.kick_off ? m.kick_off.slice(0, 5) : null,
@@ -73,7 +68,7 @@ function adaptTeam(t, standingsMap, nextMatchMap) {
     city:      t.city,
     state:     t.state,
     group:     t.group,
-    logoUrl:   logoUrl(t.slug),
+    logoUrl:   t.logo_url || null,
     founded:   t.founded ?? null,
     manager:   t.manager || null,
     bio:       t.bio || '',
