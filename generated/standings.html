@@ -1,0 +1,1346 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NWFL Admin - Standings Control</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#d0bcff",
+              "on-primary-container": "#b79cff",
+              "primary-fixed-dim": "#d0bcff",
+              "on-secondary-fixed-variant": "#2f2ebe",
+              "surface-container-highest": "#d3e4fe",
+              "on-secondary": "#ffffff",
+              tertiary: "#340081",
+              "surface-container-high": "#dce9ff",
+              "on-primary-fixed": "#22005c",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "primary-fixed": "#e9ddff",
+              "surface-container": "#e5eeff",
+              background: "#f8f9ff",
+              "inverse-on-surface": "#eaf1ff",
+              "surface-tint": "#6a45c3",
+              "surface-dim": "#cbdbf5",
+              primary: "#330082",
+              "inverse-primary": "#d0bcff",
+              "surface-bright": "#f8f9ff",
+              "surface-variant": "#d3e4fe",
+              "secondary-fixed": "#e1e0ff",
+              "outline-variant": "#cbc3d5",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-fixed": "#e9ddff",
+              error: "#ba1a1a",
+              "on-tertiary-fixed-variant": "#5516be",
+              "on-secondary-fixed": "#07006c",
+              secondary: "#4648d4",
+              surface: "#f8f9ff",
+              "on-secondary-container": "#fffbff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#6063ee",
+              "primary-container": "#4b1fa3",
+              "on-surface": "#0b1c30",
+              "on-tertiary": "#ffffff",
+              outline: "#7a7484",
+              "tertiary-container": "#4e02b8",
+              "on-primary": "#ffffff",
+              "on-background": "#0b1c30",
+              "on-tertiary-fixed": "#23005c",
+              "secondary-fixed-dim": "#c0c1ff",
+              "on-surface-variant": "#494453",
+              "inverse-surface": "#213145",
+              "on-tertiary-container": "#b89cff",
+              "surface-container-low": "#eff4ff",
+              "on-primary-fixed-variant": "#5228aa",
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+            spacing: {
+              "section-gap": "32px",
+              "component-padding-x": "16px",
+              "component-padding-y": "12px",
+              "container-margin": "24px",
+              gutter: "16px",
+              "density-compact": "8px",
+            },
+            fontFamily: {
+              "display-lg": ["Montserrat"],
+              "label-md": ["PlusJakartaSans"],
+              "body-sm": ["PlusJakartaSans"],
+              "body-lg": ["PlusJakartaSans"],
+              "body-md": ["PlusJakartaSans"],
+              "mono-label": ["JetBrainsMono"],
+              "headline-sm": ["Montserrat"],
+              "headline-md": ["Montserrat"],
+            },
+            fontSize: {
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "mono-label": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "headline-sm": [
+                "18px",
+                { lineHeight: "24px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md overflow-hidden">
+    <!-- Side Navigation Bar -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[260px] border-r border-outline-variant bg-surface-container-lowest flex flex-col py-section-gap z-50"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 bg-primary flex items-center justify-center rounded-lg"
+        >
+          <span
+            class="material-symbols-outlined text-white"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >sports_soccer</span
+          >
+        </div>
+        <div>
+          <h1 class="font-headline-sm text-headline-sm font-bold text-primary">
+            NWFL Admin
+          </h1>
+          <p class="text-[10px] uppercase tracking-widest text-outline">
+            Governance Portal
+          </p>
+        </div>
+      </div>
+      <nav class="flex-1 space-y-1">
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="dashboard"
+            >dashboard</span
+          >
+          <span class="font-body-md">Dashboard</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="sports_soccer"
+            >sports_soccer</span
+          >
+          <span class="font-body-md">Matches</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="groups"
+            >groups</span
+          >
+          <span class="font-body-md">Teams</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-primary bg-primary/10 border-l-4 border-primary font-bold"
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            data-icon="leaderboard"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >leaderboard</span
+          >
+          <span class="font-body-md">Standings</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="forum">forum</span>
+          <span class="font-body-md">WhatsApp Parser</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="sync">sync</span>
+          <span class="font-body-md">Sheet Sync</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="photo_library"
+            >photo_library</span
+          >
+          <span class="font-body-md">Media Library</span>
+        </a>
+      </nav>
+      <div class="px-4 mt-auto border-t border-outline-variant pt-6">
+        <div class="flex items-center gap-3 px-4 py-2 text-on-surface-variant">
+          <span class="material-symbols-outlined" data-icon="verified_user"
+            >verified_user</span
+          >
+          <span class="font-body-md">Internal Tool</span>
+        </div>
+      </div>
+    </aside>
+    <!-- Top Navigation Bar -->
+    <header
+      class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 border-b border-outline-variant bg-surface/80 backdrop-blur-md flex justify-between items-center px-container-margin z-40"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="font-headline-sm text-headline-sm font-bold text-on-surface"
+          >NWFL Editorial Desk</span
+        >
+        <div class="relative ml-8">
+          <span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]"
+            >search</span
+          >
+          <input
+            class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-full text-body-sm w-[300px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+            placeholder="Search competitions, teams..."
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all"
+        >
+          <span class="material-symbols-outlined" data-icon="dark_mode"
+            >dark_mode</span
+          >
+        </button>
+        <button
+          class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all relative"
+        >
+          <span class="material-symbols-outlined" data-icon="notifications"
+            >notifications</span
+          >
+          <span
+            class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"
+          ></span>
+        </button>
+        <div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+        <div class="flex items-center gap-3">
+          <span class="font-label-md text-label-md text-on-surface"
+            >Admin User</span
+          >
+          <img
+            alt="JD"
+            class="w-8 h-8 rounded-full border border-outline-variant"
+            data-alt="A professional close-up studio portrait of a confident sports administrator in a minimalist setting. The lighting is crisp and modern, emphasizing professional competence. The background is a soft, neutral grey to maintain a high-end SaaS aesthetic. The overall mood is serious and authoritative, reflecting the governance standards of a national football league office."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzHyA8fIdq6VaoQgTuQ56yzCo_qk-_MEf1In6HkwF-tVc9Epjhrh6aBA2BgWVClSf88qQ2D3gmS9V9qFTQxa453inx-E3yKRkse8sIpW4QWxAefxxPOKeW0XiRKpOf6qsCHxrxh2kDpDOTYJq-nEZi2c1QxcgDhNUVn4uR1QP8677eYSvX2MO0v5SKdZk6H0QTvMPj7PZNNmFBmcPcJH8eKf1KmXIRYi4ywWFwnGQTe-CQkwus22uepsEef3Q7lKNM00Vy5fo7gdkG"
+          />
+        </div>
+      </div>
+    </header>
+    <!-- Main Content Area -->
+    <main class="ml-[260px] pt-16 h-screen overflow-y-auto">
+      <div class="p-container-margin">
+        <!-- Header Actions -->
+        <div class="flex justify-between items-end mb-8">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">
+              Standings Control
+            </h2>
+            <p class="text-on-surface-variant font-body-md">
+              2023/2024 Premiership Season • Regular Season Phase
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <button
+              class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-on-surface-variant font-label-md hover:bg-surface-container-low transition-all"
+            >
+              <span
+                class="material-symbols-outlined text-[18px]"
+                data-icon="download"
+                >download</span
+              >
+              Export CSV
+            </button>
+            <button
+              class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-label-md hover:bg-primary-container transition-all shadow-sm"
+              id="ai-recompute"
+            >
+              <span
+                class="material-symbols-outlined text-[18px]"
+                data-icon="auto_awesome"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >auto_awesome</span
+              >
+              AI Recompute
+            </button>
+          </div>
+        </div>
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-12 gap-gutter">
+          <!-- Group A Table -->
+          <div
+            class="col-span-12 xl:col-span-6 bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm"
+          >
+            <div
+              class="px-4 py-3 bg-slate-50 border-b border-outline-variant flex justify-between items-center"
+            >
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-4 bg-secondary rounded-full"></span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                  Group A
+                </h3>
+              </div>
+              <span
+                class="text-label-md font-label-md bg-secondary/10 text-secondary px-2 py-0.5 rounded"
+                >Active Phase</span
+              >
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-surface-container-low text-label-md font-label-md text-on-surface-variant border-b border-outline-variant"
+                  >
+                    <th class="px-3 py-density-compact w-10 text-center">
+                      Pos
+                    </th>
+                    <th class="px-3 py-density-compact">Club</th>
+                    <th class="px-2 py-density-compact text-center">P</th>
+                    <th class="px-2 py-density-compact text-center">W</th>
+                    <th class="px-2 py-density-compact text-center">D</th>
+                    <th class="px-2 py-density-compact text-center">L</th>
+                    <th class="px-2 py-density-compact text-center">GF</th>
+                    <th class="px-2 py-density-compact text-center">GA</th>
+                    <th class="px-2 py-density-compact text-center">GD</th>
+                    <th class="px-2 py-density-compact text-center">Pts</th>
+                    <th class="px-3 py-density-compact text-center">Form</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                  <!-- Row 1: Green Border (Qualification) -->
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-emerald-500"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center"
+                    >
+                      1
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Nasarawa Amazons Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAJLM9VLWwsOBusKEAIm0BxHVJE7UwiUQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW_cz1vtkCUJHCP7S9twYcYggFrZyY3eklZFbaO5mrLNETfscRicQQJh8c24MbDKRenxzds-veN0Sy2322iqXqD1vZeARmsYiuUp5vL1bQ4z1NJDAamO8OJW5hkAqrt_xN7rl0TWCRwt_ERTOB10LHLnElH9bt5TwUOe7-Rj6KqGns0EAOKt0XEolwBSKY-gz"
+                          />
+                        </div>
+                        <span class="font-body-md font-semibold truncate"
+                          >Nasarawa Amazons</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">8</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">18</td>
+                    <td class="px-2 py-density-compact text-center">6</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      +12
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      26
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-emerald-500"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center"
+                    >
+                      2
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Confluence Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFyhIdDHuX_sU050CYfeMaGcm9C2Yq5iZ26QchgZpHvYtpGlXqo34Y3OOxVMuY6Pljwd1nCJXxIjbLqd5fkYPkef-80r616wPUeo3RLZ1VLbK92UDnktL3mxzwTY0GNkrZpN49hnnnZIBD4UQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW-3Brlok9eETiSIj_uAVfTxeeb1q11nFZrEQ8LUbaQbkkxrTGQFDmunkI-E70GF0Y9FcRrq3uP2bpKLg"
+                          />
+                        </div>
+                        <span class="font-body-md font-semibold truncate"
+                          >Confluence Queens</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">7</td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">15</td>
+                    <td class="px-2 py-density-compact text-center">8</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      +7
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      24
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Regular Rows -->
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-on-surface-variant"
+                    >
+                      3
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Delta Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5cYsXK5z5jMinns-k5kgCrX0Bd6A0oERkjdMr5muw__6AEWO6TxeV5lC-65jAlZW8Qx7__v6NLG1VVRJj0BVx7KDGUUga6W8sAwt0f44U5X1p3kFCwYF3ppZL5ni9iTukWKPDByFt00wP-qimWGd2tMcckyF9r4_favm50hkMOG04FOrHWF9z3qtWQEUP8XYzkSzTlr5IYNa1M_ZJir3R2TQJ7uWngY3-nUeu8ujFGiv9IYie8RraygASQXEuAzYcZLpaL4UUZQDF"
+                          />
+                        </div>
+                        <span class="font-body-md truncate">Delta Queens</span>
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">6</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">4</td>
+                    <td class="px-2 py-density-compact text-center">12</td>
+                    <td class="px-2 py-density-compact text-center">10</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      +2
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      20
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-on-surface-variant"
+                    >
+                      4
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Abia Angels Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz9i15j9SOg-DFQGA5tWZqXJEAlpZMJxtaGc2T4khsrFFCb-cZz_WenhjFhEwr6iRbpJw31ZUfB34TNArB6v-f95Jr2qlGQspe-cMlAolj8W3X3erJzGXf1FgegaIDdJEeNTZV9IXI8MXGgVWryH0zB4lK8SFxDTahEYxLTyPcxHdcMkTyxYMe-DoysaI0MWuq5FQ1-236FlM2TPa_dNYuE5kbtOv_k0qmU4_eLlTyFYk8CZJD6rFcScAAXGQzv-JplR6ggn533Ucb"
+                          />
+                        </div>
+                        <span class="font-body-md truncate">Abia Angels</span>
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">4</td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">5</td>
+                    <td class="px-2 py-density-compact text-center">10</td>
+                    <td class="px-2 py-density-compact text-center">12</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      -2
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      15
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-on-surface-variant"
+                    >
+                      5
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Heartland Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcaqkizxgG0JB8Hmsl3z_Q9-rsucpTYhZqUgzfMRnAiGqh66F21ktQeqGc0Pf6BkhbThPtVq0JZOB56R_xJ6Zk8OA19FPv6wv_YaipyusKqu8rb8_rKAIdw1x1new63fxG9JFusZxoH_NH3bYQZqdiNvpMuwkLiAlkpMGTtZxSs4bJfObKJ7IDk3-R8kGeSXhqzmUnBE54tH2NbWSh3Qx2r0H-3ssKTdNhHnxuXN-AyM5SoNRUea0gEWdevoIgLqzVuUEgNOOUfsVO"
+                          />
+                        </div>
+                        <span class="font-body-md truncate"
+                          >Heartland Queens</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">4</td>
+                    <td class="px-2 py-density-compact text-center">5</td>
+                    <td class="px-2 py-density-compact text-center">9</td>
+                    <td class="px-2 py-density-compact text-center">14</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      -5
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      13
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Red Border (Relegation Zone) -->
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-red-500 bg-red-50/10"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-error"
+                    >
+                      6
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Royal Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRJA_6LlbeEDNwQ87RsEG9gnr-fJuLvagN7ec7kiHmTJcooBQzUx9bdrdFA4YSnQ1OZuFkO1tYfXccn7ydSsduILKBmf09HDKmgA8u4BCq1YSfJYEs8JTK7kFIhFOx0vT73AOl5KMzB-DTkw0kse5LrcSu8Amp8yHLAGhCDvOXVmewSX7lXXT6JKoqnhkEzkdQZQ31Rs6V-ORAUCdr0SHmZP-36pWTDPoYGX3ow1lxmws7Li9ZUhAr1rh2v6zVBr1onG1PoyT30hJd"
+                          />
+                        </div>
+                        <span class="font-body-md truncate">Royal Queens</span>
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">7</td>
+                    <td class="px-2 py-density-compact text-center">7</td>
+                    <td class="px-2 py-density-compact text-center">16</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      -9
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      9
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Group B Table -->
+          <div
+            class="col-span-12 xl:col-span-6 bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm"
+          >
+            <div
+              class="px-4 py-3 bg-slate-50 border-b border-outline-variant flex justify-between items-center"
+            >
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-4 bg-tertiary rounded-full"></span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                  Group B
+                </h3>
+              </div>
+              <span
+                class="text-label-md font-label-md bg-secondary/10 text-secondary px-2 py-0.5 rounded"
+                >Active Phase</span
+              >
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-surface-container-low text-label-md font-label-md text-on-surface-variant border-b border-outline-variant"
+                  >
+                    <th class="px-3 py-density-compact w-10 text-center">
+                      Pos
+                    </th>
+                    <th class="px-3 py-density-compact">Club</th>
+                    <th class="px-2 py-density-compact text-center">P</th>
+                    <th class="px-2 py-density-compact text-center">W</th>
+                    <th class="px-2 py-density-compact text-center">D</th>
+                    <th class="px-2 py-density-compact text-center">L</th>
+                    <th class="px-2 py-density-compact text-center">GF</th>
+                    <th class="px-2 py-density-compact text-center">GA</th>
+                    <th class="px-2 py-density-compact text-center">GD</th>
+                    <th class="px-2 py-density-compact text-center">Pts</th>
+                    <th class="px-3 py-density-compact text-center">Form</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-emerald-500"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center"
+                    >
+                      1
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Rivers Angels Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnNe2Ta_AEz7N5e8tViI-PNUFYl4PP1TYu_qBcj8v37UXUiaz8c5DlyIkc0y2me1fCezK5-x1wrE1bKIAfig3_7KdwAOwBXS83j2tX3ie05XACqF3FT7eKZljDeGKsI5fmJT4tolaRxhTTiqKeZdH6ahGMrHSxuQRmbG3p95VXPamA76u_APJz24giQFreW0ljKRBhzGSQ2TtZFLbBa4Cmd7Nz-1jqMj_NdON398pNQqMWd4zzCQh46L_UP9xHWPd5v4cMwYWozfOV"
+                          />
+                        </div>
+                        <span class="font-body-md font-semibold truncate"
+                          >Rivers Angels</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">9</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">1</td>
+                    <td class="px-2 py-density-compact text-center">22</td>
+                    <td class="px-2 py-density-compact text-center">4</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      +18
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      29
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-emerald-500"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center"
+                    >
+                      2
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Edo Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUGI6EY9VozIpjYoUDQLfrFr0jTU8QMGR8unB4JNIOdH4XcjGHpjrLFdFwzsGVvnAggfALo4zN4ZX-H84WKOCHQOBRXn7QZg3u5XYmStyI8ZHIRUeCzQVKwj5xrHEq5JRASKsC-FrtcOhtbNMpPC-Jp_FJAh2iWKJpuPnUPoisxPyeq-49cPT2gWMOOyEDJfXOua2TFFKnggQC4qgtUTu9VwznjcRgYzaieJC0tGkn1mq1uUEWlybkB4v1_cfm7jH9CLegkLQu_7i"
+                          />
+                        </div>
+                        <span class="font-body-md font-semibold truncate"
+                          >Edo Queens</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">7</td>
+                    <td class="px-2 py-density-compact text-center">4</td>
+                    <td class="px-2 py-density-compact text-center">1</td>
+                    <td class="px-2 py-density-compact text-center">19</td>
+                    <td class="px-2 py-density-compact text-center">7</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      +12
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      25
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-on-surface-variant"
+                    >
+                      3
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Bayelsa Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsMiCunUZjw8w0R3xLI_-u2FMLPLQsvJSyvLLfbTqcot79GB5oO9UV5dFi7V-JGDRnwEtZbVItnBNDWO4aziOdIK4dR_SNUU7y6tvaC9nVUbk8h1KyqOJz3mer-N_ghhArNYkI49RiZfNDR0QDBcDzGYH2jjExcEiUOD9f7SpU-DdAGF-GMTn6ykc7ibiXzSGiohFV3Yoz4eEzNDmFvqm9nKSm4seIzfr0f2vuatIn3MBKjVJugrPG8m2dLUZTZtHkY3ak9swkOCjs"
+                          />
+                        </div>
+                        <span class="font-body-md truncate"
+                          >Bayelsa Queens</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">6</td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">16</td>
+                    <td class="px-2 py-density-compact text-center">9</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      +7
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      21
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-on-surface-variant"
+                    >
+                      4
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Robo Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBQJ59F9u1Ps7hmvPMDsKjdZGTWcXMKfaCINMiuCwPxyjSlNBsF-GUUd0CmEITxmD8lz8RHbjSrRtg2Ej1OZCkZttMKxpWIj_wXDeeSfbE56TJ0gGqHST67LskVZ5aKLmTMmi9zZCLa40f8SkCGWMB6KlS3VoG3btiYmyfLXj4cML3IHzP72GnAvEHOp0ek0NgrUTs18ggYB-ofrb909xLghs47oLjdSqA5lP2QjFNPJS3TlfE_OHImMYpEbF7vL9OUvDqYf-z66fi"
+                          />
+                        </div>
+                        <span class="font-body-md truncate">Robo Queens</span>
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">5</td>
+                    <td class="px-2 py-density-compact text-center">1</td>
+                    <td class="px-2 py-density-compact text-center">6</td>
+                    <td class="px-2 py-density-compact text-center">13</td>
+                    <td class="px-2 py-density-compact text-center">15</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      -2
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      16
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-emerald-500"
+                          title="W"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-on-surface-variant"
+                    >
+                      5
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Sunshine Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd4GibxqXv12Br1SuP2Bq3U-_UqWNY0EZXKGF1qVtGwtYYc1rWS3kxC31Q60ClrLoQsy2kejvNtEke4T_Mt31WD2u9ebfVYLSqvnKvXTRDi9NNJC6eY12PcCkjyBfWpWgl5cNvhW7BYmxpBihbLI4hoYIuYxaNVI8kbGgdB45ueePNB6aKgp3gmnUQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW-ynzEcyLYdMA_yM8vmo_nQr0hhTTA4aEWc3CE4"
+                          />
+                        </div>
+                        <span class="font-body-md truncate"
+                          >Sunshine Queens</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">3</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">7</td>
+                    <td class="px-2 py-density-compact text-center">8</td>
+                    <td class="px-2 py-density-compact text-center">18</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      -10
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      11
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-amber-500"
+                          title="D"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 transition-colors border-l-4 border-l-red-500 bg-red-50/10"
+                  >
+                    <td
+                      class="px-3 py-density-compact font-mono-label text-mono-label text-center text-error"
+                    >
+                      6
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex items-center gap-3">
+                        <div
+                          class="w-6 h-6 rounded bg-slate-100 p-0.5 border border-outline-variant"
+                        >
+                          <img
+                            alt="Adamawa Queens Logo"
+                            class="w-full h-full object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWkmN6DT95GIOGUo2JXaFhCD7qvkUQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW_18QjoUQvj-Xi496lJ4B2JaCub21iqy1tVFbiCy0C7EQwf-j2IFGMnMtROzpSxIKrZZz3-DwbKZWl2NoO0xeKHpGWZvU5VZBxNScv30vjniXd6dabXGsKiqymbH9p8B0GP78egoonVoiygRnP6pA1iZKD4C25zwEYSxnipzcpvO7I36-SMkwDI-I2eikyPr0bS"
+                          />
+                        </div>
+                        <span class="font-body-md truncate"
+                          >Adamawa Queens</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      12
+                    </td>
+                    <td class="px-2 py-density-compact text-center">1</td>
+                    <td class="px-2 py-density-compact text-center">2</td>
+                    <td class="px-2 py-density-compact text-center">9</td>
+                    <td class="px-2 py-density-compact text-center">5</td>
+                    <td class="px-2 py-density-compact text-center">23</td>
+                    <td
+                      class="px-2 py-density-compact text-center font-mono-label"
+                    >
+                      -18
+                    </td>
+                    <td
+                      class="px-2 py-density-compact text-center font-bold text-primary"
+                    >
+                      5
+                    </td>
+                    <td class="px-3 py-density-compact">
+                      <div class="flex justify-center gap-1">
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                        <span
+                          class="w-2 h-2 rounded-full bg-red-500"
+                          title="L"
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Footer Summary Card -->
+          <div
+            class="col-span-12 bg-white border border-outline-variant rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4"
+          >
+            <div class="flex gap-8">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 bg-emerald-500 rounded-sm"></span>
+                <span
+                  class="text-label-md font-label-md text-on-surface-variant uppercase"
+                  >Qualification Zone</span
+                >
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 bg-red-500 rounded-sm"></span>
+                <span
+                  class="text-label-md font-label-md text-on-surface-variant uppercase"
+                  >Relegation Zone</span
+                >
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="text-right">
+                <p class="text-[10px] text-outline uppercase tracking-wider">
+                  Last Computed
+                </p>
+                <p class="font-mono-label text-body-sm">Today, 14:45 WAT</p>
+              </div>
+              <div class="h-8 w-[1px] bg-outline-variant"></div>
+              <div class="flex -space-x-2">
+                <img
+                  alt="U1"
+                  class="w-8 h-8 rounded-full border-2 border-white"
+                  data-alt="A focused close-up of a diverse group of sports professionals and data analysts working together in a high-tech control room environment. Soft, diffused indoor lighting highlights their concentrated expressions. The background is slightly blurred, showing digital screens with live football statistics. The aesthetic is clean, professional, and team-oriented."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNcz6tgc9-tY-tpvW2BZzfWexakd4NTJqyvCsbOLkACtFluTscd8BSkxDKCiaEmiySfXFnAaNaPwz980D09g0LyhhYAC19dI9HAvJZcic28W6NlPF3wyStLwISg3sHCnGUPAWf_KT4MVYIYRd7jOUTpXKteYan0YtcS5tvHJg233L4Rgjc2NVPHoTFKlrs5jhSzAUfE78S1XUGyDyF3LGXAGhvjUPOJwR0OwDUl8cQnaDXlXL1YhJkOuNDzlOmVpcbTZAo45drE7K-"
+                />
+                <img
+                  alt="U2"
+                  class="w-8 h-8 rounded-full border-2 border-white"
+                  data-alt="A macro detail shot of a modern sports data dashboard interface being viewed on a high-resolution tablet. The screen displays complex tables, graphs, and vibrant status indicators in emerald, ruby, and amber. The environment is a brightly lit, contemporary office with natural light. The mood is precise, analytical, and technologically advanced."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY8GN7RNrWTs8ZfuW-J4zdXNpJ8IVKHfUQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW_dpg40KmwLUg49C9Mp6z1JCUc1jfSOd7siWIIXfNt1YHEQculLRclrU0M1xP8xcsRaWFOXXyDqTcLKIC2RLKqwp9LD8O9n56tZGW4EsA_u_w1q0Y_NEMgb69Wnl51RraS4L6sARfp-BWBjeKkAQhG7E2-pvkZ0BTVSkFJoXDATr_0ZUhL-oQhoYnkEVrdo"
+                />
+                <div
+                  class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary"
+                >
+                  +3
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      document
+        .getElementById("ai-recompute")
+        .addEventListener("click", function () {
+          const btn = this;
+          const originalContent = btn.innerHTML;
+          btn.innerHTML = `<span class="material-symbols-outlined animate-spin" data-icon="refresh">refresh</span> Recomputing...`;
+          btn.disabled = true;
+          btn.classList.add("opacity-80", "cursor-not-allowed");
+
+          setTimeout(() => {
+            btn.innerHTML = `<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span> Computed!`;
+            btn.classList.replace("bg-primary", "bg-emerald-600");
+
+            setTimeout(() => {
+              btn.innerHTML = originalContent;
+              btn.disabled = false;
+              btn.classList.remove("opacity-80", "cursor-not-allowed");
+              btn.classList.replace("bg-emerald-600", "bg-primary");
+            }, 2000);
+          }, 1500);
+        });
+
+      // Simple Hover Interaction for rows
+      const rows = document.querySelectorAll("tbody tr");
+      rows.forEach((row) => {
+        row.addEventListener("mouseenter", () => {
+          row.style.cursor = "pointer";
+        });
+      });
+    </script>
+  </body>
+</html>

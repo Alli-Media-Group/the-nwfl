@@ -45,7 +45,7 @@ export default function MatchCarousel({ matches = [], emblaRef }) {
 
                     {/* Center: VS or score */}
                     <div className="match-carousel__center">
-                      {isUpcoming ? (
+                      {isUpcoming || (match.homeScore == null && match.awayScore == null) ? (
                         <>
                           <span className="match-carousel__vs">VS</span>
                           {match.time && (

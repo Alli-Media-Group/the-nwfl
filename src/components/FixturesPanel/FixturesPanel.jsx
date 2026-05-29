@@ -47,7 +47,7 @@ function FixtureCard({ match }) {
 
         {/* Center */}
         <div className="fixtures-panel__center">
-          {isUpcoming ? (
+          {isUpcoming || (match.homeScore == null && match.awayScore == null) ? (
             <>
               <span className="fixtures-panel__vs">VS</span>
               {match.time && <span className="fixtures-panel__time">{match.time}</span>}

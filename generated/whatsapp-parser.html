@@ -1,0 +1,782 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NWFL Editorial Desk - WhatsApp Parser</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#d0bcff",
+              "on-primary-container": "#b79cff",
+              "primary-fixed-dim": "#d0bcff",
+              "on-secondary-fixed-variant": "#2f2ebe",
+              "surface-container-highest": "#d3e4fe",
+              "on-secondary": "#ffffff",
+              tertiary: "#340081",
+              "surface-container-high": "#dce9ff",
+              "on-primary-fixed": "#22005c",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "primary-fixed": "#e9ddff",
+              "surface-container": "#e5eeff",
+              background: "#f8f9ff",
+              "inverse-on-surface": "#eaf1ff",
+              "surface-tint": "#6a45c3",
+              "surface-dim": "#cbdbf5",
+              primary: "#330082",
+              "inverse-primary": "#d0bcff",
+              "surface-bright": "#f8f9ff",
+              "surface-variant": "#d3e4fe",
+              "secondary-fixed": "#e1e0ff",
+              "outline-variant": "#cbc3d5",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-fixed": "#e9ddff",
+              error: "#ba1a1a",
+              "on-tertiary-fixed-variant": "#5516be",
+              "on-secondary-fixed": "#07006c",
+              secondary: "#4648d4",
+              surface: "#f8f9ff",
+              "on-secondary-container": "#fffbff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#6063ee",
+              "primary-container": "#4b1fa3",
+              "on-surface": "#0b1c30",
+              "on-tertiary": "#ffffff",
+              outline: "#7a7484",
+              "tertiary-container": "#4e02b8",
+              "on-primary": "#ffffff",
+              "on-background": "#0b1c30",
+              "on-tertiary-fixed": "#23005c",
+              "secondary-fixed-dim": "#c0c1ff",
+              "on-surface-variant": "#494453",
+              "inverse-surface": "#213145",
+              "on-tertiary-container": "#b89cff",
+              "surface-container-low": "#eff4ff",
+              "on-primary-fixed-variant": "#5228aa",
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+            spacing: {
+              "section-gap": "32px",
+              "component-padding-x": "16px",
+              "component-padding-y": "12px",
+              "container-margin": "24px",
+              gutter: "16px",
+              "density-compact": "8px",
+            },
+            fontFamily: {
+              "display-lg": ["Montserrat"],
+              "label-md": ["PlusJakartaSans"],
+              "body-sm": ["PlusJakartaSans"],
+              "body-lg": ["PlusJakartaSans"],
+              "body-md": ["PlusJakartaSans"],
+              "mono-label": ["JetBrainsMono"],
+              "headline-sm": ["Montserrat"],
+              "headline-md": ["Montserrat"],
+            },
+            fontSize: {
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "mono-label": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "headline-sm": [
+                "18px",
+                { lineHeight: "24px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+      .shimmer {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(51, 0, 130, 0.05),
+          transparent
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-surface font-body-md selection:bg-primary-fixed-dim selection:text-primary"
+  >
+    <!-- Side Navigation Bar -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[260px] border-r border-outline-variant bg-surface-container-lowest dark:bg-inverse-surface flex flex-col py-section-gap z-50"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white overflow-hidden"
+        >
+          <img
+            alt="NWFL Official Logo"
+            class="w-full h-full object-cover"
+            data-alt="A professional sports organization logo featuring clean minimalist geometric shapes that evoke the spirit of football and athleticism. The design uses a sophisticated deep purple and white color scheme, presented on a high-contrast background for a modern, high-performance aesthetic."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMQ30_gRtGjZnNk2VxkLx2H98J15lZFJPO-SXJ1Kuty_LG2qZXRCZOFNHlJYJWgvkQXvaKFgb5r6SefszlJSuqGOl_xjZPJ8cm1V7eQ4hKvuzdx5E--py9n9NQ9izSZ-NVL56YnxWFIcCGdA-ijjJDSiKPZzlV5OeP2FCuYFxjzCEO9c0HkBSQh7Dt2AHV7DZAEME9M9cSy9FvfHvcx2gMPkp1H5Dj4YaKufPRsAyon8Tf-F28X891gb8zvaFwBYF090BG9jnoXhab"
+          />
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary leading-tight"
+          >
+            NWFL Admin
+          </h1>
+          <p class="text-xs text-on-surface-variant">Governance Portal</p>
+        </div>
+      </div>
+      <nav class="flex-1 space-y-1">
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="dashboard"
+            >dashboard</span
+          >
+          <span>Dashboard</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="sports_soccer"
+            >sports_soccer</span
+          >
+          <span>Matches</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="groups"
+            >groups</span
+          >
+          <span>Teams</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="leaderboard"
+            >leaderboard</span
+          >
+          <span>Standings</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-primary dark:text-primary-fixed-dim bg-primary/10 border-l-4 border-primary font-bold"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="forum">forum</span>
+          <span>WhatsApp Parser</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="sync">sync</span>
+          <span>Sheet Sync</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="photo_library"
+            >photo_library</span
+          >
+          <span>Media Library</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors"
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            data-icon="image_not_supported"
+            >image_not_supported</span
+          >
+          <span>Missing Logos</span>
+        </a>
+      </nav>
+      <div class="mt-auto px-4">
+        <div class="p-3 bg-surface-container rounded-lg">
+          <div class="flex items-center gap-2 mb-2">
+            <span
+              class="material-symbols-outlined text-primary text-sm"
+              data-icon="verified_user"
+              >verified_user</span
+            >
+            <span
+              class="text-xs font-bold text-primary uppercase tracking-wider"
+              >Internal Tool</span
+            >
+          </div>
+          <p class="text-[10px] text-on-surface-variant">
+            Authenticated access only. Activity is logged.
+          </p>
+        </div>
+      </div>
+    </aside>
+    <!-- Top Navigation Bar -->
+    <header
+      class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 border-b border-outline-variant bg-surface/80 backdrop-blur-md flex justify-between items-center px-container-margin z-40"
+    >
+      <div class="flex items-center gap-4 flex-1">
+        <div class="relative w-full max-w-md">
+          <span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm"
+            data-icon="search"
+            >search</span
+          >
+          <input
+            class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+            placeholder="Search fixtures or teams..."
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-6">
+        <nav class="flex gap-6 mr-6">
+          <a
+            class="font-label-md text-label-md text-primary border-b-2 border-primary py-5"
+            href="#"
+            >Parser Home</a
+          >
+          <a
+            class="font-label-md text-label-md text-on-surface-variant hover:text-primary py-5"
+            href="#"
+            >History</a
+          >
+        </nav>
+        <div class="flex gap-2">
+          <button
+            class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all"
+          >
+            <span class="material-symbols-outlined" data-icon="dark_mode"
+              >dark_mode</span
+            >
+          </button>
+          <button
+            class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all relative"
+          >
+            <span class="material-symbols-outlined" data-icon="notifications"
+              >notifications</span
+            >
+            <span
+              class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"
+            ></span>
+          </button>
+        </div>
+        <div
+          class="flex items-center gap-3 ml-2 border-l border-outline-variant pl-6"
+        >
+          <div class="text-right">
+            <p class="text-xs font-bold">John Doe</p>
+            <p class="text-[10px] text-on-surface-variant">Editorial Admin</p>
+          </div>
+          <div
+            class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs"
+          >
+            JD
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content Area -->
+    <main
+      class="ml-[260px] pt-16 min-h-screen bg-background p-container-margin"
+    >
+      <div class="max-w-7xl mx-auto">
+        <!-- Page Header -->
+        <div class="mb-8">
+          <h2 class="font-display-lg text-display-lg text-primary mb-2">
+            WhatsApp Parser Intake
+          </h2>
+          <p class="text-on-surface-variant max-w-2xl">
+            Effortlessly convert raw chat match updates from the field into
+            structured league data using our proprietary AI model. Paste the
+            text export below to get started.
+          </p>
+        </div>
+        <!-- Dashboard Split Layout -->
+        <div
+          class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-[calc(100vh-250px)]"
+        >
+          <!-- Left: Input Side -->
+          <div class="lg:col-span-5 flex flex-col gap-4">
+            <div
+              class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex-1 flex flex-col shadow-sm"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="material-symbols-outlined text-primary"
+                    data-icon="chat_paste_go"
+                    >chat_paste_go</span
+                  >
+                  <span
+                    class="font-bold text-primary uppercase text-xs tracking-widest"
+                    >Chat Export Feed</span
+                  >
+                </div>
+                <button
+                  class="text-[10px] font-bold text-on-surface-variant hover:text-error transition-colors uppercase tracking-wider"
+                  id="clearBtn"
+                >
+                  Clear Canvas
+                </button>
+              </div>
+              <div class="relative flex-1 group">
+                <textarea
+                  class="w-full h-full bg-surface-container-low/30 border border-outline rounded-lg p-4 font-mono-label text-mono-label resize-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all custom-scrollbar placeholder:text-on-surface-variant/40"
+                  id="chatInput"
+                  placeholder="[14:20] Match Official: Rivers Angels vs Delta Queens. Score 2-1. Scorers: O. Asisat 12', P. Sunday 45' (Rivers). A. Gift 67' (Delta)..."
+                ></textarea>
+                <div
+                  class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-300"
+                  id="inputGuide"
+                >
+                  <div
+                    class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mb-4"
+                  >
+                    <span
+                      class="material-symbols-outlined text-outline text-3xl"
+                      data-icon="content_paste"
+                      >content_paste</span
+                    >
+                  </div>
+                  <p
+                    class="text-on-surface-variant font-label-md text-label-md opacity-60"
+                  >
+                    Paste Match Reports Here
+                  </p>
+                </div>
+              </div>
+              <div class="mt-4 flex items-center gap-3">
+                <button
+                  class="flex-1 bg-primary text-on-primary font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container transition-all active:scale-[0.98]"
+                  id="processBtn"
+                >
+                  <span
+                    class="material-symbols-outlined text-sm"
+                    data-icon="smart_toy"
+                    >smart_toy</span
+                  >
+                  PROCESS WITH AI
+                </button>
+                <button
+                  class="bg-surface-container-high text-on-surface-variant p-3 rounded-lg hover:bg-surface-container-highest transition-colors"
+                >
+                  <span class="material-symbols-outlined" data-icon="settings"
+                    >settings</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- Usage Tips Bento -->
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 bg-primary/5 border border-primary/10 rounded-xl">
+                <p
+                  class="text-[10px] font-bold text-primary mb-1 uppercase tracking-wider"
+                >
+                  System Status
+                </p>
+                <div class="flex items-center gap-2">
+                  <div
+                    class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+                  ></div>
+                  <span class="text-sm font-medium">Model 4.2 Online</span>
+                </div>
+              </div>
+              <div
+                class="p-4 bg-surface-container-lowest border border-outline-variant rounded-xl"
+              >
+                <p
+                  class="text-[10px] font-bold text-on-surface-variant mb-1 uppercase tracking-wider"
+                >
+                  Instructions
+                </p>
+                <p class="text-xs text-on-surface-variant leading-tight">
+                  Paste logs directly from mobile. We handle typos and
+                  shorthand.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Right: Parsed Cards Side -->
+          <div
+            class="lg:col-span-7 flex flex-col bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm"
+          >
+            <div
+              class="bg-surface-container-high/30 px-6 py-4 border-b border-outline-variant flex items-center justify-between"
+            >
+              <div class="flex items-center gap-2">
+                <span
+                  class="material-symbols-outlined text-primary"
+                  data-icon="account_tree"
+                  >account_tree</span
+                >
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                  Parsed Match Cards
+                </h3>
+              </div>
+              <div class="flex gap-2">
+                <span
+                  class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded"
+                  >MATCHED: 0</span
+                >
+                <span
+                  class="bg-on-surface-variant/10 text-on-surface-variant text-[10px] font-bold px-2 py-1 rounded"
+                  >REJECTED: 0</span
+                >
+              </div>
+            </div>
+            <div
+              class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-4 bg-slate-50/50"
+              id="cardsContainer"
+            >
+              <!-- Empty State -->
+              <div
+                class="h-full flex flex-col items-center justify-center text-center"
+                id="emptyState"
+              >
+                <div class="relative w-40 h-40 mb-6">
+                  <div
+                    class="absolute inset-0 bg-primary/5 rounded-full blur-2xl"
+                  ></div>
+                  <img
+                    alt="Empty Dashboard State"
+                    class="w-full h-full object-cover rounded-full mix-blend-multiply opacity-40 grayscale"
+                    data-alt="A futuristic and sleek data visualization dashboard empty state illustration, showcasing a clean minimalist aesthetic. The background features light blue and soft lavender tones with translucent geometric patterns. Central element is a stylized football pitch diagram glowing with subtle neon purple outlines under soft, professional studio lighting."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmM5CfEoV0z9QZgRbXTXObJ3j7TL-WMgCgYBgLFpwXDEmI29aqMgT7GG6Nlf1Yk4we2Kp_nqFdFULZ03-GXRyQTviwolcylb-WlgytViUZHNolcpJw5fx92RahJw02lrQAfTVsypvAko_v9YhGPSRKrAK7BRYNWX-KlwicL3_yHiEZxy-ETmQabXDH9W9S6mSSBsGeiSstgsGdiREZupQbZf9C-MWP1Yr95RJLBJNPZ4BX6NVLGFWN-RRMdEYXPEnoUObnKLAOziVl"
+                  />
+                </div>
+                <h4
+                  class="font-headline-sm text-headline-sm text-on-surface-variant"
+                >
+                  No parsed matches yet
+                </h4>
+                <p class="text-on-surface-variant text-sm mt-2 max-w-xs">
+                  Data cards will populate here in real-time as you process chat
+                  exports.
+                </p>
+              </div>
+              <!-- Card Template (Hidden) -->
+              <div class="hidden" id="cardTemplate">
+                <div
+                  class="bg-white border border-outline-variant rounded-lg p-5 hover:shadow-lg transition-all duration-300 group"
+                >
+                  <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2">
+                      <span
+                        class="bg-surface-container px-2 py-1 rounded text-[10px] font-mono-label text-primary uppercase font-bold"
+                        >MATCH #7742</span
+                      >
+                      <span
+                        class="text-[10px] text-on-surface-variant flex items-center gap-1"
+                      >
+                        <span
+                          class="material-symbols-outlined text-[14px]"
+                          data-icon="schedule"
+                          >schedule</span
+                        >
+                        <span class="parsed-time">14:20 PM</span>
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <span
+                        class="text-[10px] font-bold text-emerald-600 uppercase"
+                        >98% Accuracy</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between mb-6">
+                    <div class="flex-1 text-center">
+                      <div
+                        class="w-12 h-12 bg-surface-container-low rounded-full mx-auto mb-2 overflow-hidden flex items-center justify-center"
+                      >
+                        <img
+                          alt="Home Logo"
+                          class="w-8 h-8 object-contain home-logo"
+                          data-alt="A clean, minimalist vector logo of a professional football club with crest elements and circular framing. Vibrant colors with professional sport branding aesthetics."
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVNviA9cYK_JERDWZwhwF2kFe26D_e7r_C_pgyCHd2ZgKM6zYAVnqu2NfIVpOMB_oa4e-8RsUcvJ-Fn9z7OHoV-nCmzWwzPqZonUj8hzmbkDQSF8WUHPkxG2hoahTFBs0w5s98Bng_ecoLV9AYZKQEg891crnof7PFK6u77noVM4Y45-I2P5RJxrRDkNY_LZnXIUXQzrerYp_Hp4Ln-3qr_aI2tkS8nsVwFPAEW36GdCV_nxvZLG-6Wc2ciz5H7bQhXyFOfn_9RPKV"
+                        />
+                      </div>
+                      <p class="font-bold text-sm uppercase parsed-home">
+                        Rivers Angels
+                      </p>
+                    </div>
+                    <div class="flex flex-col items-center px-4">
+                      <div class="flex items-baseline gap-2">
+                        <span
+                          class="text-3xl font-display-lg text-primary parsed-score-home"
+                          >2</span
+                        >
+                        <span
+                          class="text-xl font-display-lg text-on-surface-variant/30"
+                          >-</span
+                        >
+                        <span
+                          class="text-3xl font-display-lg text-primary parsed-score-away"
+                          >1</span
+                        >
+                      </div>
+                      <span
+                        class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest bg-surface-container px-2 py-0.5 rounded mt-1"
+                        >FT</span
+                      >
+                    </div>
+                    <div class="flex-1 text-center">
+                      <div
+                        class="w-12 h-12 bg-surface-container-low rounded-full mx-auto mb-2 overflow-hidden flex items-center justify-center"
+                      >
+                        <img
+                          alt="Away Logo"
+                          class="w-8 h-8 object-contain away-logo"
+                          data-alt="A clean, minimalist vector logo of a professional football club with crest elements and circular framing. Vibrant colors with professional sport branding aesthetics."
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNOvM-jSnT6pZ2GvWrccUSQmYtv1uq9G8auPQGz-4Gvi0r5eiSI0RfKWJieHth-8xkHRU2VdbS5hYPfxPtUJ3I-QClYVdI27nyyaP1VYyxREs_tqDNHlhI2IPpQEuI_afyhLjA9Xa-iDqGI6q39oM7cChKNfXQoKFcJS5m_LSISZ6LHvgdWwc2RMgbRDuDPflVQV6PopBZGpIbwlzKl0aHDn0QgK8C21CvpKNY7wh_zRfAVkecT34QhcnXna5qyVyh1ubP-IjCZcxq"
+                        />
+                      </div>
+                      <p class="font-bold text-sm uppercase parsed-away">
+                        Delta Queens
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="bg-surface-container-lowest border border-outline-variant/30 rounded p-3 mb-5"
+                  >
+                    <p
+                      class="text-[10px] font-bold text-on-surface-variant uppercase mb-2"
+                    >
+                      Goal Scorers
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                      <div class="text-[11px] space-y-1 parsed-scorers-home">
+                        <div class="flex items-center gap-1">
+                          <span
+                            class="material-symbols-outlined text-[12px] text-primary"
+                            data-icon="sports_soccer"
+                            >sports_soccer</span
+                          >
+                          <span>O. Asisat 12'</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                          <span
+                            class="material-symbols-outlined text-[12px] text-primary"
+                            data-icon="sports_soccer"
+                            >sports_soccer</span
+                          >
+                          <span>P. Sunday 45'</span>
+                        </div>
+                      </div>
+                      <div
+                        class="text-[11px] space-y-1 parsed-scorers-away text-right"
+                      >
+                        <div class="flex items-center justify-end gap-1">
+                          <span>A. Gift 67'</span>
+                          <span
+                            class="material-symbols-outlined text-[12px] text-primary"
+                            data-icon="sports_soccer"
+                            >sports_soccer</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="flex gap-2 pt-4 border-t border-outline-variant/30"
+                  >
+                    <button
+                      class="flex-1 bg-primary text-on-primary text-[11px] font-bold py-2 rounded hover:opacity-90 transition-all flex items-center justify-center gap-1"
+                    >
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        data-icon="check_circle"
+                        >check_circle</span
+                      >
+                      APPROVE
+                    </button>
+                    <button
+                      class="flex-1 border border-outline text-[11px] font-bold py-2 rounded hover:bg-surface-container-low transition-all flex items-center justify-center gap-1"
+                    >
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        data-icon="edit"
+                        >edit</span
+                      >
+                      EDIT
+                    </button>
+                    <button
+                      class="px-3 border border-error/30 text-error hover:bg-error/10 transition-all rounded"
+                    >
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        data-icon="delete"
+                        >delete</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      const chatInput = document.getElementById("chatInput");
+      const inputGuide = document.getElementById("inputGuide");
+      const processBtn = document.getElementById("processBtn");
+      const cardsContainer = document.getElementById("cardsContainer");
+      const emptyState = document.getElementById("emptyState");
+      const clearBtn = document.getElementById("clearBtn");
+      const cardTemplate = document.getElementById("cardTemplate");
+
+      chatInput.addEventListener("input", (e) => {
+        if (e.target.value.length > 0) {
+          inputGuide.style.opacity = "0";
+        } else {
+          inputGuide.style.opacity = "1";
+        }
+      });
+
+      clearBtn.addEventListener("click", () => {
+        chatInput.value = "";
+        inputGuide.style.opacity = "1";
+        cardsContainer.innerHTML = "";
+        cardsContainer.appendChild(emptyState);
+        emptyState.classList.remove("hidden");
+      });
+
+      processBtn.addEventListener("click", () => {
+        if (chatInput.value.trim() === "") return;
+
+        // Simple "AI Simulation"
+        processBtn.innerHTML =
+          '<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> ANALYZING...';
+        processBtn.disabled = true;
+
+        setTimeout(() => {
+          if (emptyState) emptyState.classList.add("hidden");
+
+          const newCard = cardTemplate.children[0].cloneNode(true);
+
+          // Add some randomness to simulated parse
+          const isRivers = chatInput.value.toLowerCase().includes("rivers");
+          if (!isRivers) {
+            newCard.querySelector(".parsed-home").textContent = "Edo Queens";
+            newCard.querySelector(".parsed-away").textContent = "Abia Angels";
+            newCard.querySelector(".parsed-score-home").textContent = "0";
+            newCard.querySelector(".parsed-score-away").textContent = "0";
+            newCard.querySelector(".parsed-scorers-home").innerHTML =
+              '<span class="text-on-surface-variant italic">No goals</span>';
+            newCard.querySelector(".parsed-scorers-away").innerHTML =
+              '<span class="text-on-surface-variant italic">No goals</span>';
+          }
+
+          newCard.classList.add(
+            "animate-in",
+            "fade-in",
+            "slide-in-from-right-4",
+            "duration-500",
+          );
+          cardsContainer.prepend(newCard);
+
+          processBtn.innerHTML =
+            '<span class="material-symbols-outlined text-sm" data-icon="smart_toy">smart_toy</span> PROCESS WITH AI';
+          processBtn.disabled = false;
+
+          // Optional: Clear or scroll
+          // chatInput.value = '';
+        }, 1200);
+      });
+
+      // Interactive states for buttons
+      document.addEventListener("click", (e) => {
+        if (e.target.closest("button")) {
+          const btn = e.target.closest("button");
+          if (btn.innerText.includes("APPROVE")) {
+            const card = btn.closest(".group");
+            card.style.transform = "scale(0.95)";
+            card.style.opacity = "0.5";
+            setTimeout(() => card.remove(), 300);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

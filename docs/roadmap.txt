@@ -1,0 +1,98 @@
+=== Page 1 ===
+NWFL Data Infrastructure & Production Roadmap
+Prepared as the next operational phase for the NWFL data platform buildout.
+1. Current Progress
+
+Match results + goals synced from Google Sheets ■
+
+AI parsers for WhatsApp text, images, and bulk match entry ■
+
+Basic analytics endpoints (goal distribution, game state) ■
+2. Current Data Gaps
+Data Type
+Status
+Why It Matters
+Player Profiles
+Missing
+Goal scorers are stored only as strings. No player stats, bios, positions, or history.
+Live Match Events
+Missing
+No substitutions, cards, halftime scores, possession, shots, or in-game tracking.
+Fixtures / Schedule
+Missing
+All 273 matches are final results. No upcoming games makes the platform feel inactive.
+Standings Auto-Calculation
+Partial
+Standings table exists but is not automatically recalculated from match results.
+Multi-Season Data
+Missing
+Only the 2024/25 season exists. No historical comparison capability.
+Venue Data
+Partial
+Venue is only a text string with no stadium metadata, capacity, or location.
+Referee Data
+Missing
+Officials are not tracked.
+Transfer / Loan Data
+Missing
+No player movement tracking.
+Injury / Suspension
+Missing
+No player availability tracking.
+3. AI Infrastructure Reality Check
+
+No web crawling: Current AI only parses text manually provided by users. It cannot browse X, Facebook,
+YouTube, or Google in real time.
+
+Free model limitations: Current free-tier models have rate limits, no SLA guarantees, inconsistent output
+formats, and unreliable structured output.
+
+No validation layer: Hallucinated scores or player names can be written directly into the database.
+
+No retry/fallback logic: Single API failures can break sync operations.
+
+
+=== Page 2 ===
+4. Production-Grade Roadmap
+Phase 1 — Foundation Stabilization (2–3 Weeks)
+
+Auto-recalculate standings from match results after every sync
+
+Add fixtures endpoint separating upcoming vs completed matches
+
+Create proper player model with persistent player records and statistics
+
+Create match events model for substitutions, cards, and halftime data
+
+Add validation layer before AI outputs are written to the database
+Phase 2 — Data Ingestion Expansion (1–2 Months)
+
+Build scrapers for NWFL official site, sports blogs, and media outlets
+
+Integrate X (Twitter) API for live club updates
+
+Integrate YouTube Data API for highlights and goal compilations
+
+Integrate Facebook Graph API for club page updates
+
+Aggregate RSS feeds from sports publishers
+
+Add computer vision pipeline for extracting scoreboards from images/videos
+Phase 3 — Monetization & Platform Expansion (2–3 Months)
+
+Launch public API as a paid data product
+
+Build embeddable widgets for blogs and news sites
+
+Offer premium analytics, predictions, and fantasy integrations
+
+Develop white-label admin infrastructure for other leagues
+5. Strategic Direction
+The immediate priority is stabilizing and structuring the data layer before expanding AI ingestion capabilities or
+monetization features. Without strong validation, proper schemas, and automated recalculation systems, scaling data
+ingestion will increase inconsistency and technical debt. The focus should therefore remain on: Reliable structured
+data models Automated standings and fixture systems Player and event-level tracking Validation and sync reliability
+Once the foundation is stable, the platform can evolve into a scalable football data infrastructure product for the NWFL
+ecosystem.
+
+

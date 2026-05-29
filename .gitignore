@@ -26,3 +26,4 @@ dist-ssr
 .*playwright*
 .env
 .kimi-context/
+.venv-pdf/

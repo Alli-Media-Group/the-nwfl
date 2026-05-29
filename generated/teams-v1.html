@@ -1,0 +1,943 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Club Profiles | NWFL Admin Governance Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#b79cff",
+              "surface-container-high": "#dce9ff",
+              "on-secondary-fixed-variant": "#2f2ebe",
+              "on-primary-fixed": "#22005c",
+              "on-secondary-container": "#fffbff",
+              "surface-container-low": "#eff4ff",
+              "inverse-primary": "#d0bcff",
+              "on-secondary-fixed": "#07006c",
+              background: "#f8f9ff",
+              "primary-fixed": "#e9ddff",
+              outline: "#7a7484",
+              "tertiary-fixed": "#e9ddff",
+              "on-surface-variant": "#494453",
+              "secondary-fixed-dim": "#c0c1ff",
+              "outline-variant": "#cbc3d5",
+              "on-background": "#0b1c30",
+              tertiary: "#340081",
+              "tertiary-container": "#4e02b8",
+              "primary-fixed-dim": "#d0bcff",
+              "surface-tint": "#6a45c3",
+              "surface-container": "#e5eeff",
+              secondary: "#4648d4",
+              "surface-container-lowest": "#ffffff",
+              "on-primary": "#ffffff",
+              "surface-variant": "#d3e4fe",
+              "on-error-container": "#93000a",
+              "on-surface": "#0b1c30",
+              primary: "#330082",
+              "surface-container-highest": "#d3e4fe",
+              "primary-container": "#4b1fa3",
+              "error-container": "#ffdad6",
+              "inverse-on-surface": "#eaf1ff",
+              "tertiary-fixed-dim": "#d0bcff",
+              "secondary-fixed": "#e1e0ff",
+              "inverse-surface": "#213145",
+              "surface-bright": "#f8f9ff",
+              "on-tertiary": "#ffffff",
+              "surface-dim": "#cbdbf5",
+              "on-tertiary-fixed-variant": "#5516be",
+              "on-error": "#ffffff",
+              surface: "#f8f9ff",
+              "on-tertiary-container": "#b89cff",
+              error: "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "secondary-container": "#6063ee",
+              "on-primary-fixed-variant": "#5228aa",
+              "on-tertiary-fixed": "#23005c",
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+            spacing: {
+              "container-margin": "24px",
+              "section-gap": "32px",
+              "component-padding-x": "16px",
+              "density-compact": "8px",
+              "component-padding-y": "12px",
+              gutter: "16px",
+            },
+            fontFamily: {
+              "display-lg": ["Montserrat"],
+              "label-md": ["PlusJakartaSans"],
+              "headline-sm": ["Montserrat"],
+              "body-lg": ["PlusJakartaSans"],
+              "headline-md": ["Montserrat"],
+              "body-sm": ["PlusJakartaSans"],
+              "mono-label": ["JetBrainsMono"],
+              "body-md": ["PlusJakartaSans"],
+            },
+            fontSize: {
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-sm": [
+                "18px",
+                { lineHeight: "24px", fontWeight: "700" },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "mono-label": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .card-shadow-hover:hover {
+        box-shadow: 0 4px 12px rgba(51, 0, 130, 0.05);
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md">
+    <!-- SIDE NAVIGATION (Immutable logic from JSON) -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[260px] border-r border-outline-variant bg-surface-container-lowest dark:bg-inverse-surface flex flex-col py-section-gap z-50"
+    >
+      <div class="px-6 mb-10">
+        <h1
+          class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary tracking-tight"
+        >
+          NWFL Admin
+        </h1>
+        <p class="font-label-md text-label-md text-outline">
+          Governance Portal
+        </p>
+      </div>
+      <nav class="flex-1 space-y-1">
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-body-md text-body-md">Dashboard</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">sports_soccer</span>
+          <span class="font-body-md text-body-md">Matches</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-primary dark:text-primary-fixed-dim bg-primary/10 border-l-4 border-primary font-bold transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">groups</span>
+          <span class="font-body-md text-body-md">Teams</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">leaderboard</span>
+          <span class="font-body-md text-body-md">Standings</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">forum</span>
+          <span class="font-body-md text-body-md">WhatsApp Parser</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">sync</span>
+          <span class="font-body-md text-body-md">Sheet Sync</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">photo_library</span>
+          <span class="font-body-md text-body-md">Media Library</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out"
+          href="#"
+        >
+          <span class="material-symbols-outlined">image_not_supported</span>
+          <span class="font-body-md text-body-md">Missing Logos</span>
+        </a>
+      </nav>
+      <div class="px-4 mt-auto">
+        <div
+          class="flex items-center gap-3 px-4 py-2 text-outline bg-surface-container rounded-lg"
+        >
+          <span class="material-symbols-outlined">verified_user</span>
+          <span class="font-label-md text-label-md">Internal Tool</span>
+        </div>
+      </div>
+    </aside>
+    <!-- TOP NAV BAR -->
+    <header
+      class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 border-b border-outline-variant bg-surface/80 backdrop-blur-md flex justify-between items-center px-container-margin z-40"
+    >
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <span
+            class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline"
+            >search</span
+          >
+          <input
+            class="bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-2 text-body-sm focus:ring-2 focus:ring-primary/20 outline-none w-80"
+            placeholder="Search clubs, regions, or personnel..."
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all"
+        >
+          <span class="material-symbols-outlined text-on-surface-variant"
+            >dark_mode</span
+          >
+        </button>
+        <button
+          class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all relative"
+        >
+          <span class="material-symbols-outlined text-on-surface-variant"
+            >notifications</span
+          >
+          <span
+            class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"
+          ></span>
+        </button>
+        <div class="h-8 w-px bg-outline-variant mx-2"></div>
+        <div class="flex items-center gap-3">
+          <span class="text-right hidden sm:block">
+            <p class="font-label-md text-label-md text-on-surface">John Doe</p>
+            <p
+              class="text-[10px] text-outline uppercase font-bold tracking-widest"
+            >
+              Admin
+            </p>
+          </span>
+          <img
+            alt="JD"
+            class="h-9 w-9 rounded-full bg-surface-container-high border border-outline-variant"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7qjZHcnBsYtrk7NaJO4SquchAI2qbs7fIdGp-27KTlejOxCn_bDmV-73eQX1MJS_UNQe504TnvhwqdwiQ9kWz9NV09FUPfB_CMW6JCizr5YWoiSbyQ67-GRA4bMYc_8i9yfVcFyMLZZALQKNgwEH2Gp1pHMS2sLjgx6pu0zGHch29la2TneQJl03iHXDp8veutWRd7Y_576whYVBNGLenTdgdWaeThYAhg7XZRpSYaXylbbOJ2DKiyXoF-6ys8al2QPyvYuVgO3_3"
+          />
+        </div>
+      </div>
+    </header>
+    <!-- MAIN CONTENT CANVAS -->
+    <main class="ml-[260px] pt-16 min-h-screen">
+      <div class="p-container-margin">
+        <!-- PAGE HEADER & SUMMARY -->
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-section-gap"
+        >
+          <div>
+            <h2 class="font-display-lg text-display-lg text-primary">
+              Club Profiles
+            </h2>
+            <div class="flex items-center gap-4 mt-2">
+              <span
+                class="flex items-center gap-1.5 px-3 py-1 bg-primary/5 border border-primary/20 rounded-full"
+              >
+                <span class="font-mono-label text-mono-label text-primary"
+                  >24</span
+                >
+                <span class="font-label-md text-label-md text-outline"
+                  >Total Clubs</span
+                >
+              </span>
+              <span
+                class="flex items-center gap-1.5 px-3 py-1 bg-tertiary/5 border border-tertiary/20 rounded-full"
+              >
+                <span class="font-mono-label text-mono-label text-tertiary"
+                  >2</span
+                >
+                <span class="font-label-md text-label-md text-outline"
+                  >Divisions</span
+                >
+              </span>
+              <span
+                class="flex items-center gap-1.5 px-3 py-1 bg-secondary/5 border border-secondary/20 rounded-full"
+              >
+                <span class="font-mono-label text-mono-label text-secondary"
+                  >Active</span
+                >
+                <span class="font-label-md text-label-md text-outline"
+                  >Season 24/25</span
+                >
+              </span>
+            </div>
+          </div>
+          <button
+            class="bg-primary text-on-primary px-6 py-3 rounded-xl font-headline-sm text-headline-sm flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >add_circle</span
+            >
+            Register New Team
+          </button>
+        </div>
+        <!-- FILTERS BAR -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl mb-gutter flex flex-wrap items-center gap-4"
+        >
+          <div
+            class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded-lg bg-surface min-w-[160px]"
+          >
+            <span class="material-symbols-outlined text-outline text-sm"
+              >filter_list</span
+            >
+            <select
+              class="bg-transparent border-none text-body-sm font-medium focus:ring-0 w-full p-0"
+            >
+              <option>All Groups</option>
+              <option>Group A</option>
+              <option>Group B</option>
+            </select>
+          </div>
+          <div
+            class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded-lg bg-surface min-w-[160px]"
+          >
+            <span class="material-symbols-outlined text-outline text-sm"
+              >location_on</span
+            >
+            <select
+              class="bg-transparent border-none text-body-sm font-medium focus:ring-0 w-full p-0"
+            >
+              <option>All States</option>
+              <option>Lagos</option>
+              <option>Edo</option>
+              <option>Rivers</option>
+            </select>
+          </div>
+          <div
+            class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded-lg bg-surface min-w-[160px]"
+          >
+            <span class="material-symbols-outlined text-outline text-sm"
+              >stars</span
+            >
+            <select
+              class="bg-transparent border-none text-body-sm font-medium focus:ring-0 w-full p-0"
+            >
+              <option>All Status</option>
+              <option>Defending Champion</option>
+              <option>Top 4</option>
+              <option>New Entry</option>
+            </select>
+          </div>
+          <div class="ml-auto flex gap-2">
+            <button
+              class="p-2 border border-outline-variant rounded-lg bg-surface text-outline hover:text-primary transition-colors"
+            >
+              <span class="material-symbols-outlined">grid_view</span>
+            </button>
+            <button
+              class="p-2 border border-outline-variant rounded-lg bg-surface text-outline hover:text-primary transition-colors"
+            >
+              <span class="material-symbols-outlined">view_list</span>
+            </button>
+          </div>
+        </div>
+        <!-- HIGH-DENSITY TEAM GRID -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter"
+        >
+          <!-- Card 1: Edo Queens -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col card-shadow-hover transition-all duration-300"
+          >
+            <div class="p-5 flex-1">
+              <div class="flex justify-between items-start mb-4">
+                <div
+                  class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-center p-2"
+                >
+                  <img
+                    alt="Edo Queens Logo"
+                    class="max-w-full max-h-full object-contain"
+                    data-alt="A professional sports club logo for a team named Edo Queens. The logo features a stylized crown and a football, utilizing a royal purple and gold color scheme. It is presented on a clean, high-contrast white background with professional branding aesthetics."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrDXM0n3iBP3LwKIbSv5LuMZSiJXcR-sEulB8b4e6oD_YbD14yWksOm5HJrClS5J1lPhcrnPPXfA__ygIB-a23D55HscgOxBzW0yisKNNP6anDhIFgXj0dW8n4vEFIYw4Fuyp15M3DNBQFLkl0DTV9Qv-kLAmJDsaz084sUrNbVBpYrEUq7XCTTAMzJXN6c5ZdtICjp3CpMHknblPagza_YTvdd8OxICrRfVML7EuDe-Cj0emjYpjPsrSPnBQjD3H8aRlCBrkoTo1V"
+                  />
+                </div>
+                <span
+                  class="bg-primary/10 text-primary font-mono-label text-[10px] px-2 py-1 rounded border border-primary/20 uppercase tracking-tighter"
+                  >Group A</span
+                >
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Edo Queens FC
+              </h3>
+              <p
+                class="font-body-sm text-body-sm text-outline flex items-center gap-1 mb-4"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >location_on</span
+                >
+                Benin City, Edo State
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span
+                  class="bg-secondary/10 text-secondary text-[10px] font-bold px-2 py-0.5 rounded border border-secondary/20"
+                  >Defending Champion</span
+                >
+                <span
+                  class="bg-on-tertiary-container/10 text-tertiary-container text-[10px] font-bold px-2 py-0.5 rounded border border-tertiary-container/20"
+                  >Top 4</span
+                >
+              </div>
+              <div class="space-y-3 pt-4 border-t border-outline-variant/50">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Coach</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-semibold"
+                    >Aduku Moses</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Home Ground</span
+                  >
+                  <span class="font-body-md text-body-md text-on-surface"
+                    >Ogbemudia Stadium</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-low p-2 grid grid-cols-3 gap-2 border-t border-outline-variant"
+            >
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >edit_square</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Edit</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group border-x border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >person_search</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Roster</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >perm_media</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Media</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- Card 2: Rivers Angels -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col card-shadow-hover transition-all duration-300"
+          >
+            <div class="p-5 flex-1">
+              <div class="flex justify-between items-start mb-4">
+                <div
+                  class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-center p-2"
+                >
+                  <img
+                    alt="Rivers Angels Logo"
+                    class="max-w-full max-h-full object-contain"
+                    data-alt="A sophisticated sports emblem for Rivers Angels FC. The design features angelic wings flanking a football with waves representing the riverine location. The color palette consists of deep blue and silver, set against a pristine, high-density white UI background."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5Fz4G-VmSh3dcl2HdyjkuqXog3oLJO4uRBtA90JqR8kratFUOtfsAhJ7pIM-xzdrDVtBg2-7nYO9emAWfK-envXVukFPf-WQC7RMHvDI3cepf4sTErTh3rNrlmdQcIucIuAT0Sj1W6myZUXRNdf7esbb9qhTG8bDGzChBmHMsNlGYxfobFPnLxrAV7mQS3lrQQpSXMNUQxmolDfCnpWFoIrHjtUQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW_G8"
+                  />
+                </div>
+                <span
+                  class="bg-tertiary/10 text-tertiary font-mono-label text-[10px] px-2 py-1 rounded border border-tertiary/20 uppercase tracking-tighter"
+                  >Group B</span
+                >
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Rivers Angels FC
+              </h3>
+              <p
+                class="font-body-sm text-body-sm text-outline flex items-center gap-1 mb-4"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >location_on</span
+                >
+                Port Harcourt, Rivers
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span
+                  class="bg-on-tertiary-container/10 text-tertiary-container text-[10px] font-bold px-2 py-0.5 rounded border border-tertiary-container/20"
+                  >Top 4</span
+                >
+                <span
+                  class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded border border-outline-variant"
+                  >Active</span
+                >
+              </div>
+              <div class="space-y-3 pt-4 border-t border-outline-variant/50">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Coach</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-semibold"
+                    >Edwin Okon</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Home Ground</span
+                  >
+                  <span class="font-body-md text-body-md text-on-surface"
+                    >Adokiye Stadium</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-low p-2 grid grid-cols-3 gap-2 border-t border-outline-variant"
+            >
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >edit_square</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Edit</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group border-x border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >person_search</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Roster</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >perm_media</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Media</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- Card 3: Bayelsa Queens -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col card-shadow-hover transition-all duration-300"
+          >
+            <div class="p-5 flex-1">
+              <div class="flex justify-between items-start mb-4">
+                <div
+                  class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-center p-2 text-primary"
+                >
+                  <span
+                    class="material-symbols-outlined text-4xl"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >shield</span
+                  >
+                </div>
+                <span
+                  class="bg-primary/10 text-primary font-mono-label text-[10px] px-2 py-1 rounded border border-primary/20 uppercase tracking-tighter"
+                  >Group B</span
+                >
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Bayelsa Queens
+              </h3>
+              <p
+                class="font-body-sm text-body-sm text-outline flex items-center gap-1 mb-4"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >location_on</span
+                >
+                Yenagoa, Bayelsa
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span
+                  class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded border border-outline-variant"
+                  >Active</span
+                >
+              </div>
+              <div class="space-y-3 pt-4 border-t border-outline-variant/50">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Coach</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-semibold"
+                    >Domo Okara</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Home Ground</span
+                  >
+                  <span class="font-body-md text-body-md text-on-surface"
+                    >Samson Stadium</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-low p-2 grid grid-cols-3 gap-2 border-t border-outline-variant"
+            >
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >edit_square</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Edit</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group border-x border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >person_search</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Roster</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >perm_media</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Media</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- Card 4: Delta Queens -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col card-shadow-hover transition-all duration-300"
+          >
+            <div class="p-5 flex-1">
+              <div class="flex justify-between items-start mb-4">
+                <div
+                  class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-center p-2 text-secondary"
+                >
+                  <span
+                    class="material-symbols-outlined text-4xl"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >sports_soccer</span
+                  >
+                </div>
+                <span
+                  class="bg-primary/10 text-primary font-mono-label text-[10px] px-2 py-1 rounded border border-primary/20 uppercase tracking-tighter"
+                  >Group A</span
+                >
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Delta Queens FC
+              </h3>
+              <p
+                class="font-body-sm text-body-sm text-outline flex items-center gap-1 mb-4"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >location_on</span
+                >
+                Asaba, Delta State
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span
+                  class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded border border-outline-variant"
+                  >Active</span
+                >
+                <span
+                  class="bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded border border-error/20"
+                  >Action Required</span
+                >
+              </div>
+              <div class="space-y-3 pt-4 border-t border-outline-variant/50">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Coach</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-semibold"
+                    >Tunde Adediji</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Home Ground</span
+                  >
+                  <span class="font-body-md text-body-md text-on-surface"
+                    >Stephen Keshi</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-low p-2 grid grid-cols-3 gap-2 border-t border-outline-variant"
+            >
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >edit_square</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Edit</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group border-x border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >person_search</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Roster</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >perm_media</span
+                >
+                <span
+                  class="text-[9px] uppercase font-bold text-outline group-hover:text-primary mt-1"
+                  >Media</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- Repeat Pattern for more cards... -->
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col card-shadow-hover transition-all duration-300 opacity-80 hover:opacity-100"
+          >
+            <div class="p-5 flex-1">
+              <div class="flex justify-between items-start mb-4">
+                <div
+                  class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-center p-2 text-outline"
+                >
+                  <span class="material-symbols-outlined text-4xl"
+                    >add_a_photo</span
+                  >
+                </div>
+                <span
+                  class="bg-outline/10 text-outline font-mono-label text-[10px] px-2 py-1 rounded border border-outline/20 uppercase tracking-tighter"
+                  >Group A</span
+                >
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Nasarawa Amazons
+              </h3>
+              <p
+                class="font-body-sm text-body-sm text-outline flex items-center gap-1 mb-4"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >location_on</span
+                >
+                Lafia, Nasarawa
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span
+                  class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded border border-outline-variant"
+                  >Active</span
+                >
+              </div>
+              <div class="space-y-3 pt-4 border-t border-outline-variant/50">
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Coach</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-semibold"
+                    >Christopher D.</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-label-md text-label-md text-outline"
+                    >Home Ground</span
+                  >
+                  <span class="font-body-md text-body-md text-on-surface"
+                    >Lafia City Stadium</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-low p-2 grid grid-cols-3 gap-2 border-t border-outline-variant"
+            >
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >edit_square</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group border-x border-outline-variant"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >person_search</span
+                >
+              </button>
+              <button
+                class="flex flex-col items-center justify-center py-2 hover:bg-white rounded transition-colors group"
+              >
+                <span
+                  class="material-symbols-outlined text-outline group-hover:text-primary text-xl"
+                  >perm_media</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- Placeholder for Empty Slot -->
+          <div
+            class="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-8 bg-surface/50 hover:bg-primary/5 transition-colors cursor-pointer group"
+          >
+            <span
+              class="material-symbols-outlined text-4xl text-outline group-hover:text-primary transition-colors mb-2"
+              >add_circle</span
+            >
+            <p
+              class="font-headline-sm text-headline-sm text-outline group-hover:text-primary transition-colors"
+            >
+              Add Team
+            </p>
+            <p class="text-[10px] font-mono-label text-outline mt-1">
+              AVAILABLE SLOT #25
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      // Micro-interactions
+      document.querySelectorAll(".card-shadow-hover").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          // Subtle interaction logic if needed
+        });
+      });
+    </script>
+  </body>
+</html>

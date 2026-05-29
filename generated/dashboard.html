@@ -1,0 +1,911 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NWFL Editorial Desk - Newsroom Overview</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: #f8f9ff;
+      }
+      .sidebar-active-bar {
+        box-shadow: inset 4px 0 0 0 #330082;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbc3d5;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #7a7484;
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#d0bcff",
+              "on-primary-container": "#b79cff",
+              "primary-fixed-dim": "#d0bcff",
+              "on-secondary-fixed-variant": "#2f2ebe",
+              "surface-container-highest": "#d3e4fe",
+              "on-secondary": "#ffffff",
+              tertiary: "#340081",
+              "surface-container-high": "#dce9ff",
+              "on-primary-fixed": "#22005c",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "primary-fixed": "#e9ddff",
+              "surface-container": "#e5eeff",
+              background: "#f8f9ff",
+              "inverse-on-surface": "#eaf1ff",
+              "surface-tint": "#6a45c3",
+              "surface-dim": "#cbdbf5",
+              primary: "#330082",
+              "inverse-primary": "#d0bcff",
+              "surface-bright": "#f8f9ff",
+              "surface-variant": "#d3e4fe",
+              "secondary-fixed": "#e1e0ff",
+              "outline-variant": "#cbc3d5",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-fixed": "#e9ddff",
+              error: "#ba1a1a",
+              "on-tertiary-fixed-variant": "#5516be",
+              "on-secondary-fixed": "#07006c",
+              secondary: "#4648d4",
+              surface: "#f8f9ff",
+              "on-secondary-container": "#fffbff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#6063ee",
+              "primary-container": "#4b1fa3",
+              "on-surface": "#0b1c30",
+              "on-tertiary": "#ffffff",
+              outline: "#7a7484",
+              "tertiary-container": "#4e02b8",
+              "on-primary": "#ffffff",
+              "on-background": "#0b1c30",
+              "on-tertiary-fixed": "#23005c",
+              "secondary-fixed-dim": "#c0c1ff",
+              "on-surface-variant": "#494453",
+              "inverse-surface": "#213145",
+              "on-tertiary-container": "#b89cff",
+              "surface-container-low": "#eff4ff",
+              "on-primary-fixed-variant": "#5228aa",
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+            spacing: {
+              "section-gap": "32px",
+              "component-padding-x": "16px",
+              "component-padding-y": "12px",
+              "container-margin": "24px",
+              gutter: "16px",
+              "density-compact": "8px",
+            },
+            fontFamily: {
+              "display-lg": ["Montserrat"],
+              "label-md": ["Plus Jakarta Sans"],
+              "body-sm": ["Plus Jakarta Sans"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "body-md": ["Plus Jakarta Sans"],
+              "mono-label": ["JetBrains Mono"],
+              "headline-sm": ["Montserrat"],
+              "headline-md": ["Montserrat"],
+            },
+            fontSize: {
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "mono-label": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "headline-sm": [
+                "18px",
+                { lineHeight: "24px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-primary"
+  >
+    <!-- Side Navigation Shell -->
+    <aside
+      class="fixed left-0 top-0 h-full w-[260px] border-r border-outline-variant bg-surface-container-lowest dark:bg-inverse-surface z-50 flex flex-col py-section-gap"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 bg-primary rounded overflow-hidden flex items-center justify-center"
+        >
+          <img
+            alt="NWFL Official Logo"
+            class="w-8 h-8 filter invert"
+            data-alt="A professional sports logo for a football league, featuring abstract athletic shapes and sharp geometric lines. The style is modern, minimalist, and uses a high-contrast white-on-dark theme suitable for a high-performance governance dashboard. Lighting is crisp and clean."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxXcNyxGbtjmmcpP5Jth3neSlJhXkz-cQCzFd2aYZ1O8XlotbRrqtWGocPAQR4OQGtUc-2yQXflvYcz_cw5zWmJVCXgshgSnVNn9-6uF4yB5AW26mLfvrNfgBmz1BNsBTv-snvtV8D0qvafDn9ZQPwnXu4KOozPdBGyoUQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW-P9nqgxkImRCG5pBoMmBOdiP5sFSG3tp-LVTL_6S2K3r2mWyUGSM5sM6Mc"
+          />
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary leading-tight"
+          >
+            NWFL Admin
+          </h1>
+          <p
+            class="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold"
+          >
+            Governance Portal
+          </p>
+        </div>
+      </div>
+      <nav class="flex-1 space-y-1">
+        <!-- Active Tab: Dashboard -->
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-primary dark:text-primary-fixed-dim bg-primary/10 border-l-4 border-primary font-bold transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="dashboard"
+            >dashboard</span
+          >
+          <span class="font-body-md text-body-md">Dashboard</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="sports_soccer"
+            >sports_soccer</span
+          >
+          <span class="font-body-md text-body-md">Matches</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="groups"
+            >groups</span
+          >
+          <span class="font-body-md text-body-md">Teams</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="leaderboard"
+            >leaderboard</span
+          >
+          <span class="font-body-md text-body-md">Standings</span>
+        </a>
+        <div class="my-4 mx-4 border-t border-outline-variant"></div>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="forum">forum</span>
+          <span class="font-body-md text-body-md">WhatsApp Parser</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="sync">sync</span>
+          <span class="font-body-md text-body-md">Sheet Sync</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="photo_library"
+            >photo_library</span
+          >
+          <span class="font-body-md text-body-md">Media Library</span>
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-colors transition-all duration-200"
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            data-icon="image_not_supported"
+            >image_not_supported</span
+          >
+          <span class="font-body-md text-body-md">Missing Logos</span>
+        </a>
+      </nav>
+      <div class="px-4 mt-auto">
+        <a
+          class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant bg-surface-container-low rounded-lg font-bold"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="verified_user"
+            >verified_user</span
+          >
+          <span class="font-body-md text-body-md">Internal Tool</span>
+        </a>
+      </div>
+    </aside>
+    <!-- Top Navigation Shell -->
+    <header
+      class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 border-b border-outline-variant bg-surface/80 backdrop-blur-md z-40 flex justify-between items-center px-container-margin"
+    >
+      <div class="flex items-center gap-4 flex-1">
+        <div class="relative w-full max-w-md">
+          <span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm"
+            data-icon="search"
+            >search</span
+          >
+          <input
+            class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 text-body-md focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            placeholder="Search news, fixtures, or teams..."
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="hover:bg-surface-container-high/50 rounded-full p-2 transition-all text-on-surface-variant"
+        >
+          <span class="material-symbols-outlined" data-icon="dark_mode"
+            >dark_mode</span
+          >
+        </button>
+        <button
+          class="relative hover:bg-surface-container-high/50 rounded-full p-2 transition-all text-on-surface-variant"
+        >
+          <span class="material-symbols-outlined" data-icon="notifications"
+            >notifications</span
+          >
+          <span
+            class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"
+          ></span>
+        </button>
+        <div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+        <div class="flex items-center gap-3 cursor-pointer group">
+          <div class="text-right">
+            <p class="font-label-md text-label-md text-on-surface leading-none">
+              Jane Doe
+            </p>
+            <p class="text-[10px] text-on-surface-variant font-semibold">
+              Chief Editor
+            </p>
+          </div>
+          <div
+            class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center border border-outline-variant group-hover:border-primary transition-colors overflow-hidden"
+          >
+            <img
+              alt="JD"
+              class="w-full h-full object-cover"
+              data-alt="A professional headshot of a woman in business attire, looking confident and smiling slightly. The lighting is studio-quality with soft, even illumination on a clean, neutral background, reflecting a professional SaaS environment. The overall aesthetic is sharp and high-end."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFaLVFXBEr-m3ogMdrtGZUe3UQDvDUxFShoWWbHougyHjr0tFz3E38fX8e0bnTUpya-P0mXW-fi68TMU7Q3Po-b6Da5FBLaLbB3UfeaWbTajit7NmAgHWB7wd2KrfIwRvHzjYp-WV0_iR6165-Gc1-3Vs80MppJ5z2_3WdZSS8jIVm_3IAVM7EVCmWTwTdnH2o3kOGXdzpmeekMGRsdOgvcChjzqkQ03btIQdDH9wIObxSKhDtGlDkn1oyxthysulXa7dhWW3oAsB0"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="ml-[260px] pt-16 min-h-screen p-container-margin">
+      <!-- Header Section -->
+      <div class="flex justify-between items-end mb-section-gap">
+        <div>
+          <h2 class="font-display-lg text-display-lg text-primary">
+            Newsroom Overview
+          </h2>
+          <p class="text-on-surface-variant mt-1">
+            High-performance dashboard for league governance and editorial
+            control.
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            class="px-4 py-2 bg-surface-container-highest border border-outline-variant text-on-surface font-bold rounded-lg hover:bg-surface-container-high transition-colors flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined text-sm" data-icon="download"
+              >download</span
+            >
+            Export Report
+          </button>
+          <button
+            class="px-4 py-2 bg-primary text-on-primary font-bold rounded-lg hover:brightness-110 transition-all shadow-sm flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined text-sm" data-icon="add"
+              >add</span
+            >
+            Create New Entry
+          </button>
+        </div>
+      </div>
+      <!-- Pending Alerts Banner -->
+      <div
+        class="mb-section-gap bg-error-container text-on-error-container p-4 rounded-lg border-l-8 border-error flex items-center justify-between shadow-sm"
+      >
+        <div class="flex items-center gap-4">
+          <div
+            class="w-10 h-10 bg-error/10 rounded-full flex items-center justify-center"
+          >
+            <span
+              class="material-symbols-outlined text-error"
+              data-icon="warning"
+              >warning</span
+            >
+          </div>
+          <div>
+            <h3 class="font-bold text-headline-sm leading-tight">
+              Critical Attention Required
+            </h3>
+            <p class="text-body-md opacity-90">
+              There are 5 pending alerts regarding match protocol violations and
+              missing logo assets.
+            </p>
+          </div>
+        </div>
+        <button
+          class="px-6 py-2 bg-error text-on-error font-bold rounded-lg hover:bg-error/90 transition-all"
+        >
+          Review Now
+        </button>
+      </div>
+      <!-- Bento Grid: Stats Cards -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-section-gap"
+      >
+        <!-- Total Teams Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant p-4 rounded-lg flex flex-col justify-between h-32 relative overflow-hidden group"
+        >
+          <div class="flex justify-between items-start">
+            <span
+              class="text-label-md text-on-surface-variant font-bold uppercase tracking-wider"
+              >Total Teams</span
+            >
+            <span
+              class="px-2 py-0.5 bg-success/10 text-green-700 text-[10px] font-bold rounded-full border border-green-200"
+              >+2 New</span
+            >
+          </div>
+          <div class="flex items-end justify-between">
+            <h4 class="font-display-lg text-display-lg leading-none">16</h4>
+            <div class="w-20 h-10">
+              <svg
+                class="w-full h-full stroke-primary fill-none stroke-2"
+                viewbox="0 0 100 30"
+              >
+                <path
+                  d="M0,25 L10,20 L20,28 L30,15 L40,22 L50,10 L60,18 L70,5 L80,12 L90,2 L100,8"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Matches Played Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant p-4 rounded-lg flex flex-col justify-between h-32 relative overflow-hidden group"
+        >
+          <div class="flex justify-between items-start">
+            <span
+              class="text-label-md text-on-surface-variant font-bold uppercase tracking-wider"
+              >Matches Played</span
+            >
+            <div
+              class="flex items-center gap-1 text-green-700 font-bold text-[10px]"
+            >
+              <span
+                class="material-symbols-outlined text-[12px]"
+                data-icon="trending_up"
+                >trending_up</span
+              >
+              +12%
+            </div>
+          </div>
+          <div class="flex items-end justify-between">
+            <h4 class="font-display-lg text-display-lg leading-none">124</h4>
+            <div class="w-20 h-10">
+              <svg
+                class="w-full h-full stroke-primary fill-none stroke-2 opacity-60"
+                viewbox="0 0 100 30"
+              >
+                <path
+                  d="M0,28 L10,25 L20,20 L30,22 L40,15 L50,18 L60,10 L70,12 L80,5 L90,8 L100,2"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Goals Scored Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant p-4 rounded-lg flex flex-col justify-between h-32 relative overflow-hidden group"
+        >
+          <div class="flex justify-between items-start">
+            <span
+              class="text-label-md text-on-surface-variant font-bold uppercase tracking-wider"
+              >Goals Scored</span
+            >
+            <div
+              class="flex items-center gap-1 text-green-700 font-bold text-[10px]"
+            >
+              <span
+                class="material-symbols-outlined text-[12px]"
+                data-icon="trending_up"
+                >trending_up</span
+              >
+              +8.4%
+            </div>
+          </div>
+          <div class="flex items-end justify-between">
+            <h4 class="font-display-lg text-display-lg leading-none">312</h4>
+            <div class="w-20 h-10">
+              <svg
+                class="w-full h-full stroke-primary fill-none stroke-2 opacity-80"
+                viewbox="0 0 100 30"
+              >
+                <path d="M0,30 Q25,10 50,20 T100,5"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Pending Alerts Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant p-4 rounded-lg flex flex-col justify-between h-32 relative overflow-hidden group"
+        >
+          <div class="flex justify-between items-start">
+            <span
+              class="text-label-md text-on-surface-variant font-bold uppercase tracking-wider"
+              >Pending Alerts</span
+            >
+            <div
+              class="flex items-center gap-1 text-error font-bold text-[10px]"
+            >
+              <span
+                class="material-symbols-outlined text-[12px]"
+                data-icon="priority_high"
+                >priority_high</span
+              >
+              High
+            </div>
+          </div>
+          <div class="flex items-end justify-between">
+            <h4 class="font-display-lg text-display-lg leading-none text-error">
+              05
+            </h4>
+            <div class="w-20 h-10">
+              <svg
+                class="w-full h-full stroke-error fill-none stroke-2"
+                viewbox="0 0 100 30"
+              >
+                <rect height="10" width="10" x="0" y="20"></rect>
+                <rect height="15" width="10" x="15" y="15"></rect>
+                <rect height="5" width="10" x="30" y="25"></rect>
+                <rect height="20" width="10" x="45" y="10"></rect>
+                <rect height="10" width="10" x="60" y="20"></rect>
+                <rect height="25" width="10" x="75" y="5"></rect>
+                <rect height="18" width="10" x="90" y="12"></rect>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+        <!-- Recent Matches Table (Col Span 2) -->
+        <div
+          class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col"
+        >
+          <div
+            class="px-6 py-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center"
+          >
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Recent Matches
+            </h3>
+            <a
+              class="text-primary font-bold text-label-md hover:underline"
+              href="#"
+              >View All Fixtures</a
+            >
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="bg-surface-container-low/50">
+                <tr>
+                  <th
+                    class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Match ID
+                  </th>
+                  <th
+                    class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Fixture
+                  </th>
+                  <th
+                    class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center"
+                  >
+                    Score
+                  </th>
+                  <th
+                    class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
+                  <th
+                    class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Time
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant">
+                <!-- Match Row 1 -->
+                <tr
+                  class="hover:bg-surface-container-low transition-colors group"
+                >
+                  <td class="px-6 py-3 font-mono-label text-mono-label">
+                    M-84920
+                  </td>
+                  <td class="px-6 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="flex -space-x-2">
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          RV
+                        </div>
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          FC
+                        </div>
+                      </div>
+                      <span class="font-body-md font-bold"
+                        >Rivers Angels vs FC Robo</span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-3 text-center">
+                    <span
+                      class="font-display-lg text-[18px] bg-primary text-on-primary px-3 py-1 rounded"
+                      >2 - 1</span
+                    >
+                  </td>
+                  <td class="px-6 py-3">
+                    <span
+                      class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold uppercase rounded-full border border-primary/20"
+                      >Final</span
+                    >
+                  </td>
+                  <td class="px-6 py-3 text-on-surface-variant text-body-sm">
+                    Today, 14:00
+                  </td>
+                </tr>
+                <!-- Match Row 2 (Live) -->
+                <tr
+                  class="hover:bg-surface-container-low transition-colors group"
+                >
+                  <td class="px-6 py-3 font-mono-label text-mono-label">
+                    M-84921
+                  </td>
+                  <td class="px-6 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="flex -space-x-2">
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          BA
+                        </div>
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          NA
+                        </div>
+                      </div>
+                      <span class="font-body-md font-bold"
+                        >Bayelsa Queens vs Nasarawa Amazons</span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-3 text-center">
+                    <div class="flex flex-col items-center">
+                      <span class="font-display-lg text-[18px] text-error"
+                        >1 - 1</span
+                      >
+                      <span
+                        class="text-[9px] font-bold text-error animate-pulse"
+                        >68'</span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-3">
+                    <span
+                      class="px-3 py-1 bg-error/10 text-error text-[10px] font-extrabold uppercase rounded-full border border-error/20 flex items-center gap-1 w-fit"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 bg-error rounded-full animate-ping"
+                      ></span>
+                      Live
+                    </span>
+                  </td>
+                  <td class="px-6 py-3 text-on-surface-variant text-body-sm">
+                    Today, 16:00
+                  </td>
+                </tr>
+                <!-- Match Row 3 -->
+                <tr
+                  class="hover:bg-surface-container-low transition-colors group"
+                >
+                  <td class="px-6 py-3 font-mono-label text-mono-label">
+                    M-84919
+                  </td>
+                  <td class="px-6 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="flex -space-x-2">
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          ED
+                        </div>
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          AB
+                        </div>
+                      </div>
+                      <span class="font-body-md font-bold"
+                        >Edo Queens vs Abia Angels</span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-3 text-center">
+                    <span
+                      class="font-display-lg text-[18px] bg-primary text-on-primary px-3 py-1 rounded"
+                      >3 - 0</span
+                    >
+                  </td>
+                  <td class="px-6 py-3">
+                    <span
+                      class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold uppercase rounded-full border border-primary/20"
+                      >Final</span
+                    >
+                  </td>
+                  <td class="px-6 py-3 text-on-surface-variant text-body-sm">
+                    Yesterday, 15:30
+                  </td>
+                </tr>
+                <!-- Match Row 4 -->
+                <tr
+                  class="hover:bg-surface-container-low transition-colors group"
+                >
+                  <td class="px-6 py-3 font-mono-label text-mono-label">
+                    M-84918
+                  </td>
+                  <td class="px-6 py-3">
+                    <div class="flex items-center gap-3">
+                      <div class="flex -space-x-2">
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          DL
+                        </div>
+                        <div
+                          class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold"
+                        >
+                          CO
+                        </div>
+                      </div>
+                      <span class="font-body-md font-bold"
+                        >Delta Queens vs Confluence Queens</span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-3 text-center">
+                    <span
+                      class="font-display-lg text-[18px] bg-primary text-on-primary px-3 py-1 rounded"
+                      >0 - 0</span
+                    >
+                  </td>
+                  <td class="px-6 py-3">
+                    <span
+                      class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold uppercase rounded-full border border-primary/20"
+                      >Final</span
+                    >
+                  </td>
+                  <td class="px-6 py-3 text-on-surface-variant text-body-sm">
+                    Yesterday, 14:00
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Live Operations Cards -->
+        <div class="space-y-gutter">
+          <div
+            class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg shadow-sm hover:border-primary transition-all cursor-pointer group"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div
+                class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-on-primary transition-all"
+              >
+                <span
+                  class="material-symbols-outlined text-3xl"
+                  data-icon="forum"
+                  >forum</span
+                >
+              </div>
+              <span
+                class="px-2 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded border border-green-200"
+                >System Ready</span
+              >
+            </div>
+            <h3 class="font-headline-sm text-headline-sm mb-2">
+              WhatsApp Parser
+            </h3>
+            <p
+              class="text-on-surface-variant text-body-md mb-6 leading-relaxed"
+            >
+              Instantly convert live match updates from regional field reporters
+              into dashboard-ready data entries.
+            </p>
+            <button
+              class="w-full py-3 bg-surface-container-high text-primary font-bold rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-all flex items-center justify-center gap-2"
+            >
+              Launch Parser
+              <span
+                class="material-symbols-outlined text-sm"
+                data-icon="arrow_forward"
+                >arrow_forward</span
+              >
+            </button>
+          </div>
+          <div
+            class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg shadow-sm hover:border-secondary transition-all cursor-pointer group"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div
+                class="p-3 bg-secondary/5 rounded-lg text-secondary group-hover:bg-secondary group-hover:text-on-secondary transition-all"
+              >
+                <span
+                  class="material-symbols-outlined text-3xl"
+                  data-icon="sync"
+                  >sync</span
+                >
+              </div>
+              <span
+                class="px-2 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold rounded border border-blue-200"
+                >Last Sync: 4m ago</span
+              >
+            </div>
+            <h3 class="font-headline-sm text-headline-sm mb-2">Sheet Sync</h3>
+            <p
+              class="text-on-surface-variant text-body-md mb-6 leading-relaxed"
+            >
+              Synchronize league spreadsheets with the master database to ensure
+              all records across platforms are current.
+            </p>
+            <button
+              class="w-full py-3 bg-surface-container-high text-secondary font-bold rounded-lg group-hover:bg-secondary group-hover:text-on-secondary transition-all flex items-center justify-center gap-2"
+            >
+              Run Full Sync
+              <span
+                class="material-symbols-outlined text-sm"
+                data-icon="refresh"
+                >refresh</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- System Status Footer -->
+      <footer
+        class="mt-section-gap pt-6 border-t border-outline-variant flex justify-between items-center text-on-surface-variant"
+      >
+        <div class="flex gap-6 text-body-sm">
+          <p>© 2024 Nigeria Women Football League</p>
+          <a class="hover:text-primary transition-colors" href="#"
+            >Privacy Protocol</a
+          >
+          <a class="hover:text-primary transition-colors" href="#"
+            >Admin Manual</a
+          >
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          <p class="font-mono-label text-[11px] uppercase tracking-tighter">
+            Gateway: 192.168.1.1 - Status: Operational
+          </p>
+        </div>
+      </footer>
+    </main>
+    <!-- FAB Contextual Action -->
+    <button
+      class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform group z-50"
+    >
+      <span class="material-symbols-outlined text-2xl" data-icon="bolt"
+        >bolt</span
+      >
+      <div
+        class="absolute right-16 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-lg text-body-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+      >
+        Quick Action Panel
+      </div>
+    </button>
+    <script>
+      // Micro-interactions and state handling
+      document.addEventListener("DOMContentLoaded", () => {
+        // Hover effect for table rows
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach((row) => {
+          row.addEventListener("mouseenter", () => {
+            row.style.transform = "translateX(4px)";
+            row.style.transition = "transform 0.2s ease-out";
+          });
+          row.addEventListener("mouseleave", () => {
+            row.style.transform = "translateX(0)";
+          });
+        });
+
+        // Pulsing animation for live badges handled by CSS but script could toggle states
+        setInterval(() => {
+          const liveBadge = document.querySelector(".animate-pulse");
+          if (liveBadge) {
+            // Randomly vary intensity or check real status here
+          }
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
