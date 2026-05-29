@@ -86,8 +86,9 @@ function adaptTeam(t, standingsMap, nextMatchMap) {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
-export async function fetchStandings() {
-  const rows = await get('/api/standings/')
+export async function fetchStandings(season) {
+  const qs = season ? `?season=${encodeURIComponent(season)}` : ''
+  const rows = await get(`/api/standings/${qs}`)
   const adapted = rows.map(adaptStanding)
   const groupA = adapted.filter(s => {
     const row = rows.find(r => r.team.id === s.id)
@@ -102,9 +103,14 @@ export async function fetchStandings() {
   return { groupA: sort(groupA), groupB: sort(groupB) }
 }
 
-export async function fetchMatches() {
-  const rows = await get('/api/matches/')
+export async function fetchMatches(season) {
+  const qs = season ? `?season=${encodeURIComponent(season)}` : ''
+  const rows = await get(`/api/matches/${qs}`)
   return rows.map(adaptMatch)
+}
+
+export async function fetchSeasons() {
+  return get('/api/matches/seasons/')
 }
 
 export async function fetchAnalyticsSeason() {
@@ -112,11 +118,12 @@ export async function fetchAnalyticsSeason() {
   return rows
 }
 
-export async function fetchTeams() {
+export async function fetchTeams(season) {
+  const qs = season ? `?season=${encodeURIComponent(season)}` : ''
   const [teams, standings, matches] = await Promise.all([
     get('/api/teams/'),
-    get('/api/standings/'),
-    get('/api/matches/'),
+    get(`/api/standings/${qs}`),
+    get(`/api/matches/${qs}`),
   ])
 
   // Build standings lookup by team id
