@@ -6,6 +6,14 @@
   gap: var(--sp-lg);
   height: 100%;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+  }
+
   &__title {
     font-family: var(--font-heading);
     font-size: var(--fs-2xl);
@@ -13,6 +21,45 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-white);
+  }
+
+  &__tabs {
+    display: flex;
+    gap: var(--sp-xs);
+  }
+
+  &__tab {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(138, 61, 255, 0.2);
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      border-color: rgba(138, 61, 255, 0.5);
+      color: var(--color-white);
+    }
+
+    &.active {
+      background: rgba(138, 61, 255, 0.15);
+      border-color: rgba(138, 61, 255, 0.4);
+      color: var(--color-highlight);
+    }
+  }
+
+  &__empty {
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--color-muted);
+    text-align: center;
+    padding: var(--sp-xl) 0;
   }
 
   &__list {

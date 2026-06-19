@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchTeams, fetchStandings } from '../../lib/api';
 import SkeletonTeamCard from '../../components/SkeletonTeamCard/SkeletonTeamCard';
 import Footer from '../../components/Footer/Footer';
+import { useSeason } from '../../hooks/useSeason';
 import './Teams.scss';
 
 const FILTERS = ['All', 'Group A', 'Group B'];
@@ -156,6 +157,7 @@ function TeamCard({ team, isSelected, onClick }) {
 }
 
 export default function Teams() {
+  const { season, ready } = useSeason();
   const [teams, setTeams]         = useState([]);
   const [groupA, setGroupA]       = useState([]);
   const [groupB, setGroupB]       = useState([]);
@@ -164,21 +166,25 @@ export default function Teams() {
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
+    if (!ready || !season) return;
+    let cancelled = false;
     Promise.all([
-      fetchTeams(),
-      fetchStandings(),
+      fetchTeams(season),
+      fetchStandings(season),
     ])
       .then(([teamsData, standingsData]) => {
+        if (cancelled) return;
         setTeams(teamsData);
         setGroupA(standingsData.groupA);
         setGroupB(standingsData.groupB);
         setLoading(false);
       })
       .catch(() => {
+        if (cancelled) return;
         setLoading(false);
       });
-  }, []);
+    return () => { cancelled = true; };
+  }, [season, ready]);
 
   const filtered = teams.filter(t => {
     if (activeFilter === 'All') return true;
@@ -193,7 +199,7 @@ export default function Teams() {
     <>
       <div className="teams-page">
         <div className="teams-page__hero">
-          <p className="teams-page__season">NWFL Premiership · 2024/25 Season</p>
+          <p className="teams-page__season">NWFL Premiership · {season || '2024/25'} Season</p>
           <h1 className="teams-page__title">The Teams</h1>
         </div>
 

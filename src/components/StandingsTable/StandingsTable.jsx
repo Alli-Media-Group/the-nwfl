@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { fetchStandings } from '../../lib/api';
+import { useState } from 'react';
 import SkeletonTableRow from '../SkeletonTableRow/SkeletonTableRow';
 import './StandingsTable.scss';
 
@@ -99,24 +98,8 @@ function SkeletonTable() {
   );
 }
 
-export default function StandingsTable() {
+export default function StandingsTable({ groupA = [], groupB = [], loading = false }) {
   const [activeGroup, setActiveGroup] = useState('A');
-  const [groupA, setGroupA] = useState([]);
-  const [groupB, setGroupB] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    fetchStandings()
-      .then(({ groupA, groupB }) => {
-        setGroupA(groupA);
-        setGroupB(groupB);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <div className="standings-table">

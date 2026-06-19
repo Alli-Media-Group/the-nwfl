@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SkeletonCard from '../SkeletonCard/SkeletonCard';
 import './FixturesPanel.scss';
@@ -84,9 +85,32 @@ function FixtureCard({ match }) {
 }
 
 export default function FixturesPanel({ matches = [], loading = false }) {
+  const [activeTab, setActiveTab] = useState('fixtures');
+
+  const fixtures = matches.filter(m => m.status === 'UPCOMING');
+  const results = matches.filter(m => m.status === 'FT');
+
+  const displayMatches = activeTab === 'fixtures' ? fixtures : results;
+
   return (
     <div className="fixtures-panel">
-      <h2 className="fixtures-panel__title">Fixtures &amp; Results</h2>
+      <div className="fixtures-panel__header">
+        <h2 className="fixtures-panel__title">Fixtures &amp; Results</h2>
+        <div className="fixtures-panel__tabs">
+          <button
+            className={`fixtures-panel__tab${activeTab === 'fixtures' ? ' active' : ''}`}
+            onClick={() => setActiveTab('fixtures')}
+          >
+            Fixtures ({fixtures.length})
+          </button>
+          <button
+            className={`fixtures-panel__tab${activeTab === 'results' ? ' active' : ''}`}
+            onClick={() => setActiveTab('results')}
+          >
+            Results ({results.length})
+          </button>
+        </div>
+      </div>
 
       <div className="fixtures-panel__list">
         {loading ? (
@@ -97,8 +121,10 @@ export default function FixturesPanel({ matches = [], loading = false }) {
             <SkeletonCard />
             <SkeletonCard />
           </>
+        ) : displayMatches.length === 0 ? (
+          <p className="fixtures-panel__empty">No {activeTab} available for this season.</p>
         ) : (
-          matches.map(match => (
+          displayMatches.map(match => (
             <FixtureCard key={match.id} match={match} />
           ))
         )}

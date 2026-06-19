@@ -113,9 +113,28 @@ export async function fetchSeasons() {
   return get('/api/matches/seasons/')
 }
 
-export async function fetchAnalyticsSeason() {
-  const rows = await get('/api/analytics/season/')
+export async function fetchAnalyticsSeason(season) {
+  const qs = season ? `?season=${encodeURIComponent(season)}` : ''
+  const rows = await get(`/api/analytics/season/${qs}`)
   return rows
+}
+
+export async function fetchGoalDistribution(season) {
+  const qs = season ? `?season=${encodeURIComponent(season)}` : ''
+  return get(`/api/analytics/goal-distribution/${qs}`)
+}
+
+export async function fetchPositionTrends(group, season) {
+  const params = new URLSearchParams()
+  if (group) params.set('group', group)
+  if (season) params.set('season', season)
+  const qs = params.toString()
+  return get(`/api/analytics/position-trends/${qs ? `?${qs}` : ''}`)
+}
+
+export async function fetchTopScorers(season) {
+  const qs = season ? `?season=${encodeURIComponent(season)}` : ''
+  return get(`/api/analytics/top-scorers/${qs}`)
 }
 
 export async function fetchTeams(season) {
@@ -133,7 +152,6 @@ export async function fetchTeams(season) {
   }
 
   // Build "next upcoming match" label per team
-  const now = new Date()
   const upcoming = matches
     .filter(m => m.status === 'UPCOMING')
     .sort((a, b) => {
