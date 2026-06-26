@@ -186,3 +186,40 @@ export async function fetchTeams(season) {
 
   return [...groupA, ...groupB]
 }
+
+// ── Blog / News / Gallery ─────────────────────────────────────────────────────
+
+export async function fetchPosts(category = '', page = 1, pageSize = 12) {
+  const params = new URLSearchParams()
+  params.set('page', String(page))
+  params.set('page_size', String(pageSize))
+  if (category) params.set('category', category)
+  const data = await get(`/api/blog/posts/?${params.toString()}`)
+  return {
+    posts: data.results ?? data,
+    count: data.count ?? data.length,
+    next: data.next,
+    previous: data.previous,
+  }
+}
+
+export async function fetchPost(slug) {
+  return get(`/api/blog/posts/${encodeURIComponent(slug)}/`)
+}
+
+export async function fetchGalleries(page = 1, pageSize = 12) {
+  const params = new URLSearchParams()
+  params.set('page', String(page))
+  params.set('page_size', String(pageSize))
+  const data = await get(`/api/blog/galleries/?${params.toString()}`)
+  return {
+    galleries: data.results ?? data,
+    count: data.count ?? data.length,
+    next: data.next,
+    previous: data.previous,
+  }
+}
+
+export async function fetchGallery(slug) {
+  return get(`/api/blog/galleries/${encodeURIComponent(slug)}/`)
+}

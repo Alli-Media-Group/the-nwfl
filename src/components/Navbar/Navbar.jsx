@@ -6,6 +6,9 @@ import './Navbar.scss';
 
 const NAV_LINKS = [
   { label: 'Home',      to: '/'          },
+  { label: 'News',      to: '/news'      },
+  { label: 'Blog',      to: '/blog'      },
+  { label: 'Gallery',   to: '/gallery'   },
   { label: 'Stats',     to: '/stats'     },
   { label: 'Analytics', to: '/analytics' },
 ];

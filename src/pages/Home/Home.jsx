@@ -3,8 +3,8 @@ import Hero from "../../components/Hero/Hero";
 import NewsSection from "../../components/NewsSection/NewsSection";
 import RisingStars from "../../components/RisingStars/RisingStars";
 import LeagueSection from "../../components/LeagueSection/LeagueSection";
-import { fetchMatches, fetchStandings } from "../../lib/api";
-import { mockFeaturedArticle, mockArticles } from "../../data/mockNews";
+import { fetchMatches, fetchStandings, fetchPosts } from "../../lib/api";
+import { mockFeaturedArticle } from "../../data/mockNews";
 import { mockPlayers } from "../../data/mockPlayers";
 import heroBg from "../../data/images/hero.webp";
 import stadiumBg from "../../data/images/stadium.webp";
@@ -15,8 +15,10 @@ export default function Home() {
   const { season, setSeason, seasons, ready } = useSeason();
   const [matches, setMatches] = useState([]);
   const [standings, setStandings] = useState({ groupA: [], groupB: [] });
+  const [news, setNews] = useState([]);
   const [matchesLoading, setMatchesLoading] = useState(true);
   const [standingsLoading, setStandingsLoading] = useState(true);
+  const [newsLoading, setNewsLoading] = useState(true);
 
   useEffect(() => {
     if (!ready || !season) return;
@@ -41,6 +43,18 @@ export default function Home() {
         if (cancelled) return;
         setStandingsLoading(false);
       });
+
+    fetchPosts('news')
+      .then((data) => {
+        if (cancelled) return;
+        setNews(data.posts.slice(0, 4));
+        setNewsLoading(false);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setNewsLoading(false);
+      });
+
     return () => { cancelled = true; };
   }, [season, ready]);
 
@@ -57,7 +71,20 @@ export default function Home() {
       <NewsSection
         bgImage={stadiumBg}
         featured={mockFeaturedArticle}
-        articles={mockArticles}
+        articles={newsLoading ? [] : news.map((post) => ({
+          id: post.id,
+          slug: post.slug,
+          title: post.title,
+          image: post.featured_image_url,
+          date: post.published_at
+            ? new Date(post.published_at).toLocaleDateString('en-NG', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              })
+            : '',
+          category: post.category,
+        }))}
       />
 
       <RisingStars players={mockPlayers} />
