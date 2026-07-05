@@ -1,0 +1,148 @@
+@use '../../styles/mixins' as m;
+
+.player-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+
+  &__media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: var(--color-surface-subtle);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--transition-base), transform var(--transition-slow);
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  &:hover &__img {
+    transform: scale(1.04);
+  }
+
+  &__skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      var(--color-surface-subtle) 30%,
+      rgba(255, 255, 255, 0.06) 50%,
+      var(--color-surface-subtle) 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  &__fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: var(--sp-lg);
+    mix-blend-mode: screen;
+    opacity: 0.92;
+    filter: drop-shadow(0 0 10px rgba(138, 61, 255, 0.4));
+  }
+
+  &__jersey {
+    position: absolute;
+    top: var(--sp-sm);
+    right: var(--sp-sm);
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: var(--sp-sm);
+    left: var(--sp-sm);
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+    border-radius: 50%;
+    background: var(--color-white);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-card-sm);
+  }
+
+  &__team-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__team-fallback {
+    font-family: var(--font-heading);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    padding: var(--sp-md);
+    background: var(--color-surface-elevated);
+  }
+
+  &__name {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    color: var(--color-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+  }
+
+  &__position {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  &__goals {
+    margin-left: auto;
+    font-size: var(--fs-sm);
+    color: var(--color-muted);
+
+    strong {
+      color: var(--color-white);
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

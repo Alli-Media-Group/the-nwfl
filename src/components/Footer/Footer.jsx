@@ -1,5 +1,6 @@
 import { FaFacebookF, FaXTwitter, FaInstagram, FaYoutube } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import CarbonBadge from '../CarbonBadge/CarbonBadge';
 import logo from '/logo.webp';
 import './Footer.scss';
 
@@ -52,6 +53,11 @@ const Footer = () => {
             <Icon />
           </a>
         ))}
+      </div>
+
+      {/* Carbon footprint badge */}
+      <div className="footer__carbon">
+        <CarbonBadge />
       </div>
 
       {/* Copyright */}

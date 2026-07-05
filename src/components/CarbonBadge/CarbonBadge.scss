@@ -1,0 +1,52 @@
+@use '../../styles/mixins' as m;
+
+.carbon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  padding: var(--sp-xs) var(--sp-md);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: var(--color-off-white);
+  line-height: 1.4;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &--green {
+      background: var(--color-success);
+      box-shadow: 0 0 8px var(--color-success);
+    }
+
+    &--neutral {
+      background: var(--color-muted);
+      box-shadow: 0 0 8px var(--color-muted);
+    }
+  }
+
+  &__text {
+    strong {
+      color: var(--color-white);
+      font-weight: 600;
+    }
+  }
+
+  &__divider {
+    width: 1px;
+    height: 12px;
+    background: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  &__rating {
+    color: var(--color-muted);
+  }
+}

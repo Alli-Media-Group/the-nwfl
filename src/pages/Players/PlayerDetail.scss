@@ -1,0 +1,431 @@
+@use '../../styles/mixins' as m;
+
+.player-detail {
+  padding-block: var(--sp-section);
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-xl);
+    color: var(--color-muted);
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-white);
+    }
+  }
+
+  &__hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xl);
+    padding: var(--sp-2xl) var(--sp-lg);
+    text-align: center;
+
+    @include m.md {
+      flex-direction: row;
+      text-align: left;
+      padding: var(--sp-2xl);
+    }
+
+    &--loading {
+      justify-content: center;
+      min-height: 280px;
+    }
+  }
+
+  &__avatar {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-surface-subtle);
+    border: 3px solid var(--color-border-subtle);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    @include m.md {
+      width: 180px;
+      height: 180px;
+    }
+
+    &--loading {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+  }
+
+  &__avatar-skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      var(--color-surface-subtle) 30%,
+      rgba(255, 255, 255, 0.06) 50%,
+      var(--color-surface-subtle) 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  &__fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    opacity: 0.92;
+    filter: drop-shadow(0 0 12px rgba(138, 61, 255, 0.45));
+  }
+
+  &__avatar-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+    border-radius: 50%;
+    background: var(--color-white);
+    border: 3px solid var(--color-surface-elevated);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-card-sm);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__loading-text {
+    color: var(--color-muted);
+    font-size: var(--fs-md);
+  }
+
+  &__header-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
+
+  &__name {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(var(--fs-2xl), 5vw, var(--fs-4xl));
+    color: var(--color-white);
+  }
+
+  &__team {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-sm);
+    color: var(--color-muted);
+    font-size: var(--fs-md);
+
+    @include m.md {
+      justify-content: flex-start;
+    }
+  }
+
+  &__team-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    justify-content: center;
+
+    @include m.md {
+      justify-content: flex-start;
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--sp-xs) var(--sp-md);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border-subtle);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-off-white);
+
+    &--position {
+      background: var(--color-primary);
+      border-color: var(--color-accent);
+      color: var(--color-white);
+    }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-md);
+    margin: var(--sp-xl) 0;
+
+    @include m.md {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xs);
+    padding: var(--sp-lg);
+    text-align: center;
+  }
+
+  &__stat-value {
+    font-family: var(--font-heading);
+    font-size: var(--fs-3xl);
+    color: var(--color-white);
+  }
+
+  &__stat-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+  }
+
+  &__section {
+    margin-bottom: var(--sp-xl);
+  }
+
+  &__section-title {
+    margin: 0 0 var(--sp-md);
+    font-family: var(--font-heading);
+    font-size: var(--fs-xl);
+    color: var(--color-white);
+  }
+
+  &__bio {
+    color: var(--color-off-white);
+    line-height: 1.7;
+  }
+
+  &__columns {
+    display: grid;
+    gap: var(--sp-xl);
+
+    @include m.lg {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  &__goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  &__goal {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--sp-md);
+    padding: var(--sp-md);
+
+    @include m.md {
+      padding: var(--sp-lg);
+      gap: var(--sp-lg);
+    }
+  }
+
+  &__goal-result {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--color-white);
+
+    &--w { background: rgba(34, 197, 94, 0.2); color: var(--color-success); }
+    &--d { background: rgba(138, 61, 255, 0.2); color: var(--color-highlight); }
+    &--l { background: rgba(239, 68, 68, 0.2); color: var(--color-danger); }
+    &--na { background: var(--color-surface-subtle); color: var(--color-muted); }
+  }
+
+  &__goal-match {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    min-width: 0;
+  }
+
+  &__goal-opponent {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    min-width: 0;
+  }
+
+  &__goal-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  &__goal-team {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__goal-meta {
+    font-size: var(--fs-xs);
+    color: var(--color-muted);
+  }
+
+  &__goal-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--sp-xs);
+    text-align: right;
+  }
+
+  &__goal-score {
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    color: var(--color-white);
+  }
+
+  &__goal-minute {
+    font-size: var(--fs-xs);
+    color: var(--color-muted);
+  }
+
+  &__placeholder {
+    padding: var(--sp-xl);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-elevated);
+    border: 1px dashed var(--color-border-subtle);
+    color: var(--color-muted);
+    text-align: center;
+  }
+
+  &__placeholder-text {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--fs-sm);
+  }
+
+  &__sidebar {
+    padding: var(--sp-lg);
+    height: fit-content;
+  }
+
+  &__top-scorers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
+
+  &__top-scorer {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    padding: var(--sp-sm) 0;
+    border-bottom: 1px solid var(--color-border-subtle);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__top-scorer-rank {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-surface-subtle);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  &__top-scorer-name {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--fs-sm);
+    color: var(--color-off-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-highlight);
+      }
+    }
+  }
+
+  &__top-scorer-goals {
+    font-family: var(--font-heading);
+    color: var(--color-white);
+  }
+
+  &__empty {
+    text-align: center;
+    padding: var(--sp-3xl) var(--sp-md);
+    color: var(--color-muted);
+
+    h1 {
+      margin: 0 0 var(--sp-md);
+      font-family: var(--font-heading);
+      color: var(--color-white);
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

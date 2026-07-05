@@ -29,6 +29,12 @@
   --color-surface:      rgba(75, 31, 163, 0.15);
   --color-surface-2:    rgba(106, 43, 217, 0.2);
 
+  // Clean dark surfaces (used by refreshed player pages)
+  --color-surface-elevated: #121212;
+  --color-surface-subtle:   #1a1a1a;
+  --color-border-subtle:    rgba(255, 255, 255, 0.08);
+  --color-border-accent:    rgba(138, 61, 255, 0.35);
+
   // Status
   --color-success:      #22c55e;
   --color-danger:       #ef4444;
@@ -71,6 +77,8 @@
   --shadow-card:      0 4px 24px rgba(138, 61, 255, 0.2);
   --shadow-glow:      0 0 32px rgba(138, 61, 255, 0.4);
   --shadow-nav:       0 2px 20px rgba(26, 0, 51, 0.8);
+  --shadow-card-sm:   0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.45);
 
   // ─── Transitions ─────────────────────────────────────────────────────────
   --transition-fast:  0.15s ease;

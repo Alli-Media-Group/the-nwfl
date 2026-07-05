@@ -8,6 +8,12 @@ async function get(path) {
   return Array.isArray(data) ? data : (data.results ?? data)
 }
 
+async function getPaginated(path) {
+  const res = await fetch(`${API_BASE}${path}`)
+  if (!res.ok) throw new Error(`API ${path} → ${res.status}`)
+  return res.json()
+}
+
 
 // ── Adapters — map API shape → component shape ────────────────────────────────
 
@@ -135,6 +141,41 @@ export async function fetchPositionTrends(group, season) {
 export async function fetchTopScorers(season) {
   const qs = season ? `?season=${encodeURIComponent(season)}` : ''
   return get(`/api/analytics/top-scorers/${qs}`)
+}
+
+export async function fetchPlayerTopScorers(season, limit = 20) {
+  const params = new URLSearchParams()
+  if (season) params.set('season', season)
+  if (limit) params.set('limit', String(limit))
+  const qs = params.toString()
+  return get(`/api/players/top-scorers/${qs ? `?${qs}` : ''}`)
+}
+
+export async function fetchPlayers(filters = {}, page = 1) {
+  const params = new URLSearchParams()
+  if (filters.team) params.set('team', filters.team)
+  if (filters.position) params.set('position', filters.position)
+  if (filters.group) params.set('group', filters.group)
+  if (filters.search) params.set('search', filters.search)
+  params.set('page', String(page))
+  const data = await getPaginated(`/api/players/?${params.toString()}`)
+  return {
+    players: data.results ?? [],
+    count: data.count ?? 0,
+    next: data.next,
+  }
+}
+
+export async function fetchPlayer(slug) {
+  return get(`/api/players/${encodeURIComponent(slug)}/`)
+}
+
+export async function fetchPlayerGoals(slug) {
+  return get(`/api/players/${encodeURIComponent(slug)}/goals/`)
+}
+
+export async function fetchTeamsList() {
+  return get('/api/teams/')
 }
 
 export async function fetchTeams(season) {

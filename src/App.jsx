@@ -5,6 +5,8 @@ import Stats from "./pages/Stats/Stats";
 import Analytics from "./pages/Analytics/Analytics";
 import Teams from "./pages/Teams/Teams";
 import TeamDetail from "./pages/Teams/TeamDetail";
+import Players from "./pages/Players/Players";
+import PlayerDetail from "./pages/Players/PlayerDetail";
 import News from "./pages/News/News";
 import NewsDetail from "./pages/News/NewsDetail";
 import Blog from "./pages/Blog/Blog";
@@ -25,6 +27,8 @@ export default function App() {
           <Route path="analytics"    element={<Analytics />} />
           <Route path="teams"        element={<Teams />} />
           <Route path="teams/:slug"  element={<TeamDetail />} />
+          <Route path="players"      element={<Players />} />
+          <Route path="players/:slug" element={<PlayerDetail />} />
           <Route path="about"        element={<ComingSoon title="About" />} />
           <Route path="news"         element={<News />} />
           <Route path="news/:slug"   element={<NewsDetail />} />
@@ -33,7 +37,7 @@ export default function App() {
           <Route path="gallery"      element={<Gallery />} />
           <Route path="gallery/:slug" element={<GalleryDetail />} />
           <Route path="match-center" element={<ComingSoon title="Match Center" />} />
-          <Route path="players"      element={<ComingSoon title="Players" />} />
+
           <Route path="media"        element={<ComingSoon title="Media Channel" />} />
           <Route path="*"            element={<NotFound />} />
         </Route>

@@ -1,7 +1,7 @@
 @use "../../styles/mixins" as m;
 
 .footer {
-  background: #000000;
+  background: var(--color-bg);
   isolation: isolate;
   width: 100%;
   font-family: var(--font-body);
@@ -88,6 +88,15 @@
       width: 22px;
       height: 22px;
     }
+  }
+
+  // ── Carbon footprint badge ───────────────────────────────────────────────
+  &__carbon {
+    @include m.container;
+    padding-bottom: var(--sp-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   // ── Copyright bar ────────────────────────────────────────────────────────
