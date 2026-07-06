@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { label: 'Gallery',   to: '/gallery'   },
   { label: 'Stats',     to: '/stats'     },
   { label: 'Analytics', to: '/analytics' },
-  { label: 'Players',   to: '/players'   },
 ];
 
 function SearchIcon() {

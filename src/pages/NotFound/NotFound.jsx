@@ -42,7 +42,7 @@ export default function NotFound() {
             That page doesn&apos;t exist. Even VAR couldn&apos;t pull it back into play.
           </p>
 
-          <Link to="/" className="btn btn--primary not-found__cta">
+          <Link to="/" className="btn btn--outline not-found__cta">
             <HomeIcon />
             Back to Home
           </Link>

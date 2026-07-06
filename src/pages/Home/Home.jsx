@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import Hero from "../../components/Hero/Hero";
 import NewsSection from "../../components/NewsSection/NewsSection";
-import RisingStars from "../../components/RisingStars/RisingStars";
 import LeagueSection from "../../components/LeagueSection/LeagueSection";
 import {
   fetchMatches,
   fetchStandings,
   fetchPosts,
-  fetchPlayerTopScorers,
 } from "../../lib/api";
 import heroBg from "../../data/images/hero.webp";
 import stadiumBg from "../../data/images/stadium.webp";
@@ -34,26 +32,14 @@ function mapNewsArticle(post) {
   };
 }
 
-function mapTopScorer(player) {
-  return {
-    id: player.id,
-    name: player.name,
-    team: player.team_name,
-    position: `${player.goals} goals`,
-    image: null,
-  };
-}
-
 export default function Home() {
   const { season, setSeason, seasons, ready } = useSeason();
   const [matches, setMatches] = useState([]);
   const [standings, setStandings] = useState({ groupA: [], groupB: [] });
   const [news, setNews] = useState([]);
-  const [players, setPlayers] = useState([]);
   const [matchesLoading, setMatchesLoading] = useState(true);
   const [standingsLoading, setStandingsLoading] = useState(true);
   const [newsLoading, setNewsLoading] = useState(true);
-  const [playersLoading, setPlayersLoading] = useState(true);
 
   useEffect(() => {
     if (!ready || !season) return;
@@ -86,15 +72,6 @@ export default function Home() {
         if (!cancelled) setNewsLoading(false);
       });
 
-    fetchPlayerTopScorers(season, 8)
-      .then((data) => {
-        if (cancelled) return;
-        setPlayers((data ?? []).map(mapTopScorer));
-      })
-      .finally(() => {
-        if (!cancelled) setPlayersLoading(false);
-      });
-
     return () => {
       cancelled = true;
     };
@@ -116,12 +93,6 @@ export default function Home() {
         bgImage={stadiumBg}
         articles={articleList}
         loading={newsLoading}
-      />
-
-      <RisingStars
-        players={playersLoading ? [] : players}
-        ctaText="View Players"
-        ctaTo="/players"
       />
 
       <LeagueSection
