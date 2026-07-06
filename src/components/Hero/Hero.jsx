@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import MatchCarousel from "../MatchCarousel/MatchCarousel";
 import SkeletonCard from "../SkeletonCard/SkeletonCard";
 import "./Hero.scss";
@@ -44,6 +44,8 @@ function ChevronRight() {
  * @param {string} bgImage         - hero background image path
  * @param {string} titleHtml       - heading HTML (use <span> for gradient word)
  * @param {string} subtitle        - subtitle paragraph
+ * @param {string} ctaText         - primary CTA label
+ * @param {string} ctaTo           - primary CTA route
  * @param {Array}  matches         - match data for score carousel
  * @param {boolean} matchesLoading - whether matches are still loading
  */
@@ -51,14 +53,19 @@ export default function Hero({
   bgImage,
   titleHtml = "We Are <span>NWFL</span>",
   subtitle = "Follow every fixture, standing, and performance from the Nigeria Women Football League Premiership.",
+  ctaText = "Explore Teams",
+  ctaTo = "/teams",
   matches = [],
   matchesLoading = false,
 }) {
-  const autoplay = useRef(Autoplay({ delay: 3500, stopOnInteraction: false }));
+  const plugins = useMemo(
+    () => [Autoplay({ delay: 3500, stopOnInteraction: false })],
+    []
+  );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start", dragFree: true },
-    [autoplay.current],
+    plugins,
   );
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -71,7 +78,7 @@ export default function Hero({
         <img
           src={bgImage}
           alt="NWFL match action"
-          fetchpriority="high"
+          fetchPriority="high"
           decoding="async"
         />
       </div>
@@ -85,8 +92,8 @@ export default function Hero({
         />
         <p className="hero__subtitle">{subtitle}</p>
         <div className="hero__actions">
-          <Link to="/stats" className="btn btn--primary">
-            Apply Now
+          <Link to={ctaTo} className="btn btn--primary">
+            {ctaText}
           </Link>
         </div>
       </div>

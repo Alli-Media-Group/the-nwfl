@@ -36,20 +36,20 @@
     text-transform: uppercase;
     padding: 0.35rem 0.75rem;
     border-radius: var(--radius-pill);
-    border: 1px solid rgba(138, 61, 255, 0.2);
+    border: 1px solid var(--color-border-subtle);
     background: transparent;
     color: var(--color-muted);
     cursor: pointer;
     transition: all var(--transition-fast);
 
     &:hover {
-      border-color: rgba(138, 61, 255, 0.5);
+      border-color: var(--color-border-accent);
       color: var(--color-white);
     }
 
     &.active {
-      background: rgba(138, 61, 255, 0.15);
-      border-color: rgba(138, 61, 255, 0.4);
+      background: var(--color-surface-2);
+      border-color: var(--color-border-accent);
       color: var(--color-highlight);
     }
   }
@@ -80,8 +80,8 @@
 
   // ── Match card ────────────────────────────────────────────────────────────
   &__card {
-    background: linear-gradient(180deg, rgba(20, 10, 40, 0.9) 0%, rgba(10, 5, 25, 0.92) 100%);
-    border: 1px solid rgba(138, 61, 255, 0.15);
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-lg);
     padding: var(--sp-md) var(--sp-lg);
     display: flex;
@@ -90,8 +90,8 @@
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 
     &:hover {
-      border-color: rgba(138, 61, 255, 0.4);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(138, 61, 255, 0.08);
+      border-color: var(--color-border-accent);
+      box-shadow: var(--shadow-card-hover);
       transform: translateY(-1px);
     }
   }
@@ -103,7 +103,7 @@
     justify-content: space-between;
     gap: var(--sp-sm);
     padding-bottom: var(--sp-sm);
-    border-bottom: 1px solid rgba(138, 61, 255, 0.1);
+    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   &__meta {
@@ -150,7 +150,7 @@
 
     &--upcoming {
       color: var(--color-highlight);
-      background: rgba(138, 61, 255, 0.12);
+      background: var(--color-surface-2);
     }
   }
 
@@ -175,11 +175,11 @@
   }
 
   &__logo {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border-subtle);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -189,7 +189,7 @@
     color: var(--color-white);
     overflow: hidden;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-card-sm);
     position: relative;
 
     img {
@@ -229,9 +229,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: var(--sp-xs);
     flex-shrink: 0;
-    min-width: 48px;
+    min-width: 3rem;
   }
 
   &__vs {
@@ -278,9 +278,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--sp-xs);
     padding-top: var(--sp-sm);
-    border-top: 1px solid rgba(138, 61, 255, 0.1);
+    border-top: 1px solid var(--color-border-subtle);
     color: var(--color-muted);
 
     svg {

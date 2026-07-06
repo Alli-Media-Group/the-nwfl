@@ -1,18 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import TeamLogo from '../TeamLogo/TeamLogo';
 import SkeletonCard from '../SkeletonCard/SkeletonCard';
 import './FixturesPanel.scss';
-
-function TeamLogo({ logoUrl, name }) {
-  return (
-    <div className="fixtures-panel__logo">
-      {logoUrl
-        ? <img src={logoUrl} alt={name} loading="lazy" />
-        : <span>{name.charAt(0)}</span>
-      }
-    </div>
-  );
-}
 
 function FixtureCard({ match }) {
   const isUpcoming = match.status === 'UPCOMING';
@@ -41,7 +31,7 @@ function FixtureCard({ match }) {
       <div className="fixtures-panel__matchup">
         {/* Home */}
         <div className="fixtures-panel__team fixtures-panel__team--home">
-          <TeamLogo logoUrl={match.homeLogoUrl} name={match.homeTeam} />
+          <TeamLogo src={match.homeLogoUrl} name={match.homeTeam} className="fixtures-panel__logo" />
           <span className="fixtures-panel__team-name">{match.homeShortName}</span>
           <span className="fixtures-panel__team-role">Home</span>
         </div>
@@ -64,7 +54,7 @@ function FixtureCard({ match }) {
 
         {/* Away */}
         <div className="fixtures-panel__team fixtures-panel__team--away">
-          <TeamLogo logoUrl={match.awayLogoUrl} name={match.awayTeam} />
+          <TeamLogo src={match.awayLogoUrl} name={match.awayTeam} className="fixtures-panel__logo" />
           <span className="fixtures-panel__team-name">{match.awayShortName}</span>
           <span className="fixtures-panel__team-role">Away</span>
         </div>

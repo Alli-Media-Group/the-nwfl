@@ -44,11 +44,11 @@
   &--primary {
     background: var(--gradient-glow); // purple gradient replaces the original red/orange
     color: var(--color-white);
-    box-shadow: 0 4px 20px rgba(138, 61, 255, 0.35);
+    box-shadow: var(--shadow-card-sm);
 
     &:hover {
-      filter: brightness(1.15);
-      box-shadow: 0 6px 24px rgba(138, 61, 255, 0.5);
+      filter: brightness(1.12);
+      box-shadow: var(--shadow-card-hover);
     }
 
     &:active {
@@ -59,11 +59,12 @@
   &--outline {
     background: transparent;
     color: var(--color-white);
-    border: 2px solid var(--color-highlight);
+    border: 2px solid var(--color-border-accent);
 
     &:hover {
-      background: var(--color-surface);
-      box-shadow: var(--shadow-card);
+      background: var(--color-surface-elevated);
+      border-color: var(--color-white);
+      box-shadow: var(--shadow-card-hover);
     }
   }
 
@@ -72,7 +73,8 @@
     color: var(--color-off-white);
 
     &:hover {
-      background: var(--color-surface-2);
+      background: var(--color-surface-subtle);
+      color: var(--color-white);
     }
   }
 }

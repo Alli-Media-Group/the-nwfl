@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useImageLoader } from '../../hooks/useImageLoader';
+import ArticleCard from '../ArticleCard/ArticleCard';
 import './NewsSection.scss';
 
 function ArrowRightCircle() {
@@ -12,67 +12,35 @@ function ArrowRightCircle() {
   );
 }
 
-// Featured image — shimmer on container, hidden img until loaded
-function FeaturedImage({ src, alt }) {
-  const { loaded, onLoad, onError } = useImageLoader();
+function ArticleCardSkeleton() {
   return (
-    <div className={`news-section__featured-img${!loaded ? ' is-loading' : ''}`}>
-      <img
-        src={src}
-        alt={alt}
-        className={!loaded ? 'is-loading' : ''}
-        onLoad={onLoad}
-        onError={onError}
-      />
+    <div className="news-section__skeleton-card">
+      <div className="news-section__skeleton-img skeleton" />
+      <div className="news-section__skeleton-body">
+        <span className="news-section__skeleton-meta skeleton skeleton--text" />
+        <span className="news-section__skeleton-title skeleton skeleton--text" />
+      </div>
     </div>
-  );
-}
-
-// Article card image — shimmer on container only, card body text visible throughout
-function ArticleCard({ article }) {
-  const { loaded, onLoad, onError } = useImageLoader();
-  return (
-    <Link
-      to={`/news/${article.slug}`}
-      className="news-section__card"
-      aria-label={article.title}
-    >
-      <div className={`news-section__card-img${!loaded ? ' is-loading' : ''}`}>
-        {article.image && (
-          <img
-            src={article.image}
-            alt={article.title}
-            className={!loaded ? 'is-loading' : ''}
-            onLoad={onLoad}
-            onError={onError}
-          />
-        )}
-      </div>
-
-      {/* Text always visible — shimmer is image-container only */}
-      <div className="news-section__card-body">
-        <span className="news-section__card-meta">
-          {article.date} | {article.category}
-        </span>
-        <h4 className="news-section__card-title">{article.title}</h4>
-      </div>
-    </Link>
   );
 }
 
 /**
  * NewsSection
  * @param {string} bgImage   - stadium background image
- * @param {object} featured  - { image, photoCredit, date, category, title, slug }
  * @param {Array}  articles  - [{ id, image, date, category, title, slug }]
- * @param {string} brandName - highlighted name in featured title
+ * @param {boolean} loading  - whether articles are loading
+ * @param {string} ctaText   - CTA label
+ * @param {string} ctaTo     - CTA route
  */
 export default function NewsSection({
   bgImage,
-  featured,
   articles = [],
-  brandName = 'NWFL',
+  loading = false,
+  ctaText = 'See News Log',
+  ctaTo = '/news',
 }) {
+  const displayArticles = articles.slice(0, 4);
+
   return (
     <section className="news-section" aria-label="Latest News">
 
@@ -86,40 +54,26 @@ export default function NewsSection({
           Know what&apos;s happening around you
         </h2>
 
-        {featured && (
-          <div className="news-section__featured">
-            {featured.image
-              ? <FeaturedImage src={featured.image} alt={featured.title} />
-              : <div className="news-section__featured-img news-section__featured-img--placeholder">No image</div>
-            }
-
-            <div className="news-section__featured-body">
-              <h3 className="news-section__featured-title">
-                Get the latest sports news updates, on the local and international sphere. Only on{' '}
-                <span>{brandName}</span>
-              </h3>
-
-              <Link to="/news-log" className="news-section__featured-cta">
-                See News Log <ArrowRightCircle />
-              </Link>
-
-              <div className="news-section__featured-meta">
-                <span className="news-section__featured-credit">
-                  Photo credit: {featured.photoCredit}
-                </span>
-                <span className="news-section__featured-tag">
-                  {featured.date} | {featured.category}
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {articles.length > 0 && (
+        {loading ? (
           <div className="news-section__grid">
-            {articles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+          </div>
+        ) : displayArticles.length > 0 ? (
+          <div className="news-section__grid">
+            {displayArticles.map((article) => (
+              <ArticleCard key={article.id} article={article} variant="light" />
             ))}
+          </div>
+        ) : null}
+
+        {!loading && (
+          <div className="news-section__footer">
+            <Link to={ctaTo} className="news-section__cta">
+              {ctaText} <ArrowRightCircle />
+            </Link>
           </div>
         )}
 

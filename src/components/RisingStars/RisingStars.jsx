@@ -1,9 +1,20 @@
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useImageLoader } from '../../hooks/useImageLoader';
 import './RisingStars.scss';
+
+function getInitials(name) {
+  if (!name) return '';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('')
+    .toUpperCase();
+}
 
 function PlayerCard({ player }) {
   const { loaded, onLoad, onError } = useImageLoader();
@@ -11,14 +22,20 @@ function PlayerCard({ player }) {
   return (
     <div className="rising-stars__card">
       <div className={`rising-stars__card-img${!loaded ? ' is-loading' : ''}`}>
-        <img
-          src={player.image}
-          alt={player.name}
-          loading="lazy"
-          className={!loaded ? 'is-loading' : ''}
-          onLoad={onLoad}
-          onError={onError}
-        />
+        {player.image ? (
+          <img
+            src={player.image}
+            alt={player.name}
+            loading="lazy"
+            className={!loaded ? 'is-loading' : ''}
+            onLoad={onLoad}
+            onError={onError}
+          />
+        ) : (
+          <div className="rising-stars__card-placeholder">
+            {getInitials(player.name)}
+          </div>
+        )}
       </div>
       <span className="rising-stars__card-name">{player.name}</span>
       {(player.position || player.team) && (
@@ -33,14 +50,22 @@ function PlayerCard({ player }) {
 /**
  * RisingStars
  * @param {Array}  players  - [{ id, name, position, team, image }]
- * @param {string} ctaTo    - route for "View Gallery" button
+ * @param {string} ctaText  - label for the CTA button
+ * @param {string} ctaTo    - route for the CTA button
  */
-export default function RisingStars({ players = [], ctaTo = '/stats' }) {
-  const autoplay = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
+export default function RisingStars({
+  players = [],
+  ctaText = 'View Players',
+  ctaTo = '/players',
+}) {
+  const plugins = useMemo(
+    () => [Autoplay({ delay: 3000, stopOnInteraction: false })],
+    []
+  );
 
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: 'start', slidesToScroll: 1 },
-    [autoplay.current]
+    plugins
   );
 
   if (!players.length) return null;
@@ -62,7 +87,7 @@ export default function RisingStars({ players = [], ctaTo = '/stats' }) {
 
         <div className="rising-stars__footer">
           <Link to={ctaTo} className="btn btn--primary">
-            View Gallery
+            {ctaText}
           </Link>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 .news-section {
   position: relative;
-  isolation: isolate; // contain stacking — nothing bleeds into navbar layer
+  isolation: isolate;
   @include m.section-padding;
 
   // ── Stadium background image + dark overlay ────────────────────────────
@@ -31,6 +31,10 @@
     position: relative;
     z-index: var(--z-raised);
     @include m.container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2xl);
   }
 
   // ── Section heading ────────────────────────────────────────────────────
@@ -40,7 +44,6 @@
     font-size: var(--fs-2xl);
     color: var(--color-white);
     text-align: center;
-    margin-bottom: var(--sp-2xl);
     letter-spacing: 0.01em;
 
     @include m.md {
@@ -48,87 +51,85 @@
     }
   }
 
-  // ── Featured card ──────────────────────────────────────────────────────
-  &__featured {
-    background: #ffffff;
-    // only right side gets radius — left image is flush
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    overflow: hidden;
+  // ── 4-column article grid ──────────────────────────────────────────────
+  &__grid {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    margin-bottom: var(--sp-xl);
-    max-height: 432px; // Figma: featured image height
+    gap: var(--sp-lg);
 
-    @include m.md {
-      // left col locked to Figma image width 442px, right col takes remaining space
-      grid-template-columns: 442px 1fr;
+    @include m.sm {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include m.lg {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    // Light cards in this section use a portrait image
+    .article-card__media {
+      height: 14rem;
+
+      @include m.md {
+        height: 16rem;
+      }
+
+      @include m.lg {
+        height: 18rem;
+      }
     }
   }
 
-  &__featured-img {
-    width: 100%;
-    height: 280px;
+  // ── Skeleton cards ─────────────────────────────────────────────────────
+  &__skeleton-card {
+    background: var(--color-white);
+    border-radius: var(--radius-sm);
     overflow: hidden;
-
-    @include m.md {
-      width: 442px;
-      height: 432px;
-      flex-shrink: 0;
-    }
-
-    &.is-loading {
-      @include m.img-shimmer;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-
-      &.is-loading { opacity: 0; }
-    }
-
-    &--placeholder {
-      background: #c8c8c8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      font-size: var(--fs-sm);
-    }
-  }
-
-  &__featured-body {
-    padding: var(--sp-xl) var(--sp-xl) var(--sp-lg);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: var(--sp-lg);
+
+    .skeleton {
+      background: var(--color-surface-subtle);
+    }
   }
 
-  &__featured-title {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: var(--fs-xl);
-    color: #111111;
-    line-height: 1.3;
+  &__skeleton-img {
+    width: 100%;
+    height: 14rem;
 
     @include m.md {
-      font-size: var(--fs-2xl);
+      height: 16rem;
     }
 
-    // brand name highlight — purple replaces red from design
-    span {
-      background: var(--gradient-glow);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    @include m.lg {
+      height: 18rem;
     }
   }
 
-  &__featured-cta {
+  &__skeleton-body {
+    padding: var(--sp-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    flex: 1;
+  }
+
+  &__skeleton-meta {
+    width: 40%;
+  }
+
+  &__skeleton-title {
+    width: 85%;
+    height: 1.1em;
+  }
+
+  // ── Footer CTA ─────────────────────────────────────────────────────────
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__cta {
     display: inline-flex;
     align-items: center;
     gap: var(--sp-sm);
@@ -143,7 +144,6 @@
     cursor: pointer;
     text-decoration: none;
     transition: background var(--transition-fast), color var(--transition-fast);
-    align-self: flex-start;
 
     &:hover {
       background: var(--gradient-glow);
@@ -155,135 +155,6 @@
       width: 16px;
       height: 16px;
       flex-shrink: 0;
-    }
-  }
-
-  &__featured-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--sp-sm);
-    padding-top: var(--sp-md);
-    border-top: 1px solid #e5e5e5;
-  }
-
-  &__featured-credit {
-    font-family: var(--font-body);
-    font-size: var(--fs-xs);
-    color: #888888;
-  }
-
-  &__featured-tag {
-    font-family: var(--font-body);
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--color-highlight);
-    letter-spacing: 0.04em;
-  }
-
-  // ── 3-column article grid ──────────────────────────────────────────────
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--sp-lg);
-    justify-items: center;
-
-    @include m.sm {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include m.lg {
-      // 3 cols, each naturally sized to the 364px card max-width
-      grid-template-columns: repeat(3, minmax(0, 364px));
-      justify-content: center;
-    }
-  }
-
-  // ── Article card — Figma: 364×480px total card ────────────────────────
-  &__card {
-    background: #ffffff;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    width: 100%;
-    max-width: 364px;   // Figma card width
-    margin-inline: auto;
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
-
-    @include m.lg {
-      max-width: 364px;
-    }
-
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-  }
-
-  &__card-img {
-    width: 100%;
-    height: 320px;
-    overflow: hidden;
-    flex-shrink: 0;
-
-    &.is-loading {
-      @include m.img-shimmer;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: transform var(--transition-slow);
-
-      &.is-loading { opacity: 0; }
-    }
-
-    &--placeholder {
-      background: #c8c8c8;
-      height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-size: var(--fs-sm);
-    }
-  }
-
-  &__card:hover &__card-img img {
-    transform: scale(1.04);
-  }
-
-  &__card-body {
-    padding: var(--sp-md) var(--sp-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-sm);
-    flex: 1;
-  }
-
-  &__card-meta {
-    font-family: var(--font-body);
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--color-highlight);
-    letter-spacing: 0.04em;
-  }
-
-  &__card-title {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: var(--fs-base);
-    color: #111111;
-    line-height: 1.4;
-
-    @include m.md {
-      font-size: var(--fs-md);
     }
   }
 }

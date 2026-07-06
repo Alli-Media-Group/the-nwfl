@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchTeams } from '../../lib/api';
+import TeamLogo from '../../components/TeamLogo/TeamLogo';
+import TeamStatCard from '../../components/TeamStatCard/TeamStatCard';
+import FormIndicator from '../../components/FormIndicator/FormIndicator';
+import Modal from '../../components/ui/Modal/Modal';
 import Footer from '../../components/Footer/Footer';
 import './TeamDetail.scss';
 
@@ -8,13 +12,36 @@ export default function TeamDetail() {
   const { slug } = useParams();
   const [team, setTeam] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
+    let cancelled = false;
+
     fetchTeams()
-      .then(teams => setTeam(teams.find(t => t.slug === slug) ?? null))
-      .catch(() => setTeam(null))
-      .finally(() => setLoading(false));
-  }, [slug]);
+      .then((teams) => {
+        if (cancelled) return;
+        const found = teams.find((t) => t.slug === slug) ?? null;
+        setTeam(found);
+        setError('');
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setTeam(null);
+        setError('Unable to load this team profile. Please check your connection and try again.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [slug, retryCount]);
+
+  const handleRetry = () => {
+    setError('');
+    setLoading(true);
+    setRetryCount((c) => c + 1);
+  };
 
   if (loading) {
     return (
@@ -33,31 +60,58 @@ export default function TeamDetail() {
     );
   }
 
+  const stats = [
+    { label: 'Position', value: team.position ? `#${team.position}` : '—' },
+    { label: 'Points', value: team.points ?? 0 },
+    { label: 'Record', value: `${team.w ?? 0}-${team.d ?? 0}-${team.l ?? 0}` },
+    { label: 'Goal Difference', value: (team.gd ?? 0) > 0 ? `+${team.gd}` : team.gd ?? 0 },
+  ];
+
   return (
     <>
       <div className="team-detail">
-        {/* Hero */}
         <div className="team-detail__hero">
           <div className="team-detail__hero-inner">
-            <div className="team-detail__logo">
-              <img src={team.logoUrl} alt={team.name} />
-            </div>
+            <TeamLogo
+              src={team.logoUrl}
+              name={team.name}
+              shortName={team.shortName}
+              className="team-detail__logo"
+            />
             <div className="team-detail__hero-info">
-              <span className="team-detail__group-badge">Group {team.group}</span>
+              <span className="team-detail__group-badge badge badge--accent">
+                Group {team.group}
+              </span>
               <h1 className="team-detail__name">{team.name}</h1>
-              <p className="team-detail__location">{team.city}, {team.state}</p>
-              {team.founded && (
-                <p className="team-detail__founded">Est. {team.founded}</p>
-              )}
+              <div className="team-detail__meta-row">
+                {[team.city, team.state].filter(Boolean).join(', ')}
+                {team.founded && <span className="team-detail__meta-dot">·</span>}
+                {team.founded && <span>Est. {team.founded}</span>}
+                {team.manager && team.manager !== 'TBA' && <span className="team-detail__meta-dot">·</span>}
+                {team.manager && team.manager !== 'TBA' && <span>Manager: {team.manager}</span>}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Content */}
         <div className="team-detail__body">
           <div className="team-detail__inner">
+            <section className="team-detail__section">
+              <h2 className="team-detail__section-title">Season Snapshot</h2>
+              <div className="team-detail__stats">
+                {stats.map((s) => (
+                  <TeamStatCard key={s.label} label={s.label} value={s.value} />
+                ))}
+                <TeamStatCard label="Form">
+                  <FormIndicator results={team.form} />
+                </TeamStatCard>
+                <TeamStatCard
+                  label="Next Match"
+                  value={team.nextMatch || '—'}
+                />
+              </div>
+            </section>
 
-            {/* Bio */}
             {team.bio && (
               <section className="team-detail__section">
                 <h2 className="team-detail__section-title">About the Club</h2>
@@ -65,7 +119,6 @@ export default function TeamDetail() {
               </section>
             )}
 
-            {/* Honours */}
             {team.honours.length > 0 && (
               <section className="team-detail__section">
                 <h2 className="team-detail__section-title">Honours</h2>
@@ -77,13 +130,28 @@ export default function TeamDetail() {
               </section>
             )}
 
+            <div className="team-detail__back">
+              <Link to="/teams" className="btn btn--outline">← All Teams</Link>
+            </div>
           </div>
         </div>
-
-        <div className="team-detail__back">
-          <Link to="/teams" className="btn btn--outline">← All Teams</Link>
-        </div>
       </div>
+
+      <Modal
+        isOpen={!!error}
+        onClose={() => setError('')}
+        title="Something went wrong"
+      >
+        <p>{error}</p>
+        <div className="modal__actions">
+          <button className="btn btn--ghost" onClick={() => setError('')}>
+            Close
+          </button>
+          <button className="btn btn--primary" onClick={handleRetry}>
+            Try again
+          </button>
+        </div>
+      </Modal>
 
       <Footer />
     </>

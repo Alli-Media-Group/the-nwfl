@@ -21,7 +21,6 @@ export default function NewsDetail() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
     fetchPost(slug)
       .then((data) => {
         if (cancelled) return;

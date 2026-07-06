@@ -1,0 +1,136 @@
+@use '../../styles/mixins' as m;
+
+.team-list-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+  padding: var(--sp-lg);
+  text-align: center;
+  text-decoration: none;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+
+  @include m.md {
+    flex-direction: row;
+    gap: var(--sp-lg);
+    padding: var(--sp-md) var(--sp-lg);
+    text-align: left;
+  }
+
+  &:hover {
+    background: var(--color-surface-subtle);
+    border-color: var(--color-border-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+
+    .team-list-item__chevron--desktop,
+    .team-list-item__chevron--mobile {
+      color: var(--color-white);
+      transform: translateX(2px);
+    }
+  }
+
+  &__mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    @include m.md {
+      display: none;
+    }
+  }
+
+  &__logo {
+    width: 64px;
+    height: 64px;
+
+    @include m.md {
+      width: 48px;
+      height: 48px;
+    }
+
+    .team-logo__fallback {
+      font-size: var(--fs-lg);
+
+      @include m.md {
+        font-size: var(--fs-sm);
+      }
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: var(--font-heading);
+    font-size: var(--fs-base);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-white);
+    line-height: 1.2;
+
+    @include m.md {
+      font-size: var(--fs-md);
+    }
+  }
+
+  &__meta {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    color: var(--color-muted);
+  }
+
+  &__group {
+    &--mobile {
+      display: inline-block;
+
+      @include m.md {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @include m.md {
+        display: inline-block;
+      }
+    }
+  }
+
+  &__chevron {
+    display: flex;
+    color: var(--color-muted);
+    transition:
+      color var(--transition-base),
+      transform var(--transition-base);
+
+    &--mobile {
+      @include m.md {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @include m.md {
+        display: flex;
+      }
+    }
+  }
+}

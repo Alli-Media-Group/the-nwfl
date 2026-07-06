@@ -38,7 +38,6 @@ export default function GalleryDetail() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
     fetchGallery(slug)
       .then((data) => {
         if (cancelled) return;

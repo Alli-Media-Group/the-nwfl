@@ -229,3 +229,38 @@ Use tokens from `_variables.scss` — never raw numbers:
 | API integration | `src/lib/api.js` |
 | Routing changes | `src/App.jsx` |
 | Layout changes | `src/layouts/RootLayout.jsx` |
+
+
+---
+
+## UI & Prototyping Rules — Permanent Reference
+
+These rules exist because the player-registry work repeatedly drifted into high-contrast one-offs and polished-but-wrong details. Read this section before any UI task.
+
+### 1. No high-contrast or neon accents
+- Do not use bright purple glows, neon-on-black treatments, or harsh drop-shadows unless the design spec explicitly calls for them.
+- Prefer the existing subtle surface system: `.surface`, `.surface--interactive`, `.surface--elevated`, `var(--color-surface-subtle)`, `var(--color-border-subtle)`, `var(--color-muted)`.
+- Highlights should feel recessed, not glowing.
+
+### 2. Prototype first, polish later
+- Build layout, data flow, empty states, loading states, and error states before refining visuals.
+- Use skeletons, placeholders, and generic fallback components first.
+- Do not spend time on micro-animations, hover lifts, or glows until the core UX works end-to-end.
+
+### 3. Generic fallback states are required
+- **Player avatars:** use `/no-profile.png` (the NWFL lady silhouette) for any missing or broken player photo. Apply `mix-blend-mode: screen` and a subtle `drop-shadow` so the white silhouette blends into the dark surface.
+- Do **not** fall back to initials-in-a-circle for people.
+- Add `onError` handling to every dynamic image so a broken URL degrades to the generic fallback.
+- Empty lists, errors, and "no data" states must use the shared `Modal` component or the project's placeholder styles — never native `alert()`.
+
+### 4. Use the shared Modal for feedback
+- All user-facing errors, confirmations, and success messages go through `src/components/ui/Modal/Modal.jsx`.
+- No `window.alert`, no browser-native `confirm`.
+
+### 5. Stick to the token system
+- New tokens belong in `src/styles/_variables.scss`.
+- No hardcoded hex colors or raw spacing values in component SCSS.
+- Re-read `docs/design-guidelines.md` and `src/styles/_variables.scss` before changing any color or spacing.
+
+### 6. Scope lock
+- NWFL only. No fake stats and no placeholder content that references other leagues or sports.

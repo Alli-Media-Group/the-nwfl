@@ -27,8 +27,8 @@
   &__tabs {
     display: flex;
     gap: var(--sp-xs);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--color-border);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-sm);
     padding: 3px;
   }
@@ -86,7 +86,7 @@
     font-size: var(--fs-sm);
 
     thead tr {
-      background: var(--gradient-glow);
+      background: var(--color-surface-elevated);
 
       th {
         padding: var(--sp-sm) var(--sp-md);
@@ -97,7 +97,7 @@
         color: var(--color-white);
         text-align: center;
         white-space: nowrap;
-        border-right: 1px solid rgba(255, 255, 255, 0.15);
+        border-right: 1px solid var(--color-border-subtle);
 
         &:last-child {
           border-right: none;
@@ -111,7 +111,7 @@
     }
 
     tbody tr {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid var(--color-border-subtle);
       transition: background var(--transition-fast);
 
       &:last-child {
@@ -123,7 +123,7 @@
       }
 
       &:hover {
-        background: rgba(138, 61, 255, 0.08);
+        background: var(--color-surface-subtle);
       }
 
       td {
@@ -132,7 +132,7 @@
         font-weight: 500;
         text-align: center;
         white-space: nowrap;
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        border-right: 1px solid var(--color-border-subtle);
 
         &:last-child {
           border-right: none;

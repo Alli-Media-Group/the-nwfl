@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchPosts } from '../../lib/api';
 import { useImageLoader } from '../../hooks/useImageLoader';
+import ArticleCard from '../../components/ArticleCard/ArticleCard';
+import Modal from '../../components/ui/Modal/Modal';
 import './News.scss';
 
 function formatDate(dateString) {
@@ -14,33 +16,39 @@ function formatDate(dateString) {
   });
 }
 
-function ArticleCard({ post }) {
+function FeaturedArticle({ post }) {
   const { loaded, onLoad, onError } = useImageLoader();
+
   return (
-    <Link to={`/news/${post.slug}`} className="news-page__card">
-      <div className={`news-page__card-img${!loaded ? ' is-loading' : ''}`}>
-        {post.featured_image_url ? (
-          <img
-            src={post.featured_image_url}
-            alt={post.title}
-            className={!loaded ? 'is-loading' : ''}
-            onLoad={onLoad}
-            onError={onError}
-          />
-        ) : (
-          <div className="news-page__card-img-placeholder">NWFL</div>
-        )}
-      </div>
-      <div className="news-page__card-body">
-        <span className="news-page__card-meta">
-          {formatDate(post.published_at)} | {post.category}
-        </span>
-        <h3 className="news-page__card-title">{post.title}</h3>
-        {post.excerpt && (
-          <p className="news-page__card-excerpt">{post.excerpt}</p>
-        )}
-      </div>
-    </Link>
+    <div className="news-page__featured">
+      <Link to={`/news/${post.slug}`} className="news-page__featured-link">
+        <div
+          className={`news-page__featured-media${!loaded ? ' is-loading' : ''}`}
+        >
+          {post.featured_image_url ? (
+            <img
+              src={post.featured_image_url}
+              alt={post.title}
+              className={!loaded ? 'is-loading' : ''}
+              onLoad={onLoad}
+              onError={onError}
+            />
+          ) : (
+            <div className="news-page__featured-placeholder">NWFL</div>
+          )}
+        </div>
+
+        <div className="news-page__featured-body">
+          <span className="news-page__featured-meta">
+            {formatDate(post.published_at)} | {post.category}
+          </span>
+          <h2 className="news-page__featured-title">{post.title}</h2>
+          {post.excerpt && (
+            <p className="news-page__featured-excerpt">{post.excerpt}</p>
+          )}
+        </div>
+      </Link>
+    </div>
   );
 }
 
@@ -55,12 +63,13 @@ export default function News() {
       .then((data) => {
         if (cancelled) return;
         setPosts(data.posts);
-        setLoading(false);
       })
       .catch((err) => {
         if (cancelled) return;
         setError(err.message);
-        setLoading(false);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
     return () => { cancelled = true; };
   }, []);
@@ -70,48 +79,50 @@ export default function News() {
 
   return (
     <section className="news-page">
-      <div className="news-page__header">
-        <h1 className="news-page__title">Latest News</h1>
-        <p className="news-page__subtitle">
-          Updates, announcements and stories from the Nigeria Women Football League.
-        </p>
-      </div>
+      <div className="news-page__inner">
+        <div className="news-page__header">
+          <h1 className="news-page__title">Latest News</h1>
+          <p className="news-page__subtitle">
+            Updates, announcements and stories from the Nigeria Women Football League.
+          </p>
+        </div>
 
-      {loading && <div className="news-page__loading">Loading news...</div>}
-      {error && <div className="news-page__error">{error}</div>}
+        {loading && <div className="news-page__loading">Loading news...</div>}
 
-      {!loading && !error && featured && (
-        <div className="news-page__featured">
-          <Link to={`/news/${featured.slug}`} className="news-page__featured-link">
-            {featured.featured_image_url ? (
-              <img
-                src={featured.featured_image_url}
-                alt={featured.title}
-                className="news-page__featured-img"
+        {!loading && error && (
+          <Modal
+            isOpen
+            onClose={() => setError(null)}
+            title="Unable to load news"
+          >
+            <p>{error}</p>
+            <p>Please check your connection and try again later.</p>
+          </Modal>
+        )}
+
+        {!loading && !error && posts.length === 0 && (
+          <div className="news-page__empty">
+            No news articles available right now.
+          </div>
+        )}
+
+        {!loading && !error && featured && (
+          <FeaturedArticle post={featured} />
+        )}
+
+        {!loading && !error && rest.length > 0 && (
+          <div className="news-page__grid">
+            {rest.map((post) => (
+              <ArticleCard
+                key={post.id}
+                article={post}
+                variant="dark"
+                showExcerpt
               />
-            ) : (
-              <div className="news-page__featured-img news-page__featured-img--placeholder">NWFL</div>
-            )}
-            <div className="news-page__featured-body">
-              <span className="news-page__featured-meta">
-                {formatDate(featured.published_at)} | {featured.category}
-              </span>
-              <h2 className="news-page__featured-title">{featured.title}</h2>
-              {featured.excerpt && (
-                <p className="news-page__featured-excerpt">{featured.excerpt}</p>
-              )}
-            </div>
-          </Link>
-        </div>
-      )}
-
-      {rest.length > 0 && (
-        <div className="news-page__grid">
-          {rest.map((post) => (
-            <ArticleCard key={post.id} post={post} />
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

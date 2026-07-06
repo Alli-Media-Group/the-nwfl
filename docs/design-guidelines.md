@@ -126,9 +126,9 @@ Always mobile-first. Add `@include md` / `@include lg` overrides inside componen
 
 ### Buttons
 Three variants — always use `.btn` + modifier:
-- `.btn--primary` → **purple gradient fill** (`--gradient-glow`), `--radius-sm` (6px) corners — not pill, not solid color. Replaces the original red/orange CTA from the design.
-- `.btn--outline` → transparent, highlight border, surface bg on hover
-- `.btn--ghost` → surface bg, no border
+- `.btn--primary` → **purple gradient fill** (`--gradient-glow`), `--radius-sm` (6px) corners — not pill, not solid color. Hover brightens the gradient and uses a subtle black shadow.
+- `.btn--outline` → transparent, `--color-border-accent` border, white text. Hover fills with `--color-surface-elevated`, turns the border white, and adds a subtle shadow.
+- `.btn--ghost` → `--color-surface` background, off-white text. Hover uses `--color-surface-subtle` and white text.
 
 **Never use a solid flat color for `.btn--primary`.** Always use the gradient. Never use `--radius-pill` on buttons.
 

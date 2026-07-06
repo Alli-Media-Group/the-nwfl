@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TeamLogo from '../TeamLogo/TeamLogo';
 import SkeletonTableRow from '../SkeletonTableRow/SkeletonTableRow';
 import './StandingsTable.scss';
 
@@ -12,16 +13,7 @@ function getRowStatus(index, total, relegateCount) {
   return 'safe';
 }
 
-function TeamLogo({ logoUrl, name }) {
-  return (
-    <div className="standings-table__logo">
-      {logoUrl
-        ? <img src={logoUrl} alt={name} loading="lazy" />
-        : <span>{name.charAt(0)}</span>
-      }
-    </div>
-  );
-}
+
 
 function Table({ data, relegateCount }) {
   return (
@@ -51,7 +43,7 @@ function Table({ data, relegateCount }) {
                 </td>
                 <td className="standings-table__col-team">
                   <div className="standings-table__team">
-                    <TeamLogo logoUrl={team.logoUrl} name={team.name} />
+                    <TeamLogo src={team.logoUrl} name={team.name} className="standings-table__logo" />
                     <span className="standings-table__name">{team.name}</span>
                   </div>
                 </td>
