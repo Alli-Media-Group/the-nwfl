@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, Legend, Cell,
+  LineChart, Line, Cell,
 } from 'recharts'
 import {
   fetchAnalyticsSeason,
@@ -240,45 +240,150 @@ function GoalDistributionChart({ data }) {
 }
 
 // ── Position Trends Chart ─────────────────────────────────────────────────────
+// League position after each matchday (1 = top of the group). With 8 to 11 teams crossing all the time, one coloured
+// line per team cannot be read, so the chart follows the teams you pick and keeps the others as faint grey context.
+const FOLLOW_COLORS = ['#a78bfa', '#22d3ee', '#fbbf24', '#34d399', '#f472b6', '#fb923c']
+
+// "Rivers Angels FC" reads as "Rivers Angels": the league's clubs all end in FC, so it says nothing.
+const shortName = (name) => name.replace(/ FC$/, '')
+
+function TrendTooltip({ active, payload, label, picked, colorOf }) {
+  if (!active || !payload?.length) return null
+  const rows = payload
+    .filter((p) => picked.includes(p.dataKey) && p.value != null)
+    .sort((a, b) => a.value - b.value)
+  if (!rows.length) return null
+  return (
+    <div className="analytics__tooltip">
+      <p className="analytics__tooltip-label">After matchday {label}</p>
+      {rows.map((p) => (
+        <p key={p.dataKey} style={{ color: colorOf(p.dataKey) }}>
+          {p.value}. {p.dataKey}
+        </p>
+      ))}
+    </div>
+  )
+}
+
 function PositionTrendsChart({ data, group }) {
-  const { teams, matchdays } = useMemo(() => {
+  const { teams, rows, final } = useMemo(() => {
     const all = data?.trends ?? {}
     const names = data?.teams ?? Object.keys(all)
     const maxGw = Math.max(0, ...Object.values(all).map((arr) => arr.length))
     const chartRows = []
     for (let gw = 1; gw <= maxGw; gw++) {
-      const row = { gw: `MD${gw}` }
+      const row = { gw }
       names.forEach((name) => {
         row[name] = all[name]?.[gw - 1] ?? null
       })
       chartRows.push(row)
     }
-    return { teams: names, matchdays: chartRows }
+    const last = {}
+    names.forEach((name) => {
+      const arr = all[name] ?? []
+      last[name] = arr.length ? arr[arr.length - 1] : 99
+    })
+    return { teams: names, rows: chartRows, final: last }
   }, [data])
+
+  const byFinish = useMemo(() => [...teams].sort((a, b) => final[a] - final[b]), [teams, final])
+  // Until someone picks, follow the current top three.
+  const [followed, setFollowed] = useState(null)
+  const picked = followed ?? byFinish.slice(0, 3)
+  const colorOf = (name) => FOLLOW_COLORS[picked.indexOf(name) % FOLLOW_COLORS.length]
+  const toggle = (name) =>
+    setFollowed((cur) => {
+      const base = cur ?? byFinish.slice(0, 3)
+      return base.includes(name) ? base.filter((n) => n !== name) : [...base, name].slice(-FOLLOW_COLORS.length)
+    })
 
   if (!teams.length) return <EmptyState message={`No position trend data for Group ${group}.`} />
 
-  const colors = ['#8A3DFF', '#22D3EE', '#22c55e', '#f59e0b', '#ef4444', '#ec4899', '#14b8a6', '#6366f1']
+  const positions = Array.from({ length: teams.length }, (_, i) => i + 1)
 
   return (
     <Card>
-      <h3 className="analytics__chart-title">Position Trends — Group {group}</h3>
-      <ResponsiveContainer width="100%" height={320}>
-        <LineChart data={matchdays} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(138,61,255,0.12)" />
-          <XAxis dataKey="gw" tick={{ fill: '#a78fbf', fontSize: 12 }} axisLine={false} tickLine={false} />
-          <YAxis reversed domain={[1, 'dataMax + 1']} tick={{ fill: '#a78fbf', fontSize: 12 }} axisLine={false} tickLine={false} allowDecimals={false} />
-          <Tooltip content={<ChartTooltip />} />
-          <Legend wrapperStyle={{ color: '#a78fbf', fontSize: 12, paddingTop: 12 }} />
-          {teams.slice(0, 8).map((name, i) => (
+      <h3 className="analytics__chart-title">Position trends: Group {group}</h3>
+      <p className="analytics__chart-sub">
+        Where each team stood in the group after every matchday. 1 is the top. Tap a team to follow it.
+      </p>
+      <div className="analytics__chips" role="group" aria-label={`Teams in Group ${group}`}>
+        {byFinish.map((name) => {
+          const on = picked.includes(name)
+          return (
+            <button
+              key={name}
+              type="button"
+              className={`analytics__chip${on ? ' analytics__chip--on' : ''}`}
+              style={on ? { borderColor: colorOf(name), color: '#fff' } : undefined}
+              aria-pressed={on}
+              onClick={() => toggle(name)}
+            >
+              <span className="analytics__chip-dot" style={{ background: on ? colorOf(name) : '#555' }} />
+              {final[name]}. {shortName(name)}
+            </button>
+          )
+        })}
+      </div>
+      <ResponsiveContainer width="100%" height={Math.max(300, teams.length * 30)}>
+        <LineChart data={rows} margin={{ top: 12, right: 132, left: 0, bottom: 20 }}>
+          <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.07)" />
+          <XAxis
+            dataKey="gw"
+            interval={rows.length > 14 ? 1 : 0}
+            tick={{ fill: '#9a9a9a', fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+            label={{ value: 'Matchday', position: 'insideBottom', offset: -12, fill: '#7a7a7a', fontSize: 12 }}
+          />
+          <YAxis
+            reversed
+            domain={[1, teams.length]}
+            ticks={positions}
+            interval={0}
+            width={30}
+            tick={{ fill: '#9a9a9a', fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+            allowDecimals={false}
+          />
+          <Tooltip
+            content={<TrendTooltip picked={picked} colorOf={colorOf} />}
+            cursor={{ stroke: 'rgba(255,255,255,0.15)' }}
+          />
+          {teams
+            .filter((name) => !picked.includes(name))
+            .map((name) => (
+              <Line
+                key={name}
+                type="linear"
+                dataKey={name}
+                stroke="#3a3a3a"
+                strokeWidth={1.5}
+                dot={false}
+                activeDot={false}
+                isAnimationActive={false}
+                connectNulls
+              />
+            ))}
+          {picked.map((name) => (
             <Line
               key={name}
-              type="monotone"
+              type="linear"
               dataKey={name}
-              stroke={colors[i % colors.length]}
-              strokeWidth={2}
-              dot={false}
+              stroke={colorOf(name)}
+              strokeWidth={3}
+              dot={{ r: 3, fill: colorOf(name), strokeWidth: 0 }}
+              activeDot={{ r: 5 }}
+              isAnimationActive={false}
               connectNulls
+              label={({ x, y, index, value }) =>
+                index === rows.length - 1 && value != null ? (
+                  <text key={name} x={x + 10} y={y} dy={4} fill={colorOf(name)} fontSize={12} fontWeight={600}>
+                    {value}. {shortName(name)}
+                  </text>
+                ) : null
+              }
             />
           ))}
         </LineChart>

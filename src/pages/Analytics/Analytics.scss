@@ -52,8 +52,8 @@
   }
 
   &__select {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-sm);
     padding: var(--sp-sm) var(--sp-md);
     font-family: var(--font-body);
@@ -81,8 +81,8 @@
     font-weight: 600;
     padding: var(--sp-xs) var(--sp-lg);
     border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-subtle);
     color: var(--color-muted);
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -93,7 +93,7 @@
     }
 
     &--active {
-      background: var(--gradient-glow);
+      background: var(--color-accent);
       border-color: transparent;
       color: var(--color-white);
     }
@@ -146,18 +146,11 @@
     }
   }
 
+  // One chart under the other, each the full width of the column: with 9 to 13 teams a chart needs the room.
   &__trends-grid {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-2xl);
-
-    @include m.md {
-      flex-direction: row;
-
-      > * {
-        flex: 1;
-      }
-    }
+    gap: var(--sp-xl);
   }
 
   // ── Section ─────────────────────────────────────────────────────────────────
@@ -185,10 +178,11 @@
 
   // ── Card ────────────────────────────────────────────────────────────────────
   &__card {
-    background: var(--gradient-card);
-    border: 1px solid var(--color-border);
+    // Neutral dark surface: purple stays for the highlights, not for every box.
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-card);
+    box-shadow: none;
     padding: var(--sp-lg);
     width: 100%;
 
@@ -291,7 +285,7 @@
     border-radius: 50%;
     font-size: var(--fs-xs);
     font-weight: 700;
-    background: var(--color-surface-2);
+    background: var(--color-surface-subtle);
     color: var(--color-muted);
 
     &--qualify {
@@ -319,7 +313,7 @@
     height: 28px;
     border-radius: 50%;
     object-fit: contain;
-    background: var(--color-surface-2);
+    background: var(--color-surface-subtle);
     flex-shrink: 0;
   }
 
@@ -332,7 +326,7 @@
     justify-content: center;
     font-size: var(--fs-xs);
     font-weight: 700;
-    background: var(--color-surface-2);
+    background: var(--color-surface-subtle);
     color: var(--color-text);
     flex-shrink: 0;
   }
@@ -481,6 +475,53 @@
   }
 
   // ── Chart ───────────────────────────────────────────────────────────────────
+  &__chart-sub {
+    margin: var(--sp-xs) 0 var(--sp-md);
+    font-size: var(--fs-sm);
+    color: var(--color-muted);
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-xs) var(--sp-sm);
+    margin-bottom: var(--sp-md);
+  }
+
+  &__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-subtle);
+    color: var(--color-muted);
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    cursor: pointer;
+    max-width: 100%;
+    white-space: nowrap;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-white);
+    }
+
+    &--on {
+      background: var(--color-surface-elevated);
+      font-weight: 600;
+    }
+  }
+
+  &__chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex: none;
+  }
+
   &__chart-title {
     font-family: var(--font-body);
     font-size: var(--fs-base);
