@@ -150,7 +150,7 @@ function LeagueTable({ standings }) {
 }
 
 // ── Stat Leader Cards ─────────────────────────────────────────────────────────
-function LeaderCards({ standings, seasonStats, topScorer }) {
+function LeaderCards({ standings, seasonStats }) {
   const bestAttack = useMemo(
     () => [...standings].sort((a, b) => b.gf - a.gf)[0],
     [standings]
@@ -167,8 +167,10 @@ function LeaderCards({ standings, seasonStats, topScorer }) {
   const cards = [
     { label: 'Best Attack', value: bestAttack?.gf ?? '—', sub: bestAttack?.name ?? '—', color: '#22c55e' },
     { label: 'Best Defence', value: bestDefence?.ga ?? '—', sub: bestDefence?.name ?? '—', color: '#22D3EE' },
-    { label: 'Most Clean Sheets', value: mostCleanSheets?.clean_sheets ?? '—', sub: mostCleanSheets?.team_name ?? '—', color: '#8A3DFF' },
-    { label: 'Top Scorer', value: topScorer?.goals ?? '—', sub: topScorer?.name ?? '—', color: '#f59e0b' },
+    // Clean sheets are not recorded yet: show the card only once there is a number to show.
+    ...(mostCleanSheets?.clean_sheets != null
+      ? [{ label: 'Most Clean Sheets', value: mostCleanSheets.clean_sheets, sub: mostCleanSheets.team_name ?? '—', color: '#8A3DFF' }]
+      : []),
   ]
 
   return (
@@ -392,36 +394,6 @@ function PositionTrendsChart({ data, group }) {
   )
 }
 
-// ── Form Guide ─────────────────────────────────────────────────────────────────
-function FormGuide({ standings }) {
-  if (!standings.length) return <EmptyState message="No form data available." />
-
-  return (
-    <Card>
-      <h3 className="analytics__chart-title">Form Guide</h3>
-      <div className="analytics__form-list">
-        {standings
-          .sort((a, b) => (b.pts - a.pts) || (b.gd - a.gd))
-          .map((team) => (
-            <div key={team.id} className="analytics__form-team">
-              <div className="analytics__form-team-info">
-                <TeamLogo slug={team.slug} name={team.name} />
-                <span>{team.name}</span>
-              </div>
-              <div className="analytics__form-results">
-                {(team.form ?? []).slice(-5).map((r, i) => (
-                  <span key={i} className="analytics__form-result" style={{ background: RESULT_COLORS[r] }}>
-                    {r}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-      </div>
-    </Card>
-  )
-}
-
 // ── Main Page ──────────────────────────────────────────────────────────────────
 export default function Analytics() {
   const [seasons, setSeasons] = useState([])
@@ -491,7 +463,6 @@ export default function Analytics() {
     return seasonStats.filter((s) => s.group === group)
   }, [seasonStats, group])
 
-  const topScorer = scorers[0]
 
   if (loading && !standings.length) {
     return (
@@ -539,7 +510,7 @@ export default function Analytics() {
           <div className="analytics__error">{error}</div>
         ) : (
           <div className="analytics__dashboard">
-            <LeaderCards standings={filteredStandings} seasonStats={filteredStats} topScorer={topScorer} />
+            <LeaderCards standings={filteredStandings} seasonStats={filteredStats} />
 
             <div className="analytics__main-grid">
               <div className="analytics__column analytics__column--wide">
@@ -558,10 +529,6 @@ export default function Analytics() {
               <div className="analytics__column">
                 <Section title="Top Scorers">
                   <TopScorers scorers={scorers} />
-                </Section>
-
-                <Section title="Form Guide">
-                  <FormGuide standings={filteredStandings} />
                 </Section>
 
                 <Section title="Goal Timing">
