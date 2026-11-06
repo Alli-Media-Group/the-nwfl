@@ -48,6 +48,7 @@ function adaptMatch(m) {
     homeLogoUrl:  m.home_team.logo_url || null,
     awayLogoUrl:  m.away_team.logo_url || null,
     matchday:     m.matchday != null ? `MD ${m.matchday}` : null,
+    stage:        m.stage ?? 'LEAGUE',
     date:         m.date ?? null,
     time:         m.kick_off ? m.kick_off.slice(0, 5) : null,
     venue:        m.venue || null,

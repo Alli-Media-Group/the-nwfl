@@ -17,11 +17,12 @@ const formatDay = (iso) =>
 function groupByMatchday(matches, newestFirst) {
   const groups = new Map()
   for (const m of matches) {
-    const key = m.matchday ?? 'Other'
+    // The Super Six is a separate round after the group stage, with its own matchdays.
+    const key = m.stage === 'SUPER_SIX' ? `Super Six · MD ${m.matchday ?? ''}`.trim() : (m.matchday ?? 'Other')
     if (!groups.has(key)) groups.set(key, [])
     groups.get(key).push(m)
   }
-  const num = (k) => (k === 'Other' ? -1 : parseInt(String(k).replace(/\D/g, ''), 10) || 0)
+  const num = (k) => (k === 'Other' ? -1 : (parseInt(String(k).replace(/\D/g, ''), 10) || 0) + (String(k).startsWith('Super Six') ? 100 : 0))
   return [...groups.entries()]
     .sort((a, b) => (newestFirst ? num(b[0]) - num(a[0]) : num(a[0]) - num(b[0])))
     .map(([matchday, list]) => ({
