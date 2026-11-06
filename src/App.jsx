@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home/Home";
 import Stats from "./pages/Stats/Stats";
+import MatchCenter from "./pages/MatchCenter/MatchCenter";
 import Analytics from "./pages/Analytics/Analytics";
 import Teams from "./pages/Teams/Teams";
 import TeamDetail from "./pages/Teams/TeamDetail";
@@ -34,7 +35,7 @@ export default function App() {
           <Route path="blog/:slug"   element={<BlogDetail />} />
           <Route path="gallery"      element={<Gallery />} />
           <Route path="gallery/:slug" element={<GalleryDetail />} />
-          <Route path="match-center" element={<ComingSoon title="Match Center" />} />
+          <Route path="match-center" element={<MatchCenter />} />
 
           <Route path="media"        element={<ComingSoon title="Media Channel" />} />
           <Route path="*"            element={<NotFound />} />

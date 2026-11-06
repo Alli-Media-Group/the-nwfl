@@ -135,7 +135,9 @@ export async function fetchPositionTrends(group, season) {
 
 export async function fetchTopScorers(season) {
   const qs = season ? `?season=${encodeURIComponent(season)}` : ''
-  return get(`/api/analytics/top-scorers/${qs}`)
+  const rows = await get(`/api/analytics/top-scorers/${qs}`)
+  // Some names were saved with a ball emoji in front of them; show the name alone.
+  return rows.map((r) => ({ ...r, name: r.name.replace(/^[^\p{L}\p{N}]+/u, '') }))
 }
 
 export async function fetchTeamsList() {

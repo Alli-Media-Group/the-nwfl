@@ -230,7 +230,7 @@ function GoalDistributionChart({ data }) {
           <XAxis dataKey="bucket" tick={{ fill: '#a78fbf', fontSize: 12 }} axisLine={false} tickLine={false} />
           <YAxis tick={{ fill: '#a78fbf', fontSize: 12 }} axisLine={false} tickLine={false} allowDecimals={false} />
           <Tooltip content={<ChartTooltip />} cursor={{ fill: 'rgba(138,61,255,0.08)' }} />
-          <Bar dataKey="goals" radius={[6, 6, 0, 0]}>
+          <Bar dataKey="goals" radius={[6, 6, 0, 0]} isAnimationActive={false}>
             {chartData.map((_, i) => (
               <Cell key={i} fill={i < 3 ? '#8A3DFF' : i < 6 ? '#6A2BD9' : '#ef4444'} />
             ))}

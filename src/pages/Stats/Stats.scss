@@ -1,0 +1,97 @@
+@use '../../styles/mixins' as m;
+
+.stats {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding-top: var(--navbar-height);
+
+  &__container {
+    @include m.container;
+    padding-block: var(--sp-section);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+    margin-bottom: var(--sp-xl);
+
+    @include m.md {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  &__title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-3xl);
+    font-weight: 700;
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--sp-sm);
+  }
+
+  &__subtitle { font-size: var(--fs-sm); color: var(--color-muted); }
+
+  &__select {
+    background: var(--color-surface-elevated);
+    color: var(--color-white);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.9rem;
+    font: inherit;
+    font-size: var(--fs-sm);
+
+    &:focus-visible { outline: 2px solid var(--color-highlight); outline-offset: 2px; }
+  }
+
+  &__grid {
+    display: grid;
+    gap: var(--sp-lg);
+    grid-template-columns: 1fr;
+
+    @include m.md { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  &__board {
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--sp-lg);
+  }
+
+  &__board-title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-lg);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__note { font-size: var(--fs-xs); color: var(--color-muted); margin-top: 0.2rem; }
+
+  &__list { list-style: none; margin: var(--sp-md) 0 0; padding: 0; }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    padding: 0.7rem 0;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  &__logo { width: 2rem; height: 2rem; font-size: 0.7rem; }
+
+  &__rank { width: 1.25rem; font-size: var(--fs-sm); color: var(--color-muted); }
+
+  &__who { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  &__name { font-size: var(--fs-sm); font-weight: 600; color: var(--color-white); overflow-wrap: anywhere; }
+  &__team { font-size: var(--fs-xs); color: var(--color-muted); }
+
+  &__value { font-family: var(--font-heading); font-size: var(--fs-lg); color: var(--color-white); white-space: nowrap; }
+  &__unit { font-family: var(--font-body); font-size: var(--fs-xs); color: var(--color-muted); }
+
+  &__empty { color: var(--color-muted); padding: var(--sp-xl) 0; }
+}
